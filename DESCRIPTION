@@ -1,0 +1,15 @@
+Package: ipa
+Title: Inference via Permutations, Automated
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Aymeric",
+           family = "Stamm",
+           role = c("aut", "cre"),
+           email = "aymeric.stamm@univ-nantes.fr",
+           comment = c(ORCID = "0000-0002-8725-3654"))
+Description: This package is intended to become a common 
+    permutational framework onto which one can plug different 
+    data representations and statistics for subsequent inference.
+License: AGPL-3.0
+Encoding: UTF-8
+LazyData: true
