@@ -129,23 +129,5 @@ get_permuted_statistic <- function(i, indices1, d, statistic) {
   else
     indices <- indices1[, i]
 
-  switch(
-    statistic,
-    hotelling = stat_hotelling(d, indices)
-  )
-}
-
-stat_hotelling <- function(d, indices) {
-  indices2 <- seq_len(nrow(d))[-indices]
-  x <- d[indices, ]
-  y <- d[indices2, ]
-  nx <- nrow(x)
-  ny <- nrow(y)
-  xbar <- colMeans(x)
-  ybar <- colMeans(y)
-  s2x <- cov(x)
-  s2y <- cov(y)
-  s2p <- ((nx - 1) * s2x + (ny - 1) * s2y) / (nx + ny - 2)
-  s2p_inv <- solve(s2p)
-  t(xbar - ybar) %*% s2p_inv %*% (xbar - ybar)
+  rlang::as_function(statistic)(d, indices)
 }
