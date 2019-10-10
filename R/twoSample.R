@@ -45,7 +45,7 @@
 #' t2 <- two_sample_test(x, y)
 #' t2$pvalue
 two_sample_test <- function(x, y,
-                            statistic = "hotelling",
+                            statistic = stat_hotelling,
                             B = 1000L,
                             alpha = 0.05,
                             test = "exact",
