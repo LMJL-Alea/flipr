@@ -76,16 +76,35 @@ two_sample_test <- function(x, y,
   test <- match.arg(test, c("approximate", "exact"))
   if (test == "approximate" & M <= B) {
     B <- M
-    group1.perm <- utils::combn(n, n1)[, 1:B]
+    group1_perm <- utils::combn(n, n1)[, 1:B]
   } else
-    group1.perm <- replicate(B, sample.int(n))[1:n1, ]
+    group1_perm <- replicate(B, sample.int(n))[1:n1, ]
 
   if (!npc)
-    Tp <- sapply(0:B, get_permuted_statistic, indices1 = group1.perm, d = d, statistic = statistic)
+    Tp <- sapply(
+      X = 0:B,
+      FUN = get_permuted_statistic,
+      indices1 = group1_perm,
+      d = d,
+      statistic = statistic
+    )
   else {
     Tp <- statistic %>%
-      purrr::map(~ sapply(0:B, get_permuted_statistic, indices1 = group1.perm, d = d, statistic = .)) %>%
-      purrr::map(~ sapply(1:(B+1), stats2pvalue, Tp = ., test = "approximate", B = B, M = M)) %>%
+      purrr::map(~ sapply(
+        X = 0:B,
+        FUN = get_permuted_statistic,
+        indices1 = group1_perm,
+        d = d,
+        statistic = .
+      )) %>%
+      purrr::map(~ sapply(
+        X = 1:(B+1),
+        FUN = stats2pvalue,
+        Tp = .,
+        test = "approximate",
+        B = B,
+        M = M
+      )) %>%
       purrr::transpose() %>%
       purrr::simplify_all() %>%
       purrr::map_dbl(combine_pvalues)
