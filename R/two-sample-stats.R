@@ -37,8 +37,8 @@ stat_hotelling <- function(data, indices, ...) {
   Y <- purrr::reduce(data[indices2], rbind)
   Xbar <- colMeans(X)
   Ybar <- colMeans(Y)
-  Sx <- cov(X)
-  Sy <- cov(Y)
+  Sx <- stats::cov(X)
+  Sy <- stats::cov(Y)
   Spooled <- ((nx - 1) * Sx + (ny - 1) * Sy) / (nx + ny - 2)
   Sinv <- solve(Spooled)
   D <- Xbar - Ybar
