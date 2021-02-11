@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 ## Overview
 
 <!-- badges: start -->
+[![check-standard](https://github.com/astamm/ipa/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/ipa/actions)
+[![test-coverage](https://github.com/astamm/ipa/workflows/test-coverage/badge.svg)](https://github.com/astamm/ipa/actions)
+[![Codecov test coverage](https://codecov.io/gh/astamm/ipa/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/ipa?branch=master)
+[![pkgdown](https://github.com/astamm/ipa/workflows/pkgdown/badge.svg)](https://github.com/astamm/ipa/actions)
 <!-- badges: end -->
 
 The goal of the **ipa** package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for hypothesis testing on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and **ipa** takes care of the permutation magic and provides you with the result of the permutation test. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called *non-parametric combination* approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. Currently, you can do two-sample tests. We plan on adding very soon one-sample tests, ANOVA and regression to the list as well.

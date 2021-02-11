@@ -4,6 +4,12 @@
 ## Overview
 
 <!-- badges: start -->
+
+[![check-standard](https://github.com/astamm/ipa/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/ipa/actions)
+[![test-coverage](https://github.com/astamm/ipa/workflows/test-coverage/badge.svg)](https://github.com/astamm/ipa/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/astamm/ipa/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/ipa?branch=master)
+[![pkgdown](https://github.com/astamm/ipa/workflows/pkgdown/badge.svg)](https://github.com/astamm/ipa/actions)
 <!-- badges: end -->
 
 The goal of the **ipa** package is to provide a flexible framework for
