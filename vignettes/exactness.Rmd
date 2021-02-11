@@ -1,5 +1,10 @@
 ---
 title: "On the exactness of permutation tests"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{On the exactness of permutation tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

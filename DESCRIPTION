@@ -27,4 +27,6 @@ Imports:
     rlang,
     magrittr
 Suggests: 
-    rmarkdown
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
