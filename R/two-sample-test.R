@@ -23,7 +23,7 @@
 #'   These can be \code{\link{stat_hotelling}} or user-specified functions that
 #'   define desired statistics. See the section *User-supplied statistic
 #'   function* for more information on how these user-supplied functions should
-#'   be structured for compatibility with the IPA framwork. Default is
+#'   be structured for compatibility with the PSI framwork. Default is
 #'   \code{\link{stat_hotelling}}.
 #' @param B The number of sampled permutation. Default is `1000L`.
 #' @param test A string specifying if performing an exact test through the use

@@ -22,7 +22,7 @@ two_sample_test(
 These can be \code{\link{stat_hotelling}} or user-specified functions that
 define desired statistics. See the section \emph{User-supplied statistic
 function} for more information on how these user-supplied functions should
-be structured for compatibility with the IPA framwork. Default is
+be structured for compatibility with the PSI framwork. Default is
 \code{\link{stat_hotelling}}.}
 
 \item{B}{The number of sampled permutation. Default is \code{1000L}.}

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(ipa)
+library(psi)
 ```
 
 In this article, we discuss the exactness property of permutation tests, which is closely related to how $p$-values are estimated from the permutations.
