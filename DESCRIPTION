@@ -1,7 +1,7 @@
 Package: ipa
 Title: Inference via Permutations, Automated
-Version: 0.0.0.9000
-Authors@R: c( 
+Version: 0.1.0
+Authors@R: c(
     person(given = "Alessia", 
            family = "Pini", 
            role = "aut", 
@@ -15,9 +15,8 @@ Authors@R: c(
            family = "Vantini", 
            role = "aut", 
            email = "simone.vantini@polimi.it"))
-Description: This package is intended to become a common 
-    permutational framework onto which one can plug different 
-    data representations and statistics for subsequent inference.
+Description: A flexible permutation framework for hypothesis 
+  testing, ANOVA and regression anlaysis of complex data.
 License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
