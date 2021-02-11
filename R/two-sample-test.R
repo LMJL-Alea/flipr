@@ -1,21 +1,36 @@
 #' Two-Sample Permutation Test
 #'
 #' This function carries out an hypothesis test where the null hypothesis is
-#' that the two samples are ruled by the same underyling generative probability
-#' distributions against the alternative hypothesis that they are ruled by two
+#' that the two samples are ruled by the same underlying generative probability
+#' distribution against the alternative hypothesis that they are ruled by two
 #' separate generative probability distributions.
+#'
+#' @section User-supplied statistic function:
+#' A user-specified function should have at least two arguments:
+#'
+#' - the first argument is `data` which should be a list of the `n1 + n2`
+#' concatenated observations with the original `n1` observations from the first
+#' sample on top and the original `n2` observations from the second sample
+#' below;
+#' - the second argument is `indices` which should be an integer vector giving
+#' the indices in `data` that are considered to belong to the first sample.
+#'
+#' See the \code{\link{stat_hotelling}} function for an example.
 #'
 #' @param x A list or matrix representing the 1st sample.
 #' @param y A list or matrix representing the 2nd sample.
-#' @param statistic A string specifying the chosen test statistic(s), among:
-#'   \code{"hotelling"} [default].
-#' @param B The number of sampled permutation (default: \code{1000L}).
-#' @param alpha The significance level (default: \code{0.05}).
-#' @param test A character string specifying if performing an exact test through
-#'   the use of Phipson-Smyth estimate of the p-value or an approximate test
-#'   through a Monte-Carlo estimate of the p-value (default: \code{"exact"}).
-#' @param seed An integer for specifying the seed of the random generator for
-#'   result reproducibility or method comparisons (default: \code{NULL}).
+#' @param statistic A character vector specifying the chosen test statistic(s).
+#'   These can be \code{\link{stat_hotelling}} or user-specified functions that
+#'   define desired statistics. See the section *User-supplied statistic
+#'   function* for more information on how these user-supplied functions should
+#'   be structured for compatibility with the IPA framwork. Default is
+#'   \code{\link{stat_hotelling}}.
+#' @param B The number of sampled permutation. Default is `1000L`.
+#' @param test A string specifying if performing an exact test through the use
+#'   of Phipson-Smyth estimate of the p-value or an approximate test through a
+#'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
+#' @param seed An integer specifying the seed of the random generator useful for
+#'   result reproducibility or method comparisons. Default is `NULL`.
 #'
 #' @return A \code{\link[base]{list}} with three components: the value of the
 #'   statistic for the original two samples, the p-value of the resulting
@@ -25,47 +40,40 @@
 #'
 #' @examples
 #' n <- 10L
-#' p <- 3L
-#' mx <- rep(0, p)
-#' sigma <- diag(1, p)
+#' mx <- 0
+#' sigma <- 1
 #'
 #' # Two different models for the two populations
-#' x <- mvnfast::rmvn(n = n, mu = mx, sigma = sigma)
+#' x <- rnorm(n = n, mean = mx, sd = sigma)
 #' delta <- 10
 #' my <- mx + delta
-#' y <- mvnfast::rmvn(n = n, mu = my, sigma = sigma)
+#' y <- rnorm(n = n, mean = my, sd = sigma)
 #' t1 <- two_sample_test(x, y)
 #' t1$pvalue
 #'
 #' # Same model for the two populations
-#' x <- mvnfast::rmvn(n = n, mu = mx, sigma = sigma)
+#' x <- rnorm(n = n, mean = mx, sd = sigma)
 #' delta <- 0
 #' my <- mx + delta
-#' y <- mvnfast::rmvn(n = n, mu = my, sigma = sigma)
+#' y <- rnorm(n = n, mean = my, sd = sigma)
 #' t2 <- two_sample_test(x, y)
 #' t2$pvalue
 two_sample_test <- function(x, y,
                             statistic = stat_hotelling,
                             B = 1000L,
-                            alpha = 0.05,
                             test = "exact",
                             seed = NULL) {
 
   set.seed(seed)
 
-  if (is.list(x)) {
-    stopifnot(is.list(y))
-    n1 <- length(x)
-    n2 <- length(y)
-    d <- 0 # TO BE DONE
-  } else if (is.matrix(x)) {
-    stopifnot(is.matrix(y))
-    n1 <- nrow(x)
-    n2 <- nrow(y)
-    d <- rbind(x, y)
-  }
+  l <- convert_to_list(x, y)
+  x <- l[[1]]
+  y <- l[[2]]
 
+  n1 <- length(x)
+  n2 <- length(y)
   n <- n1 + n2
+  stat_data <- c(x, y)
 
   npc <- length(statistic) > 1
 
@@ -85,7 +93,7 @@ two_sample_test <- function(x, y,
       X = 0:B,
       FUN = get_permuted_statistic,
       indices1 = group1_perm,
-      d = d,
+      stat_data = stat_data,
       statistic = statistic
     )
   else {
@@ -94,7 +102,7 @@ two_sample_test <- function(x, y,
         X = 0:B,
         FUN = get_permuted_statistic,
         indices1 = group1_perm,
-        d = d,
+        stat_data = stat_data,
         statistic = .
       )) %>%
       purrr::map(~ sapply(
@@ -117,36 +125,11 @@ two_sample_test <- function(x, y,
   )
 }
 
-stats2pvalue <- function(i, Tp, test = "exact", B, M) {
-  T0 <- Tp[i]
-  b <- sum(Tp >= T0) - 1
-  if (test == "approximate") return(b / B)
-  phipson_smyth_pvalue(b, B, M)
-}
-
-combine_pvalues <- function(p, method = "tippett") {
-  switch (
-    method,
-    tippett = 1 - min(p),
-    fisher = - 2 * sum(log(p))
-  )
-}
-
-phipson_smyth_pvalue <- function(b, B, M) {
-  if (M <= 10000) {
-    pt <- seq_len(M) / M
-    return(mean(stats::pbinom(q = b, size = B, prob = pt)))
-  }
-
-  corr <- stats::integrate(stats::pbinom, 0, 0.5 / M, q = b, size = B)$value
-  (b + 1) / (B + 1) - corr
-}
-
-get_permuted_statistic <- function(i, indices1, d, statistic) {
+get_permuted_statistic <- function(i, indices1, stat_data, statistic) {
   if (i == 0)
     indices <- seq_len(nrow(indices1))
   else
     indices <- indices1[, i]
 
-  rlang::as_function(statistic)(d, indices)
+  rlang::as_function(statistic)(stat_data, indices)
 }
