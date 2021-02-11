@@ -28,5 +28,6 @@ Imports:
     magrittr
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    covr
 VignetteBuilder: knitr

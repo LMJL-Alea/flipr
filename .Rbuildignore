@@ -4,3 +4,4 @@
 ^vignettes/articles$
 ^\.github$
 ^LICENSE\.md$
+^codecov\.yml$
