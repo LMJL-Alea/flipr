@@ -1,3 +1,4 @@
 ^ipa\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^vignettes/articles$

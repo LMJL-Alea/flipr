@@ -1,0 +1,30 @@
+---
+title: "On the exactness of permutation tests"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ipa)
+```
+
+In this article, we discuss the exactness property of permutation tests, which is closely related to how $p$-values are estimated from the permutations.
+
+## Exactness of a test
+
+When you want to perform an hypothesis test, you first need to specify the **null hypothesis** $H_0$ you are testing and the **alternative hypothesis** $H_a$ you are testing against. Next, you need to define a **statistic** $T$ that fulfills the following properties:
+
+- you can compute its observed value under the null hypothesis once you observed some data;
+- large values of the statistic are evidence in favor of the alternative hypothesis;
+- you know (an approximation of) the distribution of $T$ under the null hypothesis, also known as the **null distribution**.
+
+Finally, you specify a significance level $\alpha$ which controls the probability of making type I errors:
+$$  \mathbb{P} \left( \mbox{Type I errors} \right) = \mathbb{P} \left( \mbox{Reject } H_0 \mbox{ while it was true} \right) = \alpha. $$
+This control is exact (i.e. the equality holds) if you know the null distribution. When you estimate it, as it is done in resampling-based testing procedures, you are not guaranteed to get this control.
+
+Permutation tests use permutations of the data to estimate the null distribution and therefore access an estimate of the $p$-value. There are several ways of estimating $p$-values from a permutation scheme. In this article, we first review the traditional approach to permutation testing and show that it does not lead to an exact testing procedure. Next, we demonstrate that we can make the permutation test exact by estimating the $p$-value in a different fashion.
