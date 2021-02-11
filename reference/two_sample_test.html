@@ -75,7 +75,7 @@ separate generative probability distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ipa</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -97,6 +97,9 @@ separate generative probability distributions." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/alternative.html">The alternative hypothesis in permutation testing</a>
+    </li>
     <li>
       <a href="../articles/exactness.html">On the exactness of permutation tests</a>
     </li>
@@ -217,7 +220,7 @@ the indices in <code>data</code> that are considered to belong to the first samp
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
 <span class='va'>t2</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 <span class='va'>t2</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0.7212733</div></pre>
+</div><div class='output co'>#&gt; [1] 0.08690767</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
