@@ -29,6 +29,10 @@
 #' @param test A string specifying if performing an exact test through the use
 #'   of Phipson-Smyth estimate of the p-value or an approximate test through a
 #'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
+#' @param combining_function A string specifying the combining function to be
+#'   used to compute the single test statistic value from the set of p-value
+#'   estimates obtained during the non-parametric combination testing procedure.
+#'   Default is `"tippett"`, which picks Tippett's function.
 #' @param seed An integer specifying the seed of the random generator useful for
 #'   result reproducibility or method comparisons. Default is `NULL`.
 #'
@@ -62,9 +66,10 @@ two_sample_test <- function(x, y,
                             statistic = stat_hotelling,
                             B = 1000L,
                             test = "exact",
+                            combining_function = "tippett",
                             seed = NULL) {
 
-  set.seed(seed)
+  if (!is.null(seed)) set.seed(seed)
 
   l <- convert_to_list(x, y)
   x <- l[[1]]
@@ -115,7 +120,7 @@ two_sample_test <- function(x, y,
       )) %>%
       purrr::transpose() %>%
       purrr::simplify_all() %>%
-      purrr::map_dbl(combine_pvalues)
+      purrr::map_dbl(combine_pvalues, method = combining_function)
   }
 
   list(

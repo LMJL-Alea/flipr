@@ -92,7 +92,7 @@ test_t2 <- psi::two_sample_test(
   B = 10000
 )
 test_t2$pvalue
-#> [1] 9.472133e-05
+#> [1] 0.0001945701
 ```
 
 We can compare the resulting p-value with the one obtained using the

@@ -10,6 +10,7 @@ two_sample_test(
   statistic = stat_hotelling,
   B = 1000L,
   test = "exact",
+  combining_function = "tippett",
   seed = NULL
 )
 }
@@ -30,6 +31,11 @@ be structured for compatibility with the PSI framwork. Default is
 \item{test}{A string specifying if performing an exact test through the use
 of Phipson-Smyth estimate of the p-value or an approximate test through a
 Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
+
+\item{combining_function}{A string specifying the combining function to be
+used to compute the single test statistic value from the set of p-value
+estimates obtained during the non-parametric combination testing procedure.
+Default is \code{"tippett"}, which picks Tippett's function.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}
