@@ -29,5 +29,7 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    covr
+    covr,
+    tidyverse,
+    plotly
 VignetteBuilder: knitr
