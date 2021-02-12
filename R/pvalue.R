@@ -15,10 +15,12 @@ combine_pvalues <- function(p, method = "tippett") {
 
 phipson_smyth_pvalue <- function(b, B, M) {
   if (M <= 10000) {
-    pt <- seq_len(M) / M
+    # pt <- seq_len(M) / M
+    pt <- seq_len(M + 1) / (M + 1)
     return(mean(stats::pbinom(q = b, size = B, prob = pt)))
   }
 
-  corr <- stats::integrate(stats::pbinom, 0, 0.5 / M, q = b, size = B)$value
+  # corr <- stats::integrate(stats::pbinom, 0, 0.5 / M, q = b, size = B)$value
+  corr <- stats::integrate(stats::pbinom, 0, 0.5 / (M + 1), q = b, size = B)$value
   (b + 1) / (B + 1) - corr
 }
