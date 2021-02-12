@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{The alternative hypothesis in permutation testing}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -17,3 +18,97 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(psi)
 ```
+
+In this article, we discuss a key difference between the traditional
+framework for null hypothesis significance testing (NHST) and the
+permutation framework for NHST. This critical difference lies at the
+root of the framework in the specification of the null and alternative
+hypothesis. First, we review the traditional approach to NHST. Second we
+explain how the use of the permutation framework requires particular
+care when formulating the null and alternative hypotheses. Finally, we
+will discuss an approach proposed by @pesarin2010, coined
+**Non-Parametric Combination** (NPC), which allows one to combine
+several test statistics into a single test.
+
+## Traditional NHST
+
+The traditional approach to NHST pertains to specifying a null
+distribution $H_0$ that we would like to reject in favor of an
+alternative hypothesis $H_a$ given statistical evidence in the form of
+data samples. For example, if we study the effect of some drug on the
+amount of sugar in the blood in patients diagnosed with diabetes, we
+might take two samples out of two distinct populations, one to which we
+gave a placebo and one to which we gave the treatment. At this point,
+the goal is to show that the average amount of sugar in the treatment
+group is lower than the one in the placebo group. Hence, a suitable test
+for answering this question is given by the following hypotheses:
+
+$$
+H_0: \mu_\mathrm{treatment} \ge \mu_\mathrm{placebo} \quad \mbox{against} \quad H_a: \mu_\mathrm{treatment} < \mu_\mathrm{placebo}
+$$
+
+As suggested by intuition, the alternative hypothesis is first
+determined on the basis of what we aim at proving and the null
+hypothesis $H_0$ is then deduced as the complementary event to $H_a$.
+
+## Permutation NHST
+
+The permutation framework completely redefines the null and alternative
+hypotheses with respect to the traditional approach:
+
+-   The null hypothesis is **always the same** for all tests performed
+    in the permutation framework. This is by design. In effect, the idea
+    of using the permutations to approach the null distribution relies
+    on the assumption of data exchangeability under $H_0$. This means
+    that the null hypothesis always needs to be that the two samples are
+    drawn from the same underlying distribution. Hence, if we have two
+    independent samples
+    $X_1, \dots, X_{n_x} \stackrel{i.i.d.}{\sim} F_X$ and
+    $Y_1, \dots, Y_{n_y} \stackrel{i.i.d.}{\sim} F_Y$, the null
+    hypothesis for the two-sample problem is necessarily:
+    $$ H_0: F_X = F_Y. $$
+-   The alternative hypothesis **is not** the complementary event to
+    $H_0$. In effect, that would be $F_X \neq F_Y$. However, there could
+    be millions of reasons for that to be true. In practice, the use of
+    a specific test statistic targets some aspect(s) of the
+    distributions. For instance, if one uses Hotelling's $T^2$
+    statistic, focus is put on finding differences in the first-order
+    moment of the two distributions $F_X$ and $F_Y$.
+-   These two differences generate a huge change of paradigm for
+    interpreting the results. In effect, suppose that the permutation
+    test using Hotelling's $T^2$ statistic reveals that there is not
+    enough evidence to reject the null hypothesis. This does not imply,
+    by no means, that we can assume that the two samples come from the
+    same distribution, because, for all we know, our data could contain
+    enough evidence to identify differences in variance or higher
+    moments.
+
+## Non-Parametric Combination
+
+Once you have your sample of $m$ permutations out the $m_t$ possible
+ones, you can in fact compute the values of as many test statistics
+$T^{(1)}, \dots, T^{(L)}$ as you want. At this point, you might want to
+use the unbiased estimator
+$\widehat{p_\infty}^{(\ell)} = \frac{B^{(\ell)}}{m}$ of the p-value
+$p_\infty^{(\ell)} = \mathbb{P} \left( T^{(\ell)} \ge t_\mathrm{obs}^{(\ell)} \right)$
+for each test statistic to produce $L$ p-value estimates, each one
+targeting a different aspect of the distributions under investigation.
+Since this evidence has been summarized by p-values, they are all on the
+same scale even though they might look at very different features of the
+distributions. They can therefore be combined in various ways to provide
+a single test statistic value to be used in the testing procedure. There
+are several possible **combining functions** to do this fusion of
+p-values. The package **psi** currently implements:
+
+-   Tippett's combining function:
+    $\mathrm{Tippett}(p_1, …, p_L) = 1 - \min_{\ell \in 1, \dots, L} p_\ell$;
+    and,
+-   Fisher's combining function:
+    $\mathrm{Fisher}(p_1, …, p_L) = -2 \sum_{\ell=1}^L \log p_\ell$.
+
+The choice of the combining function is made through the optional
+argument `combining_function` which takes a string as value. At the
+moment, it accepts either `"tippett"` or `"fisher"` for picking one of
+the two above-mentioned combining functions.
+
+## References

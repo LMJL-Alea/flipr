@@ -5,6 +5,10 @@ vignette: >
   %\VignetteIndexEntry{On the exactness of permutation tests}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+params:
+  R: 1000
+  seed: 12345
 ---
 
 ```{r, include = FALSE}
@@ -15,78 +19,245 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, message=FALSE}
-library(magrittr)
-library(purrr)
+library(tidyverse)
 library(psi)
 ```
 
-In this article, we discuss the exactness property of permutation tests, which is closely related to how $p$-values are estimated from the permutations.
+In this article, we discuss the exactness property of permutation tests,
+which is closely related to how $p$-values are retrieved from the
+permutations. This article is a summary of the paper by @phipson2010.
 
-## Exactness of a test
+## Traditional formulation of a statistical test
 
-When you want to perform an hypothesis test, you first need to specify the **null hypothesis** $H_0$ you are testing and the **alternative hypothesis** $H_a$ you are testing against. Next, you need to define a **statistic** $T$ that fulfills the following properties:
+A statistical test aims at determining whether some observed data can be
+considered to be strong evidence in favor of a so-called *alternative*
+hypothesis $H_a$ compared to a so-called *null* hypothesis $H_0$. To do
+that, a test statistic $T$ is defined such that:
 
-- you can compute its observed value under the null hypothesis once you observed some data;
-- large values of the statistic are evidence in favor of the alternative hypothesis;
-- you know (an approximation of) the distribution of $T$ under the null hypothesis, also known as the **null distribution**.
+-   its observed value under $H_0$ can be computed once you observed
+    some data;
+-   large values of the statistic are evidence in favor of $H_a$.
+-   you know (an approximation of) the distribution of $T$ under the
+    null hypothesis, also known as the **null distribution**.
 
-Finally, you specify a significance level $\alpha$ which controls the probability of making type I errors:
-$$  \mathbb{P} \left( \mbox{Type I errors} \right) = \mathbb{P} \left( \mbox{Reject } H_0 \mbox{ while it was true} \right) = \alpha. $$
-This control is exact (i.e. the equality holds) if you know the null distribution. When you estimate it, as it is done in resampling-based testing procedures, you are not guaranteed to get this control.
+Once such a test statistic is available and we observe some data, we can
+denote by $t_\mathrm{obs}$ the value of the test statistic computed from
+the observed data and define the so-called **p-value** as the null
+hypothesis tail probability:
+$$ p_\infty = \mathbb{P}_{H_0} \left( T \ge t_\mathrm{obs} \right). $$
+The p-value $p_\infty$ is by definition uniformly distributed on $(0,1)$
+under the null hypothesis. Hence, we can define the so-called
+**significance level** $\alpha \in (0,1)$ and decide to reject $H_0$ in
+favor of $H_1$ when $p_\infty \le \alpha$. By doing this, the
+probability of wrongly rejecting $H_0$, also known as the probability of
+type I errors, is simply:
+$$ \mathbb{P}_{H_0} \left( p_\infty \le \alpha \right) = \alpha. $$ The
+significance level $\alpha$ therefore matches by design the probability
+of type I errors, which means that choosing $\alpha$ allows to control
+the probability of type I errors. We say that the test is **exact**.
 
-Permutation tests use permutations of the data to estimate the null distribution and therefore access an estimate of the $p$-value. There are several ways of estimating $p$-values from a permutation scheme. In this article, we first review the traditional approach to permutation testing and show that it does not lead to an exact testing procedure. Next, we demonstrate that we can make the permutation test exact by estimating the $p$-value in a different fashion.
+When the null distribution of $T$ is not known, you do not have access
+to $p_\infty$. A possible solution is then to resort to resampling
+techniques to approach the null hypothesis. Once you get an approximate
+null distribution, the question is how do you compute a p-value that
+provides an exact statistical test. There are two approaches to this
+problem: the first estimates the true p-value $p_\infty$ from the
+approximate null distribution while the second proposes an alternative
+definition of the p-value that can be straightforwardly computed. Let us
+expand on both approaches.
 
-## Monte-Carlo estimator of the p-value
+## The two-sample problem in a permutational framework
 
-Let us state again the two-sample testing problem for the sake of clarity.
-
-We start with two samples $X_1, \dots, X_{n_x} \stackrel{iid}{\sim} \mathcal{D}(\theta_x)$ and $Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim} \mathcal{D}(\theta_y)$. We want to know whether the two distributions are the same or not on the basis of the two samples we collected. In this parametric setting, it boils down to testing the following hypotheses:
+We start with two samples
+$X_1, \dots, X_{n_x} \stackrel{iid}{\sim} \mathcal{D}(\theta_x)$ and
+$Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim} \mathcal{D}(\theta_y)$. We
+want to know whether the two distributions are the same or not on the
+basis of the two samples we collected. In this parametric setting, it
+boils down to testing the following hypotheses:
 $$ H_0: \theta_x = \theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. $$
-Let $T$ be a statistic that depends on the two samples which is suited for elucidating this test, i.e.:
+Let $T$ be a statistic that depends on the two samples which is suited
+for elucidating this test, i.e.:
 
-- you can compute its observed value under the null hypothesis once you observed some data;
-- large values of the statistic are evidence in favor of the alternative hypothesis.
+-   you can compute its observed value under the null hypothesis once
+    you observed some data;
+-   large values of the statistic are evidence in favor of the
+    alternative hypothesis.
 
-Now, for performing the test, one should also know (an approximation of) the distribution of $T$ under the null hypothesis, also known as the **null distribution**, from which the p-value associated to this test can be computed for instance.
+Now, for performing the test, one should also know (an approximation of)
+the distribution of $T$ under the null hypothesis, also known as the
+**null distribution**, from which the p-value associated to this test
+can be computed for instance.
 
-If one knows the exact null distribution, then there is no need to resort to permutations. However, if the null distribution is not known, permutations come in handy for approaching it. 
+If one knows the exact null distribution, then there is no need to
+resort to permutations. However, if the null distribution is not known,
+permutations come in handy for approaching it.
 
-The idea is that, under the null hypothesis, the two samples come from the same distribution. Hence, we can pull them together as one big sample of size $n = n_x + n_y$ generated by that common distribution. At this point, we can split the pooled sample into two random subsets of size $n_x$ and $n_y$ respectively, and use them to compute a value of the statistic $T$. If we repeat many times this splitting strategy, say $B$ times, we end up with $B$ values of the statistic from which we can compute the empirical distribution, known as the **permutation distribution**, which approaches the null distribution.
+The idea is that, under the null hypothesis, the two samples come from
+the same distribution. Hence, we can pull them together as one big
+sample of size $n = n_x + n_y$ generated by that common distribution. At
+this point, we can split the pooled sample into two random subsets of
+size $n_x$ and $n_y$ respectively, and use them to compute a value of
+the statistic $T$. If we repeat many times this splitting strategy, say
+$m$ times, we end up with $m$ values of the statistic from which we can
+compute the empirical distribution, known as the **permutation
+distribution**, which approaches the null distribution.
 
-Following this description, if we denote $t_\mathrm{obs}$ the value of the statistic computed from the original two samples and $t_b^\star$ the value of the statistic computed from the two samples generated at the $b$-*th* split of the pooled sample, we deduce that an estimate of the p-value can be obtained by:
-$$ \widehat{p}_\mathrm{MC} = \frac{1}{B} \sum_{b=1}^B \mathbb{I}_{[t_\mathrm{obs},+\infty)}(t_b^\star). $$
+## Permutation p-value as an unbiased estimator of $p_\infty$
 
-However, when one uses this estimator of the p-value for the purpose of hypothesis testing, the resulting test is not exact. Let us provide some empirical evidence by running simulations. In **psi**, you perform a permutation test using this estimator of the p-value by setting the optional argument `test` to `"approximate"`.
+Let $t_\mathrm{obs}$ be the value of the statistic computed from the
+original two samples, $m$ be the number of permutations used to approach
+the null distribution and $B$ be a random variable that counts the
+number of test statistic values greater than or equal to
+$t_\mathrm{obs}$.
+
+By definition, the random variable $B$ follows a binomial distribution
+of size $m$ and rate of success $p_\infty$. Hence, we can define the
+following **unbiased estimator** of $p_\infty$:
+$$ \widehat{p_\infty} = \frac{B}{m}. $$
+
+However, when one uses this estimator of the p-value for the purpose of
+hypothesis testing, the resulting test is not exact. Let us investigate
+why.
+
+First, remember that the true p-value $p_\infty$ is a random variable
+itself, in the sense that its value changes as soon as $t_\mathrm{obs}$
+changes i.e. each time the whole experiment is reconducted. Hence, the
+probability of wrongly rejecting the null hypothesis using
+$\widehat{p_\infty}$ reads:
+$$ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \int_\mathbb{R} \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) f_{p_\infty}(p) dp = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) dp, $$
+because $p_\infty$ is uniformly distributed on $(0,1)$ under the null
+hypothesis.
+
+Next, notice that $\widehat{p_\infty}$ can only take on a finite set of
+values
+$\left\{ 0, \frac{1}{m}, \frac{2}{m}, \dots, \frac{m-1}{m}, 1 \right\}$.
+Hence, we have for any $b \in 0, 1, \dots, m$:
+$$ \mathbb{P} \left( \widehat{p_\infty} = \frac{b}{m} \right) = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} = \left. \frac{b}{m} \right| p \right) dp = \int_0^1 \binom{m}{b} p^b (1-p)^{m-b} dp = \frac{1}{m + 1}. $$
+
+We can therefore deduce that:
+$$ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \frac{\lfloor m \alpha \rfloor + 1}{m + 1} \neq \alpha. $$
+
+The following R code shows graphically that this does not provide an
+exact test:
+
+```{r fig.width=6, out.width="100%"}
+alpha <- seq(0.01, 0.1, by = 0.01)
+m <- c(10, 100, 1000)
+p1 <- crossing(alpha, m) %>% 
+  mutate(
+    p = (floor(m * alpha) + 1) / (m + 1), 
+    mf = paste("m =", m)
+  ) %>% 
+  ggplot(aes(alpha, p, color = mf)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = 0, slope = 1)) + 
+  labs(
+    x = "Significance level",
+    y = "Probability of wrongly rejecting H0"
+  ) + 
+  facet_wrap(vars(mf)) + 
+  scale_color_viridis_d() + 
+  scale_y_continuous(limits = c(0, 0.1)) + 
+  coord_equal() + 
+  theme_bw()
+p1 %>% 
+  plotly::ggplotly() %>% 
+  plotly::hide_legend()
+```
+
+## Permutation p-value as the tail probability of a resampling distribution
+
+An alternative strategy is to define the p-value by looking at the
+random variable $B$ instead of the test statistic $T$. While the p-value
+is the tail probability of the null distribution, in the context of
+randomization tests, we can define it as the tail probability of the
+distribution of $B$. Given a fixed number $m$ of sampled permutations,
+recall that the random variable $B$ counts the number of test statistic
+values larger than or equal to $t_\mathrm{obs}$. Hence, an alternative
+equivalent definition of the p-value is given by the so-called **exact
+permutation p-value**:
+$$ p_e = \mathbb{P}_{H_0} \left( B \le b \right), $$ where $b$ is the
+observed number of test statistics larger than or equal to
+$t_\mathrm{obs}$ (using the observed sample of permutations that was
+drawn).
+
+Let $B_t$ be a random variable that counts the total number of possible
+distinct test statistic values exceeding tobs and recall that $m_t$ is
+the total number of possible distinct permutations. We denote by
+$$ p_t = \frac{B_t + 1}{m_t + 1}, $$ the permutation p-value when the
+exhaustive list of all permutations is used.
+
+As we have seen before, it is straightforward to show that $B_t$ follows
+a discrete uniform distribution on the integers $0, \dots, m_t$ and
+that, conditional on $B_t = b_t$, the random variable $B$ follows a
+binomial distribution of size $m$ and rate of success $p_t$. We can thus
+write:
+$$ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), $$
+where $F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)$ is the
+cumulative probability function of the binomial distribution of size $m$
+and probability of success $\frac{b_t + 1}{m_t + 1}$.
+
+This estimator can be computationally intense to compute for large
+values of $m_t$, in which case one might use the following integral
+approximation:
+$$ p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t. $$
+
+## Comparison by empirical evidence
+
+In **psi**, you perform a permutation test using the estimator
+$\widehat{p_\infty}$ of the p-value $p_\infty$ by setting
+`test == "approximate"`. This provides a non-exact test but an unbiased
+estimate of $p_\infty$. You perform a permutation test using the
+permutation p-value $p_e$ by setting `test == "exact"`. This provides an
+exact test.
+
+The following R code runs simulations to empirically estimate the
+probability of wrongly rejecting the null hypothesis. The generative
+model for both samples is the standard normal distribution. Sample sizes
+are set to $n_1 = n_2 = 10$. We draw $100$ permutations for each test.
 
 ```{r power-simulation}
 alpha <- 0.05
-B <- 100
-set.seed(1234)
-1:B %>% 
-  map_lgl(~ {
+R <- params$R
+set.seed(params$seed)
+1:R %>% 
+  map(~ {
     x <- rnorm(n = 10, mean = 0, sd = 1)
     y <- rnorm(n = 10, mean = 0, sd = 1)
-    test_hotelling <- two_sample_test(
+    test_exact <- two_sample_test(
       x = x, 
       y = y, 
       statistic = stat_hotelling, 
-      test = "exact"
+      test = "exact", 
+      B = 100
     )
-    test_hotelling$pvalue < alpha
-  }) %>% 
-  mean()
-set.seed(1234)
-1:B %>% 
-  map_lgl(~ {
-    x <- rnorm(n = 10, mean = 0, sd = 1)
-    y <- rnorm(n = 10, mean = 0, sd = 1)
-    test_hotelling <- two_sample_test(
+    test_approx <- two_sample_test(
       x = x, 
       y = y, 
       statistic = stat_hotelling, 
-      test = "approximate"
+      test = "approximate", 
+      B = 100
     )
-    test_hotelling$pvalue < alpha
+    c(
+      approx = (test_approx$pvalue <= alpha), 
+      exact = (test_exact$pvalue <= alpha)
+    )
   }) %>% 
-  mean()
+  transpose() %>% 
+  simplify_all() %>% 
+  map(mean)
 ```
+
+Note that we only ran $R=1000$ simulations to estimate the probability
+of wrongly rejecting $H_0$. Hence, we encourage readers to download the
+`Rmd` file for this article and try increasing the `R` argument in the
+`params` list of the YAML header.
+
+This simulation confirms the theoretical value of the probability of
+wrongly rejecting the null hypothesis for the *approximate* case. It
+also provides numerical evidence that using the permutation p-value
+$p_e$ provides an exact test. This is by design since $p_e$ is a genuine
+probability hence it is uniformly distributed on $(0,1)$ under the null
+hypothesis.
+
+## References
