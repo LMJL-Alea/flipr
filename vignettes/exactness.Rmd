@@ -11,14 +11,11 @@ params:
   seed: 12345
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup, message=FALSE}
 library(tidyverse)
 library(psi)
 ```
