@@ -124,7 +124,7 @@
   B <span class="op">=</span> <span class="fl">10000</span>
 <span class="op">)</span>
 <span class="va">test_t2</span><span class="op">$</span><span class="va">pvalue</span>
-<span class="co">#&gt; [1] 9.472133e-05</span></code></pre></div>
+<span class="co">#&gt; [1] 0.0001945701</span></code></pre></div>
 <p>We can compare the resulting p-value with the one obtained using the more classic parametric test:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_student</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x1</span>, y <span class="op">=</span> <span class="va">x2</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>

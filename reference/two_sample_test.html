@@ -139,6 +139,7 @@ separate generative probability distributions.</p>
   statistic <span class='op'>=</span> <span class='va'>stat_hotelling</span>,
   B <span class='op'>=</span> <span class='fl'>1000L</span>,
   test <span class='op'>=</span> <span class='st'>"exact"</span>,
+  combining_function <span class='op'>=</span> <span class='st'>"tippett"</span>,
   seed <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -171,6 +172,13 @@ be structured for compatibility with the PSI framwork. Default is
       <td><p>A string specifying if performing an exact test through the use
 of Phipson-Smyth estimate of the p-value or an approximate test through a
 Monte-Carlo estimate of the p-value. Default is <code>"exact"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>combining_function</th>
+      <td><p>A string specifying the combining function to be
+used to compute the single test statistic value from the set of p-value
+estimates obtained during the non-parametric combination testing procedure.
+Default is <code>"tippett"</code>, which picks Tippett's function.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -220,7 +228,7 @@ the indices in <code>data</code> that are considered to belong to the first samp
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
 <span class='va'>t2</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 <span class='va'>t2</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0.3416529</div></pre>
+</div><div class='output co'>#&gt; [1] 0.399595</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
