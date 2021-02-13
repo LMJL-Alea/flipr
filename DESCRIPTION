@@ -1,5 +1,5 @@
-Package: psi
-Title: Permutations for Statistical Inference
+Package: flipr
+Title: Flexible Inference via Permutations in R
 Version: 0.1.0
 Authors@R: c(
     person(given = "Alessia", 
@@ -16,7 +16,7 @@ Authors@R: c(
            role = "aut", 
            email = "simone.vantini@polimi.it"))
 Description: A flexible permutation framework for hypothesis 
-  testing, ANOVA and regression anlaysis of complex data.
+  testing, ANOVA and regression analysis of complex data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -34,3 +34,5 @@ Suggests:
     plotly,
     widgetframe
 VignetteBuilder: knitr
+URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
+BugReports: https://github.com/astamm/flipr/issues/

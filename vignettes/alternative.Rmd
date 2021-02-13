@@ -15,8 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(psi)
+```{r setup, include=FALSE}
+library(flipr)
 ```
 
 In this article, we discuss a key difference between the traditional
@@ -98,7 +98,7 @@ same scale even though they might look at very different features of the
 distributions. They can therefore be combined in various ways to provide
 a single test statistic value to be used in the testing procedure. There
 are several possible **combining functions** to do this fusion of
-p-values. The package **psi** currently implements:
+p-values. The package **flipr** currently implements:
 
 -   Tippett's combining function:
     $\mathrm{Tippett}(p_1, …, p_L) = 1 - \min_{\ell \in 1, \dots, L} p_\ell$;
