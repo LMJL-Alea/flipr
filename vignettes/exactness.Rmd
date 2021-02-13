@@ -159,7 +159,8 @@ p1 <- crossing(alpha, m) %>%
   theme_bw()
 p1 %>% 
   plotly::ggplotly() %>% 
-  plotly::hide_legend()
+  plotly::hide_legend() %>% 
+  widgetframe::frameableWidget()
 ```
 
 ## Permutation p-value as the tail probability of a resampling distribution

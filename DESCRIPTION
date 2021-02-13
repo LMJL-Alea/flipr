@@ -31,5 +31,6 @@ Suggests:
     knitr,
     covr,
     tidyverse,
-    plotly
+    plotly,
+    widgetframe
 VignetteBuilder: knitr
