@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The alternative hypothesis in permutation testing • psi</title>
+<title>The alternative hypothesis in permutation testing • flipr</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="The alternative hypothesis in permutation testing">
-<meta property="og:description" content="psi">
+<meta property="og:description" content="flipr">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -37,7 +37,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">psi</a>
+        <a class="navbar-link" href="../index.html">flipr</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -72,7 +72,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/astamm/flipr/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -88,15 +95,13 @@
       <h1 data-toc-skip>The alternative hypothesis in permutation testing</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/astamm/flipr/blob/master/vignettes/alternative.Rmd"><code>vignettes/alternative.Rmd</code></a></small>
       <div class="hidden name"><code>alternative.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psi</span><span class="op">)</span></code></pre></div>
 <p>In this article, we discuss a key difference between the traditional framework for null hypothesis significance testing (NHST) and the permutation framework for NHST. This critical difference lies at the root of the framework in the specification of the null and alternative hypothesis. First, we review the traditional approach to NHST. Second we explain how the use of the permutation framework requires particular care when formulating the null and alternative hypotheses. Finally, we will discuss an approach proposed by <span class="citation">Pesarin and Salmaso (2010)</span>, coined <strong>Non-Parametric Combination</strong> (NPC), which allows one to combine several test statistics into a single test.</p>
 <div id="traditional-nhst" class="section level2">
 <h2 class="hasAnchor">
@@ -121,7 +126,7 @@ H_0: \mu_\mathrm{treatment} \ge \mu_\mathrm{placebo} \quad \mbox{against} \quad 
 <div id="non-parametric-combination" class="section level2">
 <h2 class="hasAnchor">
 <a href="#non-parametric-combination" class="anchor"></a>Non-Parametric Combination</h2>
-<p>Once you have your sample of <span class="math inline">\(m\)</span> permutations out the <span class="math inline">\(m_t\)</span> possible ones, you can in fact compute the values of as many test statistics <span class="math inline">\(T^{(1)}, \dots, T^{(L)}\)</span> as you want. At this point, you might want to use the unbiased estimator <span class="math inline">\(\widehat{p_\infty}^{(\ell)} = \frac{B^{(\ell)}}{m}\)</span> of the p-value <span class="math inline">\(p_\infty^{(\ell)} = \mathbb{P} \left( T^{(\ell)} \ge t_\mathrm{obs}^{(\ell)} \right)\)</span> for each test statistic to produce <span class="math inline">\(L\)</span> p-value estimates, each one targeting a different aspect of the distributions under investigation. Since this evidence has been summarized by p-values, they are all on the same scale even though they might look at very different features of the distributions. They can therefore be combined in various ways to provide a single test statistic value to be used in the testing procedure. There are several possible <strong>combining functions</strong> to do this fusion of p-values. The package <strong>psi</strong> currently implements:</p>
+<p>Once you have your sample of <span class="math inline">\(m\)</span> permutations out the <span class="math inline">\(m_t\)</span> possible ones, you can in fact compute the values of as many test statistics <span class="math inline">\(T^{(1)}, \dots, T^{(L)}\)</span> as you want. At this point, you might want to use the unbiased estimator <span class="math inline">\(\widehat{p_\infty}^{(\ell)} = \frac{B^{(\ell)}}{m}\)</span> of the p-value <span class="math inline">\(p_\infty^{(\ell)} = \mathbb{P} \left( T^{(\ell)} \ge t_\mathrm{obs}^{(\ell)} \right)\)</span> for each test statistic to produce <span class="math inline">\(L\)</span> p-value estimates, each one targeting a different aspect of the distributions under investigation. Since this evidence has been summarized by p-values, they are all on the same scale even though they might look at very different features of the distributions. They can therefore be combined in various ways to provide a single test statistic value to be used in the testing procedure. There are several possible <strong>combining functions</strong> to do this fusion of p-values. The package <strong>flipr</strong> currently implements:</p>
 <ul>
 <li>Tippett’s combining function: <span class="math inline">\(\mathrm{Tippett}(p_1, …, p_L) = 1 - \min_{\ell \in 1, \dots, L} p_\ell\)</span>; and,</li>
 <li>Fisher’s combining function: <span class="math inline">\(\mathrm{Fisher}(p_1, …, p_L) = -2 \sum_{\ell=1}^L \log p_\ell\)</span>.</li>
