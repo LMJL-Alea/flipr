@@ -41,14 +41,14 @@ Once such a test statistic is available and we observe some data, we can
 denote by $t_\mathrm{obs}$ the value of the test statistic computed from
 the observed data and define the so-called **p-value** as the null
 hypothesis tail probability:
-$$ p_\infty = \mathbb{P}_{H_0} \left( T \ge t_\mathrm{obs} \right). $$
-The p-value $p_\infty$ is by definition uniformly distributed on $(0,1)$
+$$ p_\infty = \mathbb{P}_{H_0} \left( T \ge t_\mathrm{obs} \right). $$The
+p-value $p_\infty$ is by definition uniformly distributed on $(0,1)$
 under the null hypothesis. Hence, we can define the so-called
 **significance level** $\alpha \in (0,1)$ and decide to reject $H_0$ in
 favor of $H_1$ when $p_\infty \le \alpha$. By doing this, the
 probability of wrongly rejecting $H_0$, also known as the probability of
 type I errors, is simply:
-$$ \mathbb{P}_{H_0} \left( p_\infty \le \alpha \right) = \alpha. $$ The
+$$ \mathbb{P}_{H_0} \left( p_\infty \le \alpha \right) = \alpha. $$The
 significance level $\alpha$ therefore matches by design the probability
 of type I errors, which means that choosing $\alpha$ allows to control
 the probability of type I errors. We say that the test is **exact**.
@@ -71,9 +71,9 @@ $Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim} \mathcal{D}(\theta_y)$. We
 want to know whether the two distributions are the same or not on the
 basis of the two samples we collected. In this parametric setting, it
 boils down to testing the following hypotheses:
-$$ H_0: \theta_x = \theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. $$
-Let $T$ be a statistic that depends on the two samples which is suited
-for elucidating this test, i.e.:
+$$ H_0: \theta_x = \theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. $$Let
+$T$ be a statistic that depends on the two samples which is suited for
+elucidating this test, i.e.:
 
 -   you can compute its observed value under the null hypothesis once
     you observed some data;
@@ -121,8 +121,8 @@ itself, in the sense that its value changes as soon as $t_\mathrm{obs}$
 changes i.e. each time the whole experiment is reconducted. Hence, the
 probability of wrongly rejecting the null hypothesis using
 $\widehat{p_\infty}$ reads:
-$$ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \int_\mathbb{R} \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) f_{p_\infty}(p) dp = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) dp, $$
-because $p_\infty$ is uniformly distributed on $(0,1)$ under the null
+$$ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \int_\mathbb{R} \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) f_{p_\infty}(p) dp = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) dp, $$because
+$p_\infty$ is uniformly distributed on $(0,1)$ under the null
 hypothesis.
 
 Next, notice that $\widehat{p_\infty}$ can only take on a finite set of
@@ -134,8 +134,8 @@ $$ \mathbb{P} \left( \widehat{p_\infty} = \frac{b}{m} \right) = \int_0^1 \mathbb
 We can therefore deduce that:
 $$ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \frac{\lfloor m \alpha \rfloor + 1}{m + 1} \neq \alpha. $$
 
-The following R code shows graphically that this does not provide an
-exact test:
+The following R code shows graphically that using $\widehat{p_\infty}$
+as p-value does not provide an exact test:
 
 ```{r fig.width=6, out.width="100%"}
 alpha <- seq(0.01, 0.1, by = 0.01)
@@ -157,10 +157,18 @@ p1 <- crossing(alpha, m) %>%
   scale_y_continuous(limits = c(0, 0.1)) + 
   coord_equal() + 
   theme_bw()
-p1 %>% 
+fig <- p1 %>% 
   plotly::ggplotly() %>% 
-  plotly::hide_legend() %>% 
-  widgetframe::frameableWidget()
+  plotly::hide_legend()
+htmlwidgets::saveWidget(fig, "plotly-fig.html")
+htmltools::tags$iframe(
+  src = "plotly-fig.html",
+  scrolling = "no", 
+  seamless = "seamless",
+  frameBorder = "0",
+  width = "100%", 
+  height = 400
+)
 ```
 
 ## Permutation p-value as the tail probability of a resampling distribution
@@ -174,7 +182,7 @@ recall that the random variable $B$ counts the number of test statistic
 values larger than or equal to $t_\mathrm{obs}$. Hence, an alternative
 equivalent definition of the p-value is given by the so-called **exact
 permutation p-value**:
-$$ p_e = \mathbb{P}_{H_0} \left( B \le b \right), $$ where $b$ is the
+$$ p_e = \mathbb{P}_{H_0} \left( B \le b \right), $$where $b$ is the
 observed number of test statistics larger than or equal to
 $t_\mathrm{obs}$ (using the observed sample of permutations that was
 drawn).
@@ -182,7 +190,7 @@ drawn).
 Let $B_t$ be a random variable that counts the total number of possible
 distinct test statistic values exceeding tobs and recall that $m_t$ is
 the total number of possible distinct permutations. We denote by
-$$ p_t = \frac{B_t + 1}{m_t + 1}, $$ the permutation p-value when the
+$$ p_t = \frac{B_t + 1}{m_t + 1}, $$the permutation p-value when the
 exhaustive list of all permutations is used.
 
 As we have seen before, it is straightforward to show that $B_t$ follows
@@ -190,10 +198,10 @@ a discrete uniform distribution on the integers $0, \dots, m_t$ and
 that, conditional on $B_t = b_t$, the random variable $B$ follows a
 binomial distribution of size $m$ and rate of success $p_t$. We can thus
 write:
-$$ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), $$
-where $F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)$ is the
-cumulative probability function of the binomial distribution of size $m$
-and probability of success $\frac{b_t + 1}{m_t + 1}$.
+$$ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), $$where
+$F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)$ is the cumulative
+probability function of the binomial distribution of size $m$ and
+probability of success $\frac{b_t + 1}{m_t + 1}$.
 
 This estimator can be computationally intense to compute for large
 values of $m_t$, in which case one might use the following integral
