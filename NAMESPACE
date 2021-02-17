@@ -2,5 +2,7 @@
 
 export("%>%")
 export(stat_hotelling)
+export(stat_mean)
+export(stat_t)
 export(two_sample_test)
 importFrom(magrittr,"%>%")
