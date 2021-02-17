@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -161,7 +161,11 @@
 <span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">%&gt;%</span> 
   <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/hide_legend.html">hide_legend</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span><span class="va">fig</span>, <span class="st">"plotly-fig.html"</span><span class="op">)</span>
+<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
+  widget <span class="op">=</span> <span class="va">fig</span>, 
+  file <span class="op">=</span> <span class="st">"plotly-fig.html"</span>, 
+  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
+<span class="op">)</span>
 <span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
   src <span class="op">=</span> <span class="st">"plotly-fig.html"</span>,
   scrolling <span class="op">=</span> <span class="st">"no"</span>, 
@@ -187,8 +191,8 @@
 <p>The following R code runs simulations to empirically estimate the probability of wrongly rejecting the null hypothesis. The generative model for both samples is the standard normal distribution. Sample sizes are set to <span class="math inline">\(n_1 = n_2 = 10\)</span>. We draw <span class="math inline">\(100\)</span> permutations for each test.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
-<span class="va">R</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">R</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">seed</span><span class="op">)</span>
+<span class="va">R</span> <span class="op">&lt;-</span> <span class="fl">1000</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
 <span class="fl">1</span><span class="op">:</span><span class="va">R</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
     <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
