@@ -8,13 +8,7 @@
   - Windows Server 2008 R2 SP1, R-devel, 32/64 bit
   - Ubuntu Linux 20.04.1 LTS, R-release, GCC
   - Fedora Linux, R-devel, clang, gfortran
+  - Oracle Solaris 10, x86, 32 bit, R-release
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
-
-There was 1 NOTE:
-
-    * checking CRAN incoming feasibility ... NOTE
-    Maintainer: 'Aymeric Stamm <aymeric.stamm@math.cnrs.fr>'
-
-    New submission
+There were no ERRORs, WARNINGs or NOTEs.
