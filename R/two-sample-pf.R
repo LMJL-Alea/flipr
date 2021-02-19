@@ -2,9 +2,10 @@
 #'
 #' This function calculates the permutation p-value function for two-sample
 #' problems. This is done through the specification of a set of null hypotheses
-#' of the form $F_X = F_{g(Y)}$ where $g$ is a user-supplied function.
+#' of the form $F_X = F_{g_\theta(Y)}$ where $g_\theta$ is a user-supplied function.
 #'
-#' @param null_specification A function such that `F_X = F_{null_specification(Y)}`.
+#' @param null_specification A function such that `F_X =
+#'   F_{null_specification(Y)}` under the null hypothesis.
 #' @inheritParams two_sample_test
 #' @param alternative A string specifying whether the p-value is right-tailed,
 #'   left-tailed or two-tailed. Choices are `"right_tail"`, `"left_tail"` and

@@ -129,9 +129,11 @@ two_sample_test <- function(x, y,
       purrr::map_dbl(combine_pvalues, combine_with = combine_with)
   }
 
+  altern <- if (npc) "right_tail" else alternative
+
   list(
     statistic = Tp[1],
-    pvalue = stats2pvalue(1, Tp, B, M, type = type, alternative = alternative),
+    pvalue = stats2pvalue(1, Tp, B, M, type = type, alternative = altern),
     permuted_statistics = Tp[-1]
   )
 }

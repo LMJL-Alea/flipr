@@ -17,7 +17,7 @@ two_sample_pf(
 )
 }
 \arguments{
-\item{null_specification}{A function such that \verb{F_X = F_\{null_specification(Y)\}}.}
+\item{null_specification}{A function such that \verb{F_X = F_\{null_specification(Y)\}} under the null hypothesis.}
 
 \item{x}{A list or matrix representing the 1st sample.}
 
@@ -57,7 +57,7 @@ null hypothesis specified through the first argument.
 \description{
 This function calculates the permutation p-value function for two-sample
 problems. This is done through the specification of a set of null hypotheses
-of the form $F_X = F_{g(Y)}$ where $g$ is a user-supplied function.
+of the form $F_X = F_{g_\theta(Y)}$ where $g_\theta$ is a user-supplied function.
 }
 \examples{
 x1 <- rnorm(10)

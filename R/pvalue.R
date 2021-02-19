@@ -3,19 +3,16 @@ stats2pvalue <- function(i, Tp, B, M, type = "exact", alternative = "right_tail"
   type <- match.arg(type, available_types)
   available_alternatives <- c("left_tail", "right_tail", "two_tail")
   alternative <- match.arg(alternative, available_alternatives)
+  T0 <- Tp[i]
   b <- switch (alternative,
     right_tail = {
-      T0 <- Tp[i]
       sum(Tp >= T0) - 1
     },
     left_tail = {
-      T0 <- Tp[i]
       sum(Tp <= T0) - 1
     },
     two_tail = {
-      Tp <- abs(Tp)
-      T0 <- Tp[i]
-      sum(Tp >= T0) - 1
+      2 * min(sum(Tp >= T0), sum(Tp <= T0)) - 1
     }
   )
   if (type == "approximate") return(b / B)
