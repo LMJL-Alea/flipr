@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Calculating p-value functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -17,17 +18,31 @@ knitr::opts_chunk$set(
 ```{r setup, message=FALSE}
 library(tidyverse)
 library(flipr)
+grid_size <- 10
+B <- 1000
 ```
 
-```{r fig.width=6, out.width="100%"}
-x1 <- rnorm(10)
-x2 <- rnorm(10, 3)
+The concept of $p$-value functions pertains to assessing the $p$-value
+of a set of null hypotheses and to plot this $p$-value surface on the
+domain defined by the set of null hypotheses. The idea behind is that if
+such a $p$-value function is available, you can deduce from it point
+estimates or confidence interval estimates for parameters used to define
+the nulls or extract a single $p$-value for a specific null of interest
+[@martin2017; @fraser2019; @infanger2019]. In particular, there is
+another **R** package dedicated to $p$-value functions called
+[**pvaluefunctions**](https://cran.r-project.org/web/packages/pvaluefunctions/index.html).
 
-grid_size <- 100
-B <- 100
+## P-value function for the mean
+
+```{r fig.width=6, out.width="100%"}
+x1 <- rnorm(10, mean = 0)
+x2 <- rnorm(10, mean = 3)
+test_param <- stats::t.test(x2, x1, var.equal = TRUE)
+delta_min <- test_param$conf.int[1] - 1
+delta_max <- test_param$conf.int[2] + 1
 
 data_t <- tibble(
-  delta = seq(0, 6, length.out = grid_size),
+  delta = seq(delta_min, delta_max, length.out = grid_size),
   null_spec = map(delta, ~ function(y) {y - .x}),
   two_tail = map_dbl(
     .x = null_spec,
@@ -67,7 +82,7 @@ data_t %>%
   ggplot(aes(delta, value, color = name)) +
   geom_line() +
   labs(
-    title = "P-value function for the mean difference", 
+    title = "P-value function for the mean", 
     subtitle = "t-statistic", 
     x = expression(delta), 
     y = "p-value", 
@@ -83,9 +98,120 @@ data_t %>%
     color = "black"
   ) +
   geom_vline(
-    xintercept = stats::t.test(x2, x1, var.equal = TRUE)$conf.int,
+    xintercept = test_param$conf.int,
     color = "black",
     linetype = "dashed"
   ) +
   scale_y_continuous(breaks = seq(0, 1, by = 0.05), limits = c(0, 1))
+```
+
+## P-value function for the variance
+
+```{r fig.width=6, out.width="100%"}
+x1 <- rnorm(10, sd = 1)
+x2 <- rnorm(10, sd = 2)
+test_param <- stats::var.test(x2, x1)
+rho_min <- 1e-3# sqrt(test_param$conf.int[1]) * 0.8
+rho_max <- sqrt(test_param$conf.int[2]) * 1.2
+
+data_f <- tibble(
+  rho = seq(rho_min, rho_max, length.out = grid_size),
+  null_spec = map(rho, ~ function(y) {y / .x}),
+  two_tail = map_dbl(
+    .x = null_spec,
+    .f = two_sample_pf,
+    x = x1,
+    y = x2,
+    statistic = stat_f,
+    seed = 1234,
+    B = B,
+    alternative = "two_tail"
+  ),
+  left_tail = map_dbl(
+    .x = null_spec,
+    .f = two_sample_pf,
+    x = x1,
+    y = x2,
+    statistic = stat_f,
+    seed = 1234,
+    B = B,
+    alternative = "left_tail"
+  ),
+  right_tail = map_dbl(
+    .x = null_spec,
+    .f = two_sample_pf,
+    x = x1,
+    y = x2,
+    statistic = stat_f,
+    seed = 1234,
+    B = B,
+    alternative = "right_tail"
+  )
+) %>%
+  select(-null_spec) %>%
+  pivot_longer(-rho)
+
+data_f %>%
+  ggplot(aes(rho, value, color = name)) +
+  geom_line() +
+  labs(
+    title = "P-value function for the standard deviation", 
+    subtitle = "F-statistic", 
+    x = expression(rho), 
+    y = "p-value", 
+    color = "Type"
+  ) +
+  geom_hline(
+    yintercept = 0.05,
+    color = "black",
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = sqrt(test_param$statistic),
+    color = "black"
+  ) +
+  geom_vline(
+    xintercept = sqrt(test_param$conf.int),
+    color = "black",
+    linetype = "dashed"
+  ) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.05), limits = c(0, 1))
+```
+
+## P-value function for both mean and variance
+
+```{r fig.width=6, out.width="100%"}
+x1 <- rnorm(10, mean = 0, sd = 1)
+x2 <- rnorm(10, mean = 3, sd = 2)
+test_param_mean <- stats::t.test(x2, x1, var.equal = TRUE)
+test_param_var <- stats::var.test(x2, x1)
+delta_min <- test_param_mean$conf.int[1] - 1
+delta_max <- test_param_mean$conf.int[2] + 1
+rho_min <- 1e-3
+rho_max <- sqrt(test_param_var$conf.int[2]) * 1.2
+
+process <- function(delta, rho, x, y, B) {
+  map2_dbl(delta, rho, ~ {
+    null_spec <- function(y) {(y - .x) / .y}
+    two_sample_pf(
+      null_specification = null_spec, 
+      x = x, 
+      y = y, 
+      statistic = c("stat_t", "stat_f"), 
+      B = B, 
+      seed = 1234, 
+      alternative = "two_tail"
+    )
+  })
+}
+
+process_cmp <- compiler::cmpfun(process)
+
+delta_grid <- seq(delta_min, delta_max, length.out = grid_size)
+rho_grid <- seq(rho_min, rho_max, length.out = grid_size)
+pvalue <- outer(delta_grid, rho_grid, FUN = process_cmp, x = x1, y = x2, B = B)
+
+fig <- plotly::plot_ly(x = delta_grid, y = rho_grid, z = pvalue) %>%
+  plotly::add_surface()
+fig
 ```
