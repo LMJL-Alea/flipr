@@ -4,12 +4,15 @@
 \alias{test-statistic}
 \alias{stat_hotelling}
 \alias{stat_t}
+\alias{stat_f}
 \alias{stat_mean}
 \title{Hotelling's statistic for two-sample testing}
 \usage{
 stat_hotelling(data, indices, ...)
 
 stat_t(data, indices, ...)
+
+stat_f(data, indices, ...)
 
 stat_mean(data, indices, ...)
 }

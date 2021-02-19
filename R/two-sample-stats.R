@@ -65,6 +65,18 @@ stat_t <- function(data, indices, ...) {
 
 #' @rdname test-statistic
 #' @export
+stat_f <- function(data, indices, ...) {
+  n <- length(data)
+  n1 <- length(indices)
+  n2 <- n - n1
+  indices2 <- seq_len(n)[-indices]
+  x1 <- unlist(data[indices])
+  x2 <- unlist(data[indices2])
+  stats::var.test(x1, x2)$statistic
+}
+
+#' @rdname test-statistic
+#' @export
 stat_mean <- function(data, indices, ...) {
   n <- length(data)
   n1 <- length(indices)
