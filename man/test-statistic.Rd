@@ -6,7 +6,7 @@
 \alias{stat_t}
 \alias{stat_f}
 \alias{stat_mean}
-\title{Hotelling's statistic for two-sample testing}
+\title{Test Statistics for the Two-Sample Problem}
 \usage{
 stat_hotelling(data, indices, ...)
 

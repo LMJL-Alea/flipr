@@ -1,4 +1,4 @@
-#' Hotelling's statistic for two-sample testing
+#' Test Statistics for the Two-Sample Problem
 #'
 #' This function implements the original Hotelling's $T^2$ statistic which is
 #' defined for multivariate data when the number $n$ of observations is greater
