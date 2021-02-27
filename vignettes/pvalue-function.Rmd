@@ -18,8 +18,27 @@ knitr::opts_chunk$set(
 ```{r setup, message=FALSE}
 library(tidyverse)
 library(flipr)
-grid_size <- 10
+ngrid_in <- 20
+ngrid_out <- 100
 B <- 1000
+n1 <- 30
+n2 <- 30
+set.seed(1301)
+x1 <- rnorm(n1, mean = 0, sd = 1)
+x2 <- rnorm(n2, mean = 3, sd = 1)
+y1 <- rnorm(n1, mean = 0, sd = 1)
+y2 <- rnorm(n2, mean = 0, sd = 2)
+z1 <- rnorm(n1, mean = 0, sd = 1)
+z2 <- rnorm(n2, mean = 3, sd = 2)
+
+generate_grid <- function(center_value, min_value, max_value, n) {
+  stopifnot(center_value > min_value && center_value < max_value)
+  c(
+    seq(min_value, center_value, len = n / 2 + 1)[1:(n / 2)], 
+    center_value, 
+    seq(center_value, max_value, len = n / 2 + 1)[-1]
+  )
+}
 ```
 
 The concept of $p$-value functions pertains to assessing the $p$-value
@@ -35,47 +54,61 @@ another **R** package dedicated to $p$-value functions called
 ## P-value function for the mean
 
 ```{r fig.width=6, out.width="100%"}
-x1 <- rnorm(10, mean = 0)
-x2 <- rnorm(10, mean = 3)
 test_param <- stats::t.test(x2, x1, var.equal = TRUE)
 delta_min <- test_param$conf.int[1] - 1
 delta_max <- test_param$conf.int[2] + 1
 
-data_t <- tibble(
-  delta = seq(delta_min, delta_max, length.out = grid_size),
-  null_spec = map(delta, ~ function(y) {y - .x}),
-  two_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_t,
-    seed = 1234,
-    B = B,
+delta_pe <- mean(x2) - mean(x1)
+delta_pe
+delta_in <- generate_grid(delta_pe, delta_min, delta_max, ngrid_in)
+
+null_spec_mean <- function(y, parameters) {
+  delta <- parameters[1]
+  y - delta
+}
+
+df <- tibble(
+  delta = delta_in,
+  two_tail = two_sample_pf(
+    parameters = delta, 
+    null_specification = null_spec_mean, 
+    x = x1, 
+    y = x2, 
+    statistic = stat_t, 
+    B = B, 
+    seed = 1234, 
     alternative = "two_tail"
   ),
-  left_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_t,
-    seed = 1234,
-    B = B,
+  left_tail = two_sample_pf(
+    parameters = delta, 
+    null_specification = null_spec_mean, 
+    x = x1, 
+    y = x2, 
+    statistic = stat_t, 
+    B = B, 
+    seed = 1234, 
     alternative = "left_tail"
   ),
-  right_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_t,
-    seed = 1234,
-    B = B,
+  right_tail = two_sample_pf(
+    parameters = delta, 
+    null_specification = null_spec_mean, 
+    x = x1, 
+    y = x2, 
+    statistic = stat_t, 
+    B = B, 
+    seed = 1234, 
     alternative = "right_tail"
   )
+)
+
+delta_out <- generate_grid(delta_pe, delta_min, delta_max, ngrid_out)
+
+data_t <- tibble(
+  delta = delta_out, 
+  two_tail = approx(df$delta, df$two_tail, delta)$y, 
+  left_tail = approx(df$delta, df$left_tail, delta)$y, 
+  right_tail = approx(df$delta, df$right_tail, delta)$y, 
 ) %>%
-  select(-null_spec) %>%
   pivot_longer(-delta)
 
 data_t %>%
@@ -108,47 +141,61 @@ data_t %>%
 ## P-value function for the variance
 
 ```{r fig.width=6, out.width="100%"}
-x1 <- rnorm(10, sd = 1)
-x2 <- rnorm(10, sd = 2)
-test_param <- stats::var.test(x2, x1)
+test_param <- stats::var.test(y2, y1)
 rho_min <- 1e-3# sqrt(test_param$conf.int[1]) * 0.8
 rho_max <- sqrt(test_param$conf.int[2]) * 1.2
 
-data_f <- tibble(
-  rho = seq(rho_min, rho_max, length.out = grid_size),
-  null_spec = map(rho, ~ function(y) {y / .x}),
-  two_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_f,
-    seed = 1234,
-    B = B,
+rho_pe <- sd(y2) / sd(y1)
+rho_pe
+rho_in <- generate_grid(rho_pe, rho_min, rho_max, ngrid_in)
+
+null_spec_sd <- function(y, parameters) {
+  rho <- parameters[1]
+  y / rho
+}
+
+df <- tibble(
+  rho = rho_in,
+  two_tail = two_sample_pf(
+    parameters = rho, 
+    null_specification = null_spec_sd, 
+    x = y1, 
+    y = y2, 
+    statistic = stat_f, 
+    B = B, 
+    seed = 1234, 
     alternative = "two_tail"
   ),
-  left_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_f,
-    seed = 1234,
-    B = B,
+  left_tail = two_sample_pf(
+    parameters = rho, 
+    null_specification = null_spec_sd, 
+    x = y1, 
+    y = y2, 
+    statistic = stat_f, 
+    B = B, 
+    seed = 1234, 
     alternative = "left_tail"
   ),
-  right_tail = map_dbl(
-    .x = null_spec,
-    .f = two_sample_pf,
-    x = x1,
-    y = x2,
-    statistic = stat_f,
-    seed = 1234,
-    B = B,
+  right_tail = two_sample_pf(
+    parameters = rho, 
+    null_specification = null_spec_sd, 
+    x = y1, 
+    y = y2, 
+    statistic = stat_f, 
+    B = B, 
+    seed = 1234, 
     alternative = "right_tail"
   )
+)
+
+rho_out <- generate_grid(rho_pe, rho_min, rho_max, ngrid_out)
+
+data_f <- tibble(
+  rho = rho_out, 
+  two_tail = approx(df$rho, df$two_tail, rho)$y, 
+  left_tail = approx(df$rho, df$left_tail, rho)$y, 
+  right_tail = approx(df$rho, df$right_tail, rho)$y, 
 ) %>%
-  select(-null_spec) %>%
   pivot_longer(-rho)
 
 data_f %>%
@@ -180,38 +227,190 @@ data_f %>%
 
 ## P-value function for both mean and variance
 
-```{r fig.width=6, out.width="100%"}
-x1 <- rnorm(10, mean = 0, sd = 1)
-x2 <- rnorm(10, mean = 3, sd = 2)
-test_param_mean <- stats::t.test(x2, x1, var.equal = TRUE)
-test_param_var <- stats::var.test(x2, x1)
+Assume that we have two r.v. $X$ and $Y$ that differ in distribution
+only in their first two moments. Let $\mu_X$ and $\mu_Y$ be the means of
+$X$ and $Y$ respectively and $\sigma_X$ and $\sigma_Y$ be the standard
+deviations. We can therefore write
+
+$$
+Y = \delta + \rho X.
+$$
+
+In this case, we have
+
+$$
+\begin{cases}
+\mu_Y = \delta + \rho \mu_X \\
+\sigma_Y^2 = \rho^2 \sigma_X^2
+\end{cases}
+\Longleftrightarrow
+\begin{cases}
+\delta = \mu_Y - \frac{\sigma_Y}{\sigma_X} \mu_X \\
+\rho = \frac{\sigma_Y}{\sigma_X}
+\end{cases}
+$$
+
+In the following example, we have $\delta = 3$ and $\rho = 2$.
+
+```{r fig.width=6, fig.height=5, out.width="100%"}
+delta_pe <- mean(z2) - sd(z2) / sd(z1) * mean(z1)
+delta_pe
+rho_pe <- sd(z2) / sd(z1)
+rho_pe
+test_param_mean <- stats::t.test(z2, z1, var.equal = FALSE)
+test_param_var <- stats::var.test(z2, z1)
 delta_min <- test_param_mean$conf.int[1] - 1
 delta_max <- test_param_mean$conf.int[2] + 1
 rho_min <- 1e-3
 rho_max <- sqrt(test_param_var$conf.int[2]) * 1.2
 
-process <- function(delta, rho, x, y, B) {
-  map2_dbl(delta, rho, ~ {
-    null_spec <- function(y) {(y - .x) / .y}
-    two_sample_pf(
-      null_specification = null_spec, 
-      x = x, 
-      y = y, 
-      statistic = c("stat_t", "stat_f"), 
-      B = B, 
-      seed = 1234, 
-      alternative = "two_tail"
-    )
-  })
+null_spec_both <- function(y, parameters) {
+  delta <- parameters[1]
+  rho <- parameters[2]
+  (y - delta) / rho
+}
+
+process <- function(delta, rho, x, y, B, combine_with) {
+  two_sample_pf(
+    parameters = map2(delta, rho, c), 
+    null_specification = null_spec_both, 
+    x = x, 
+    y = y, 
+    statistic = c("stat_mean", "stat_f"), 
+    B = B, 
+    seed = 1234, 
+    combine_with = combine_with, 
+    alternative = "two_tail"
+  )
 }
 
 process_cmp <- compiler::cmpfun(process)
 
-delta_grid <- seq(delta_min, delta_max, length.out = grid_size)
-rho_grid <- seq(rho_min, rho_max, length.out = grid_size)
-pvalue <- outer(delta_grid, rho_grid, FUN = process_cmp, x = x1, y = x2, B = B)
+delta_in <- generate_grid(delta_pe, delta_min, delta_max, ngrid_in)
+rho_in <- generate_grid(rho_pe, rho_min, rho_max, ngrid_in)
+delta_out <- generate_grid(delta_pe, delta_min, delta_max, ngrid_out)
+rho_out <- generate_grid(rho_pe, rho_min, rho_max, ngrid_out)
 
-fig <- plotly::plot_ly(x = delta_grid, y = rho_grid, z = pvalue) %>%
+df_fisher <- crossing(delta = delta_in, rho = rho_in) %>% 
+  mutate(pvalue = process_cmp(
+    delta = delta, 
+    rho = rho, 
+    x = z1, 
+    y = z2, 
+    B = B,  
+    combine_with = "fisher"
+  ))
+df_fisher <- akima::interp(
+  x = df_fisher$delta, 
+  y = df_fisher$rho, 
+  z = df_fisher$pvalue, 
+  xo = delta_out, 
+  yo = rho_out
+)
+pvalue_fisher <- t(df_fisher$z)
+
+df_tippett <- crossing(delta = delta_in, rho = rho_in) %>% 
+  mutate(pvalue = process_cmp(
+    delta = delta, 
+    rho = rho, 
+    x = z1, 
+    y = z2, 
+    B = B,  
+    combine_with = "tippett"
+  ))
+df_tippett <- akima::interp(
+  x = df_tippett$delta, 
+  y = df_tippett$rho, 
+  z = df_tippett$pvalue, 
+  xo = delta_out, 
+  yo = rho_out
+)
+pvalue_tippett <- t(df_tippett$z)
+
+fig <- plotly::plot_ly(
+  x = delta_out, 
+  y = rho_out, 
+  z = pvalue_fisher
+) %>%
   plotly::add_surface()
-fig
+fig %>% 
+  plotly::layout(scene = list(
+    xaxis = list(title = "delta"), 
+    yaxis = list(title = "rho"), 
+    zaxis = list(title = "p-value")
+  ))
 ```
+
+```{r fig.width=6, fig.height=5, out.width="100%"}
+fig2_fisher <- plotly::plot_ly(
+  type = "contour", 
+  x = delta_out, 
+  y = rho_out, 
+  z = pvalue_fisher
+)
+fig2_fisher %>% 
+  plotly::layout(
+    xaxis = list(title = plotly::TeX("\\delta")), 
+    yaxis = list(title = plotly::TeX("\\rho"))
+  ) %>% 
+  plotly::config(mathjax = "cdn")
+```
+
+```{r fig.width=6, fig.height=5, out.width="100%"}
+fig2_tippett <- plotly::plot_ly(
+  type = "contour",
+  x = delta_out,
+  y = rho_out,
+  z = pvalue_tippett
+)
+fig2_tippett %>%
+  plotly::layout(
+    xaxis = list(title = plotly::TeX("\\delta")),
+    yaxis = list(title = plotly::TeX("\\rho"))
+  ) %>%
+  plotly::config(mathjax = "cdn")
+```
+
+```{r fig.width=6, fig.height=5, out.width="100%"}
+fig3_fisher <- plotly::plot_ly(
+  type = "contour", 
+  x = delta_out, 
+  y = rho_out, 
+  z = pvalue_fisher, 
+  autocontour = FALSE,
+  contours = list(
+    start = 0.05,
+    end = 1,
+    size = 0.05
+  )
+)
+fig3_fisher %>% 
+  plotly::layout(
+    xaxis = list(title = plotly::TeX("\\delta")), 
+    yaxis = list(title = plotly::TeX("\\rho"))
+  ) %>% 
+  plotly::config(mathjax = "cdn")
+```
+
+```{r fig.width=6, fig.height=5, out.width="100%"}
+fig3_tippett <- plotly::plot_ly(
+  type = "contour", 
+  x = delta_out, 
+  y = rho_out, 
+  z = pvalue_tippett, 
+  autocontour = FALSE,
+  contours = list(
+    start = 0.05,
+    end = 1,
+    size = 0.05
+  )
+)
+fig3_tippett %>% 
+  plotly::layout(
+    xaxis = list(title = plotly::TeX("\\delta")), 
+    yaxis = list(title = plotly::TeX("\\rho"))
+  ) %>% 
+  plotly::config(mathjax = "cdn")
+```
+
+## References
