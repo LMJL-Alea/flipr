@@ -5,6 +5,7 @@
 \title{Two-Sample Permutation P-Value Function}
 \usage{
 two_sample_pf(
+  parameters,
   null_specification,
   x,
   y,
@@ -17,7 +18,12 @@ two_sample_pf(
 )
 }
 \arguments{
-\item{null_specification}{A function such that \verb{F_X = F_\{null_specification(Y)\}} under the null hypothesis.}
+\item{parameters}{A list of vectors specifying a set of candidate parameter
+values under the null hypothesis.}
+
+\item{null_specification}{A function with two arguments \code{y} and \code{parameters}
+such that \verb{F_X = F_\{null_specification(Y, parameters)\}} under the null
+hypothesis.}
 
 \item{x}{A list or matrix representing the 1st sample.}
 
@@ -51,19 +57,22 @@ used in argument \code{statistic} is positive, all alternatives will lead to the
 two-tailed p-value.}
 }
 \value{
-A scalar value giving the p-value of the permutation test using the
-null hypothesis specified through the first argument.
+A vector of p-values of the permutation test for each parameter
+values specified through the first argument.
 }
 \description{
 This function calculates the permutation p-value function for two-sample
 problems. This is done through the specification of a set of null hypotheses
-of the form $F_X = F_{g_\theta(Y)}$ where $g_\theta$ is a user-supplied function.
+of the form \verb{F_X = F_\{g(Y, parameters)\}} where \code{g} is a user-supplied
+function.
 }
 \examples{
 x1 <- rnorm(10)
 x2 <- rnorm(10, 3)
+null_spec <- function(y, parameters) {y - parameters[1]}
 two_sample_pf(
-  null_spec = function(y) {y - 3},
+  parameters = 3,
+  null_specification = null_spec,
   x = x1,
   y = x2,
   statistic = stat_t,
