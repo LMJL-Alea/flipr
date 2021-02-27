@@ -33,6 +33,12 @@ be structured for compatibility with the \strong{flipr} framwork. Default is
 of Phipson-Smyth estimate of the p-value or an approximate test through a
 Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
 
+\item{alternative}{A string specifying whether the p-value is right-tailed,
+left-tailed or two-tailed. Choices are \code{"right_tail"}, \code{"left_tail"} and
+\code{"two_tail"}. Default is \code{"right_tail"}. Obviously, if the test statistic
+used in argument \code{statistic} is positive, all alternatives will lead to the
+two-tailed p-value.}
+
 \item{combine_with}{A string specifying the combining function to be used to
 compute the single test statistic value from the set of p-value estimates
 obtained during the non-parametric combination testing procedure. Default

@@ -29,6 +29,11 @@
 #' @param type A string specifying if performing an exact test through the use
 #'   of Phipson-Smyth estimate of the p-value or an approximate test through a
 #'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
+#' @param alternative A string specifying whether the p-value is right-tailed,
+#'   left-tailed or two-tailed. Choices are `"right_tail"`, `"left_tail"` and
+#'   `"two_tail"`. Default is `"right_tail"`. Obviously, if the test statistic
+#'   used in argument `statistic` is positive, all alternatives will lead to the
+#'   two-tailed p-value.
 #' @param combine_with A string specifying the combining function to be used to
 #'   compute the single test statistic value from the set of p-value estimates
 #'   obtained during the non-parametric combination testing procedure. Default
