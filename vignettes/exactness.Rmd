@@ -213,9 +213,9 @@ $$ p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t
 
 In **flipr**, you perform a permutation test using the estimator
 $\widehat{p_\infty}$ of the p-value $p_\infty$ by setting
-`test == "approximate"`. This provides a non-exact test but an unbiased
+`type == "approximate"`. This provides a non-exact test but an unbiased
 estimate of $p_\infty$. You perform a permutation test using the
-permutation p-value $p_e$ by setting `test == "exact"`. This provides an
+permutation p-value $p_e$ by setting `type == "exact"`. This provides an
 exact test.
 
 The following R code runs simulations to empirically estimate the
@@ -235,14 +235,14 @@ set.seed(12345)
       x = x, 
       y = y, 
       statistic = stat_hotelling, 
-      test = "exact", 
+      type = "exact", 
       B = 100
     )
     test_approx <- two_sample_test(
       x = x, 
       y = y, 
       statistic = stat_hotelling, 
-      test = "approximate", 
+      type = "approximate", 
       B = 100
     )
     c(

@@ -42,7 +42,7 @@ two_sample_pf <- function(parameters,
   if (!is.null(seed)) set.seed(seed)
   null_spec <- rlang::as_function(null_specification)
   parameters %>%
-    map_dbl(~ {
+    purrr::map_dbl(~ {
       y <- null_spec(y, .x)
       two_sample_test(
         x = x,

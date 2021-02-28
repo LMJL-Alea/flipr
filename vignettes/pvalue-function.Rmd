@@ -291,41 +291,60 @@ rho_in <- generate_grid(rho_pe, rho_min, rho_max, ngrid_in)
 delta_out <- generate_grid(delta_pe, delta_min, delta_max, ngrid_out)
 rho_out <- generate_grid(rho_pe, rho_min, rho_max, ngrid_out)
 
-df_fisher <- crossing(delta = delta_in, rho = rho_in) %>% 
-  mutate(pvalue = process_cmp(
-    delta = delta, 
-    rho = rho, 
-    x = z1, 
-    y = z2, 
-    B = B,  
-    combine_with = "fisher"
-  ))
-df_fisher <- akima::interp(
-  x = df_fisher$delta, 
-  y = df_fisher$rho, 
-  z = df_fisher$pvalue, 
-  xo = delta_out, 
-  yo = rho_out
-)
-pvalue_fisher <- t(df_fisher$z)
+# Fisher method to combine test statistics
 
-df_tippett <- crossing(delta = delta_in, rho = rho_in) %>% 
-  mutate(pvalue = process_cmp(
-    delta = delta, 
-    rho = rho, 
-    x = z1, 
-    y = z2, 
-    B = B,  
-    combine_with = "tippett"
-  ))
-df_tippett <- akima::interp(
-  x = df_tippett$delta, 
-  y = df_tippett$rho, 
-  z = df_tippett$pvalue, 
-  xo = delta_out, 
-  yo = rho_out
-)
-pvalue_tippett <- t(df_tippett$z)
+Z_fisher <- t(outer(
+  X = delta_in, 
+  Y = rho_in, 
+  FUN = process_cmp, 
+  x = z1, 
+  y = z2, 
+  B = B,  
+  combine_with = "fisher"
+))
+df_fisher <- crossing(delta = delta_out, rho = rho_out) %>% 
+  mutate(pvalue = map2_dbl(delta, rho, ~ {
+    pracma::interp2(
+      x = delta_in, 
+      y = rho_in, 
+      Z = Z_fisher, 
+      xp = .x, 
+      yp = .y
+    )
+  }))
+pvalue_fisher <- t(matrix(
+  data = df_fisher$pvalue, 
+  nrow = ngrid_out + 1, 
+  ncol = ngrid_out + 1, 
+  byrow = TRUE
+))
+
+# Tippett method to combine test statistics
+Z_tippett <- t(outer(
+  X = delta_in, 
+  Y = rho_in, 
+  FUN = process_cmp, 
+  x = z1, 
+  y = z2, 
+  B = B,  
+  combine_with = "tippett"
+))
+df_tippett <- crossing(delta = delta_out, rho = rho_out) %>% 
+  mutate(pvalue = map2_dbl(delta, rho, ~ {
+    pracma::interp2(
+      x = delta_in, 
+      y = rho_in, 
+      Z = Z_tippett, 
+      xp = .x, 
+      yp = .y
+    )
+  }))
+pvalue_tippett <- t(matrix(
+  data = df_tippett$pvalue, 
+  nrow = ngrid_out + 1, 
+  ncol = ngrid_out + 1, 
+  byrow = TRUE
+))
 
 fig <- plotly::plot_ly(
   x = delta_out, 

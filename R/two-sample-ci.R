@@ -56,12 +56,12 @@ two_sample_ci <- function(point_estimate, alpha,
     pvalues - alpha
   }
 
-  lb <- uniroot(
+  lb <- stats::uniroot(
     f = cost,
     interval = c(point_estimate / 10, point_estimate),
     extendInt = "upX"
   )$root
-  ub <- uniroot(
+  ub <- stats::uniroot(
     f = cost,
     interval = c(point_estimate, point_estimate * 10),
     extendInt = "downX"
