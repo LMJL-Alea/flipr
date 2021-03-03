@@ -15,8 +15,12 @@ Authors@R: c(
            family = "Vantini", 
            role = "aut", 
            email = "simone.vantini@polimi.it"))
-Description: A flexible permutation framework for hypothesis 
-  testing, ANOVA and regression analysis of complex data.
+Description: A flexible permutation framework for making 
+    inference such as point estimation, confidence 
+    intervals or hypothesis testing, on any kind of data, 
+    be it univariate, multivariate, or more complex such 
+    as network-valued data, topological data, functional 
+    data or density-valued data.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -25,7 +29,10 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     purrr,
     rlang,
-    magrittr
+    magrittr,
+    cli,
+    ggplot2,
+    tibble
 Suggests: 
     rmarkdown,
     knitr,
