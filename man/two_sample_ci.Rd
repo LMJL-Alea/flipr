@@ -5,25 +5,21 @@
 \title{Two-Sample Permutation Confidence Interval}
 \usage{
 two_sample_ci(
-  point_estimate,
-  alpha,
   null_specification,
   x,
   y,
+  alpha = 0.05,
   statistic = stat_hotelling,
   B = 1000L,
+  alternative = "right_tail",
   type = "exact",
-  combine_with = "tippett",
-  seed = NULL,
-  alternative = "right_tail"
+  point_estimate = NULL,
+  lower_bound = 0,
+  upper_bound = 1,
+  seed = NULL
 )
 }
 \arguments{
-\item{point_estimate}{A scalar value providing a point estimate of the
-parameter for which we want to compute a confidence interval.}
-
-\item{alpha}{A scalar specifying the desired significance level.}
-
 \item{null_specification}{A function with two arguments \code{y} and \code{parameters}
 such that \verb{F_X = F_\{null_specification(Y, parameters)\}} under the null
 hypothesis.}
@@ -31,6 +27,9 @@ hypothesis.}
 \item{x}{A list or matrix representing the 1st sample.}
 
 \item{y}{A list or matrix representing the 2nd sample.}
+
+\item{alpha}{A scalar specifying the desired significance level. Default is
+\code{0.05}.}
 
 \item{statistic}{A character vector specifying the chosen test statistic(s).
 These can be \code{\link{stat_hotelling}} or user-specified functions that
@@ -41,23 +40,31 @@ be structured for compatibility with the \strong{flipr} framwork. Default is
 
 \item{B}{The number of sampled permutation. Default is \code{1000L}.}
 
-\item{type}{A string specifying if performing an exact test through the use
-of Phipson-Smyth estimate of the p-value or an approximate test through a
-Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
-
-\item{combine_with}{A string specifying the combining function to be used to
-compute the single test statistic value from the set of p-value estimates
-obtained during the non-parametric combination testing procedure. Default
-is \code{"tippett"}, which picks Tippett's function.}
-
-\item{seed}{An integer specifying the seed of the random generator useful for
-result reproducibility or method comparisons. Default is \code{NULL}.}
-
 \item{alternative}{A string specifying whether the p-value is right-tailed,
 left-tailed or two-tailed. Choices are \code{"right_tail"}, \code{"left_tail"} and
 \code{"two_tail"}. Default is \code{"right_tail"}. Obviously, if the test statistic
 used in argument \code{statistic} is positive, all alternatives will lead to the
 two-tailed p-value.}
+
+\item{type}{A string specifying if performing an exact test through the use
+of Phipson-Smyth estimate of the p-value or an approximate test through a
+Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
+
+\item{point_estimate}{A scalar providing a point estimate of the parameter
+under investigation. Default is \code{NULL}, in which case the point estimate is
+computed by maximizing the p-value function via the
+\code{\link{two_sample_pe}} function.}
+
+\item{lower_bound}{A scalar value specifying a rough lower bound of the
+interval over which searching the maximum of the p-value function. Default
+is \code{0}.}
+
+\item{upper_bound}{A scalar value specifying a rough upper bound of the
+interval over which searching the maximum of the p-value function. Default
+is \code{1}.}
+
+\item{seed}{An integer specifying the seed of the random generator useful for
+result reproducibility or method comparisons. Default is \code{NULL}.}
 }
 \value{
 A length-2 vector providing the confidence interval at the required
@@ -73,14 +80,12 @@ x1 <- rnorm(10)
 x2 <- rnorm(10, 3)
 null_spec <- function(y, parameters) {y - parameters[1]}
 two_sample_ci(
-  point_estimate = mean(x2) - mean(x1),
-  alpha = 0.05,
   null_specification = null_spec,
   x = x1,
   y = x2,
   statistic = stat_t,
-  seed = 1234,
-  B = 1000,
-  alternative = "two_tail"
+  alternative = "two_tail",
+  lower_bound = 2,
+  upper_bound = 4
 )
 }
