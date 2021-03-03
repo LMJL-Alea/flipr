@@ -387,4 +387,23 @@ two_sample_ci(
 
 ## Hypothesis tests
 
+Extracting the $p$-value for a single hypothesis test in which the null
+hypothesis is $H_0: \delta = \delta_0$ is immediate from the $p$-value
+function as it boils down to evaluating the $p$-value function in
+$\delta_0$. Hence we can for instance test $H_0: \delta = 3$ against the
+alternative $H_1: \delta \ne 3$ using the following piece of code:
+
+```{r}
+two_sample_pf(
+  parameters = 3, 
+  null_specification = null_spec, 
+  x = a1, 
+  y = a2, 
+  statistic = stat_t, 
+  B = 10000, 
+  seed = 1234, 
+  alternative = "two_tail"
+  )
+```
+
 ## References
