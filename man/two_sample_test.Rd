@@ -9,9 +9,9 @@ two_sample_test(
   y,
   statistic = stat_hotelling,
   B = 1000L,
-  type = "exact",
   alternative = "right_tail",
   combine_with = "tippett",
+  type = "exact",
   seed = NULL
 )
 }
@@ -29,10 +29,6 @@ be structured for compatibility with the \strong{flipr} framwork. Default is
 
 \item{B}{The number of sampled permutation. Default is \code{1000L}.}
 
-\item{type}{A string specifying if performing an exact test through the use
-of Phipson-Smyth estimate of the p-value or an approximate test through a
-Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
-
 \item{alternative}{A string specifying whether the p-value is right-tailed,
 left-tailed or two-tailed. Choices are \code{"right_tail"}, \code{"left_tail"} and
 \code{"two_tail"}. Default is \code{"right_tail"}. Obviously, if the test statistic
@@ -43,6 +39,10 @@ two-tailed p-value.}
 compute the single test statistic value from the set of p-value estimates
 obtained during the non-parametric combination testing procedure. Default
 is \code{"tippett"}, which picks Tippett's function.}
+
+\item{type}{A string specifying if performing an exact test through the use
+of Phipson-Smyth estimate of the p-value or an approximate test through a
+Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}

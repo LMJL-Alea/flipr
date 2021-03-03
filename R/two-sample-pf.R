@@ -35,10 +35,10 @@ two_sample_pf <- function(parameters,
                           x, y,
                           statistic = stat_hotelling,
                           B = 1000L,
-                          type = "exact",
+                          alternative = "right_tail",
                           combine_with = "tippett",
-                          seed = NULL,
-                          alternative = "right_tail") {
+                          type = "exact",
+                          seed = NULL) {
   if (!is.null(seed)) set.seed(seed)
   null_spec <- rlang::as_function(null_specification)
   parameters %>%
