@@ -28,7 +28,8 @@
 #'   statistic = stat_t,
 #'   alternative = "two_tail",
 #'   lower_bound = 2,
-#'   upper_bound = 4
+#'   upper_bound = 4,
+#'   B = 100L
 #' )
 two_sample_ci <- function(null_specification,
                           x, y,

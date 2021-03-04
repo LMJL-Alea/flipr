@@ -159,9 +159,9 @@ two_sample_viz <- function(null_specification,
     ) +
     geom_area(
       data = df %>%
-        filter(
-          parameter >= confidence_interval[1],
-          parameter <= confidence_interval[2]
+        subset(
+          .data$parameter >= confidence_interval[1] &
+            .data$parameter <= confidence_interval[2]
         ),
       fill = color_palette[2],
       alpha = 0.2

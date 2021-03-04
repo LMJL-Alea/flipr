@@ -86,6 +86,7 @@ two_sample_ci(
   statistic = stat_t,
   alternative = "two_tail",
   lower_bound = 2,
-  upper_bound = 4
+  upper_bound = 4,
+  B = 100L
 )
 }

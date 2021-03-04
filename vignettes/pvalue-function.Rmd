@@ -49,7 +49,7 @@ estimates or confidence interval estimates for parameters used to define
 the nulls or extract a single $p$-value for a specific null of interest
 [@martin2017; @fraser2019; @infanger2019]. In particular, there is
 another **R** package dedicated to $p$-value functions called
-[**pvaluefunctions**](https://cran.r-project.org/web/packages/pvaluefunctions/index.html).
+[**pvaluefunctions**](https://CRAN.R-project.org/package=pvaluefunctions).
 
 ## P-value function for the mean
 
