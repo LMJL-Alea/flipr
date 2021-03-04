@@ -33,7 +33,8 @@ Imports:
     cli,
     ggplot2,
     tibble,
-    withr
+    withr,
+    viridisLite
 Suggests: 
     rmarkdown,
     knitr,
