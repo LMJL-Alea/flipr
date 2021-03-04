@@ -8,6 +8,7 @@ two_sample_viz(
   null_specification,
   x,
   y,
+  alpha = 0.05,
   statistic = stat_hotelling,
   B = 1000L,
   alternative = "two_tail",
@@ -29,6 +30,9 @@ hypothesis.}
 \item{x}{A list or matrix representing the 1st sample.}
 
 \item{y}{A list or matrix representing the 2nd sample.}
+
+\item{alpha}{A scalar specifying the desired significance level. Default is
+\code{0.05}.}
 
 \item{statistic}{A character vector specifying the chosen test statistic(s).
 These can be \code{\link{stat_hotelling}} or user-specified functions that

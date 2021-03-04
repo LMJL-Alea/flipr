@@ -32,6 +32,7 @@
 #' }
 two_sample_viz <- function(null_specification,
                            x, y,
+                           alpha = 0.05,
                            statistic = stat_hotelling,
                            B = 1000L,
                            alternative = "two_tail",
@@ -74,6 +75,7 @@ two_sample_viz <- function(null_specification,
       null_specification = null_specification,
       x = x,
       y = y,
+      alpha = alpha,
       statistic = statistic,
       B = B,
       alternative = alternative,
@@ -120,6 +122,8 @@ two_sample_viz <- function(null_specification,
     )$y
   )
 
+  color_palette <- viridisLite::viridis(3)
+
   df %>%
     ggplot(aes(.data$parameter, .data$pvalue)) +
     geom_line() +
@@ -138,7 +142,36 @@ two_sample_viz <- function(null_specification,
       y = "p-value"
     ) +
     theme_bw() +
-    scale_y_continuous(limits = c(0, 1))
+    scale_y_continuous(limits = c(0, 1)) +
+    geom_vline(
+      xintercept = point_estimate,
+      color = color_palette[3]
+    ) +
+    geom_vline(
+      xintercept = confidence_interval,
+      color = color_palette[2],
+      linetype = "dashed"
+    ) +
+    geom_hline(
+      yintercept = alpha,
+      color = color_palette[1],
+      linetype = "dashed"
+    ) +
+    geom_area(
+      data = df %>%
+        filter(
+          parameter >= confidence_interval[1],
+          parameter <= confidence_interval[2]
+        ),
+      fill = color_palette[2],
+      alpha = 0.2
+    ) +
+    scale_x_continuous(
+      breaks = round(
+        x = c(confidence_interval[1], point_estimate, confidence_interval[2]),
+        digits = 3
+      )
+    )
 }
 
 generate_grid <- function(center_value, min_value, max_value, n) {
