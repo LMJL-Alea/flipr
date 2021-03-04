@@ -75,7 +75,7 @@ two_sample_test <- function(x, y,
                             type = "exact",
                             seed = NULL) {
 
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) withr::local_seed(seed)
 
   l <- convert_to_list(x, y)
   x <- l[[1]]

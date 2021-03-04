@@ -39,7 +39,7 @@ two_sample_pf <- function(parameters,
                           combine_with = "tippett",
                           type = "exact",
                           seed = NULL) {
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) withr::local_seed(seed)
   null_spec <- rlang::as_function(null_specification)
   parameters %>%
     purrr::map_dbl(~ {

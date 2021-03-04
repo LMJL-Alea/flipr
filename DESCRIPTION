@@ -32,7 +32,8 @@ Imports:
     magrittr,
     cli,
     ggplot2,
-    tibble
+    tibble,
+    withr
 Suggests: 
     rmarkdown,
     knitr,
