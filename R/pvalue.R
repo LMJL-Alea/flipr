@@ -12,7 +12,7 @@ stats2pvalue <- function(i, Tp, B, M, type = "exact", alternative = "right_tail"
       sum(Tp <= T0) - 1
     },
     two_tail = {
-      2 * min(sum(Tp >= T0), sum(Tp <= T0)) - 1
+      2 * (min(sum(Tp >= T0), sum(Tp <= T0)) - 1)
     }
   )
   if (type == "approximate") return(b / B)
