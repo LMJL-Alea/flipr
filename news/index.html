@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -90,6 +90,9 @@
     <span class="fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/flipr.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -106,6 +109,9 @@
     </li>
     <li>
       <a href="../articles/exactness.html">On the exactness of permutation tests</a>
+    </li>
+    <li>
+      <a href="../articles/pvalue-function.html">Calculating p-value functions</a>
     </li>
   </ul>
 </li>
@@ -137,6 +143,42 @@
       <small>Source: <a href='https://github.com/astamm/flipr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="flipr-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#flipr-020" class="anchor"></a>flipr 0.2.0<small> Unreleased </small>
+</h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li>Compute p-value surfaces when inferring multiple parameters at once via <code><a href="../reference/two_sample_pf.html">two_sample_pf()</a></code>;</li>
+<li>Compute a point estimation for a single parameter of interest via <code><a href="../reference/two_sample_pe.html">two_sample_pe()</a></code>;</li>
+<li>Compute a confidence interval for a single parameter of interest via <code><a href="../reference/two_sample_ci.html">two_sample_ci()</a></code>;</li>
+<li>Automatically draw the p-value function for a single parameter of interest via <code><a href="../reference/two_sample_viz.html">two_sample_viz()</a></code>.</li>
+</ul>
+</div>
+<div id="full-list-of-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#full-list-of-changes" class="anchor"></a>Full list of changes</h2>
+<ul>
+<li>Change argument names <code>test</code> and <code>combining_function</code> to <code>type</code> and <code>combine_with</code> respectively. Add argument <code>alternative</code> to specify which kind of test is performed.</li>
+<li>Add a function to compute p-value functions for sets of null hypotheses.</li>
+<li>Draft of article illustrating the computation of p-value functions with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>.</li>
+<li>Add <span class="math inline"><em>t</em></span>, mean and Fisher test statistics.</li>
+<li>Correct two-tail p-value computation.</li>
+<li>Better API for pvalue function.</li>
+<li>Added a function for two sample confidence interval for a single parameter.</li>
+<li>Added an article about permutation inference overview.</li>
+<li>Added dependency to the <a href="https://ggplot2.tidyverse.org"><strong>ggplot2</strong></a> package for plotting features.</li>
+<li>Added dependency to the <a href="https://cli.r-lib.org"><strong>cli</strong></a> package for displaying important information to the user in an elegant fashion.</li>
+<li>Added function for point estimation of a single parameter.</li>
+<li>Added function for confidence interval of a single parameter.</li>
+<li>Added function for automatic plotting of the p-value function of a single parameter.</li>
+<li>Added dependency to the <a href="https://withr.r-lib.org"><strong>withr</strong></a> package for properly handle local random seed generator settings.</li>
+<li>Added dependency to the <a href="https://github.com/sjmgarnier/viridisLite"><strong>viridisLite</strong></a> package for using colors compatible with most common types of color blindness.</li>
+</ul>
+</div>
+</div>
     <div id="flipr-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
 <a href="#flipr-011" class="anchor"></a>flipr 0.1.1<small> 2021-02-17 </small>

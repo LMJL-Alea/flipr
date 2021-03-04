@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -49,6 +49,9 @@
     <span class="fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/flipr.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -65,6 +68,9 @@
     </li>
     <li>
       <a href="../articles/exactness.html">On the exactness of permutation tests</a>
+    </li>
+    <li>
+      <a href="../articles/pvalue-function.html">Calculating p-value functions</a>
     </li>
   </ul>
 </li>
@@ -164,7 +170,7 @@
 <span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
   widget <span class="op">=</span> <span class="va">fig</span>, 
   file <span class="op">=</span> <span class="st">"plotly-fig.html"</span>, 
-  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
+  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
   src <span class="op">=</span> <span class="st">"plotly-fig.html"</span>,
@@ -187,7 +193,7 @@
 <div id="comparison-by-empirical-evidence" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparison-by-empirical-evidence" class="anchor"></a>Comparison by empirical evidence</h2>
-<p>In <strong>flipr</strong>, you perform a permutation test using the estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the p-value <span class="math inline">\(p_\infty\)</span> by setting <code>test == "approximate"</code>. This provides a non-exact test but an unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting <code>test == "exact"</code>. This provides an exact test.</p>
+<p>In <strong>flipr</strong>, you perform a permutation test using the estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the p-value <span class="math inline">\(p_\infty\)</span> by setting <code>type == "approximate"</code>. This provides a non-exact test but an unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting <code>type == "exact"</code>. This provides an exact test.</p>
 <p>The following R code runs simulations to empirically estimate the probability of wrongly rejecting the null hypothesis. The generative model for both samples is the standard normal distribution. Sample sizes are set to <span class="math inline">\(n_1 = n_2 = 10\)</span>. We draw <span class="math inline">\(100\)</span> permutations for each test.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
@@ -201,14 +207,14 @@
       x <span class="op">=</span> <span class="va">x</span>, 
       y <span class="op">=</span> <span class="va">y</span>, 
       statistic <span class="op">=</span> <span class="va">stat_hotelling</span>, 
-      test <span class="op">=</span> <span class="st">"exact"</span>, 
+      type <span class="op">=</span> <span class="st">"exact"</span>, 
       B <span class="op">=</span> <span class="fl">100</span>
     <span class="op">)</span>
     <span class="va">test_approx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/two_sample_test.html">two_sample_test</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="va">x</span>, 
       y <span class="op">=</span> <span class="va">y</span>, 
       statistic <span class="op">=</span> <span class="va">stat_hotelling</span>, 
-      test <span class="op">=</span> <span class="st">"approximate"</span>, 
+      type <span class="op">=</span> <span class="st">"approximate"</span>, 
       B <span class="op">=</span> <span class="fl">100</span>
     <span class="op">)</span>
     <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>

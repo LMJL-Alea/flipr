@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Two-Sample Permutation Test — two_sample_test • flipr</title>
+<title>Two-Sample Permutation Confidence Interval — two_sample_ci • flipr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,10 @@
 
 
 
-<meta property="og:title" content="Two-Sample Permutation Test — two_sample_test" />
-<meta property="og:description" content="This function carries out an hypothesis test where the null hypothesis is
-that the two samples are ruled by the same underlying generative probability
-distribution against the alternative hypothesis that they are ruled by two
-separate generative probability distributions." />
+<meta property="og:title" content="Two-Sample Permutation Confidence Interval — two_sample_ci" />
+<meta property="og:description" content="This function calculates permutation confidence intervals for two-sample
+problems. This is done through the specification a point estimate of the
+parameter to be estimated and of a set of null hypotheses of the form F_X = F_{g(Y, parameters)} where g is a user-supplied function." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -143,26 +142,29 @@ separate generative probability distributions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Two-Sample Permutation Test</h1>
-    <small class="dont-index">Source: <a href='https://github.com/astamm/flipr/blob/master/R/two-sample-test.R'><code>R/two-sample-test.R</code></a></small>
-    <div class="hidden name"><code>two_sample_test.Rd</code></div>
+    <h1>Two-Sample Permutation Confidence Interval</h1>
+    <small class="dont-index">Source: <a href='https://github.com/astamm/flipr/blob/master/R/two-sample-ci.R'><code>R/two-sample-ci.R</code></a></small>
+    <div class="hidden name"><code>two_sample_ci.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function carries out an hypothesis test where the null hypothesis is
-that the two samples are ruled by the same underlying generative probability
-distribution against the alternative hypothesis that they are ruled by two
-separate generative probability distributions.</p>
+    <p>This function calculates permutation confidence intervals for two-sample
+problems. This is done through the specification a point estimate of the
+parameter to be estimated and of a set of null hypotheses of the form <code>F_X = F_{g(Y, parameters)}</code> where <code>g</code> is a user-supplied function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>two_sample_test</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>two_sample_ci</span><span class='op'>(</span>
+  <span class='va'>null_specification</span>,
   <span class='va'>x</span>,
   <span class='va'>y</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.05</span>,
   statistic <span class='op'>=</span> <span class='va'>stat_hotelling</span>,
   B <span class='op'>=</span> <span class='fl'>1000L</span>,
   alternative <span class='op'>=</span> <span class='st'>"right_tail"</span>,
-  combine_with <span class='op'>=</span> <span class='st'>"tippett"</span>,
   type <span class='op'>=</span> <span class='st'>"exact"</span>,
+  point_estimate <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lower_bound <span class='op'>=</span> <span class='fl'>0</span>,
+  upper_bound <span class='op'>=</span> <span class='fl'>1</span>,
   seed <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -170,12 +172,23 @@ separate generative probability distributions.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>null_specification</th>
+      <td><p>A function with two arguments <code>y</code> and <code>parameters</code>
+such that <code>F_X = F_{null_specification(Y, parameters)}</code> under the null
+hypothesis.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A list or matrix representing the 1st sample.</p></td>
     </tr>
     <tr>
       <th>y</th>
       <td><p>A list or matrix representing the 2nd sample.</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>A scalar specifying the desired significance level. Default is
+<code>0.05</code>.</p></td>
     </tr>
     <tr>
       <th>statistic</th>
@@ -199,17 +212,29 @@ used in argument <code>statistic</code> is positive, all alternatives will lead 
 two-tailed p-value.</p></td>
     </tr>
     <tr>
-      <th>combine_with</th>
-      <td><p>A string specifying the combining function to be used to
-compute the single test statistic value from the set of p-value estimates
-obtained during the non-parametric combination testing procedure. Default
-is <code>"tippett"</code>, which picks Tippett's function.</p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>A string specifying if performing an exact test through the use
 of Phipson-Smyth estimate of the p-value or an approximate test through a
 Monte-Carlo estimate of the p-value. Default is <code>"exact"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>point_estimate</th>
+      <td><p>A scalar providing a point estimate of the parameter
+under investigation. Default is <code>NULL</code>, in which case the point estimate is
+computed by maximizing the p-value function via the
+<code><a href='two_sample_pe.html'>two_sample_pe</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>lower_bound</th>
+      <td><p>A scalar value specifying a rough lower bound of the
+interval over which searching the maximum of the p-value function. Default
+is <code>0</code>.</p></td>
+    </tr>
+    <tr>
+      <th>upper_bound</th>
+      <td><p>A scalar value specifying a rough upper bound of the
+interval over which searching the maximum of the p-value function. Default
+is <code>1</code>.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -220,46 +245,24 @@ result reproducibility or method comparisons. Default is <code>NULL</code>.</p><
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> with three components: the value of the
-statistic for the original two samples, the p-value of the resulting
-permutation test and a numeric vector storing the values of the permuted
-statistics.</p>
-    <h2 class="hasAnchor" id="user-supplied-statistic-function"><a class="anchor" href="#user-supplied-statistic-function"></a>User-supplied statistic function</h2>
-
-    
-
-<p>A user-specified function should have at least two arguments:</p><ul>
-<li><p>the first argument is <code>data</code> which should be a list of the <code>n1 + n2</code>
-concatenated observations with the original <code>n1</code> observations from the first
-sample on top and the original <code>n2</code> observations from the second sample
-below;</p></li>
-<li><p>the second argument is <code>indices</code> which should be an integer vector giving
-the indices in <code>data</code> that are considered to belong to the first sample.</p></li>
-</ul>
-
-<p>See the <code><a href='test-statistic.html'>stat_hotelling</a></code> function for an example.</p>
+    <p>A length-2 vector providing the confidence interval at the required
+level.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>10L</span>
-<span class='va'>mx</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-<span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-
-<span class='co'># Two different models for the two populations</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>mx</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>delta</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='va'>my</span> <span class='op'>&lt;-</span> <span class='va'>mx</span> <span class='op'>+</span> <span class='va'>delta</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>t1</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
-<span class='va'>t1</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0.0009936031</div><div class='input'>
-<span class='co'># Same model for the two populations</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>mx</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>delta</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-<span class='va'>my</span> <span class='op'>&lt;-</span> <span class='va'>mx</span> <span class='op'>+</span> <span class='va'>delta</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>t2</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
-<span class='va'>t2</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0.8311634</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>null_spec</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>parameters</span><span class='op'>)</span> <span class='op'>{</span><span class='va'>y</span> <span class='op'>-</span> <span class='va'>parameters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>}</span>
+<span class='fu'>two_sample_ci</span><span class='op'>(</span>
+  null_specification <span class='op'>=</span> <span class='va'>null_spec</span>,
+  x <span class='op'>=</span> <span class='va'>x1</span>,
+  y <span class='op'>=</span> <span class='va'>x2</span>,
+  statistic <span class='op'>=</span> <span class='va'>stat_t</span>,
+  alternative <span class='op'>=</span> <span class='st'>"two_tail"</span>,
+  lower_bound <span class='op'>=</span> <span class='fl'>2</span>,
+  upper_bound <span class='op'>=</span> <span class='fl'>4</span>,
+  B <span class='op'>=</span> <span class='fl'>100L</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='output co'>#&gt; [1] 2.316154 4.133539</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

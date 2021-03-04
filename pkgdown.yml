@@ -4,5 +4,7 @@ pkgdown_sha: ~
 articles:
   alternative: alternative.html
   exactness: exactness.html
-last_built: 2021-02-17T20:17Z
+  flipr: flipr.html
+  pvalue-function: pvalue-function.html
+last_built: 2021-03-04T12:05Z
 
