@@ -26,13 +26,18 @@
 #'   be structured for compatibility with the **flipr** framwork. Default is
 #'   \code{\link{stat_hotelling}}.
 #' @param B The number of sampled permutation. Default is `1000L`.
-#' @param test A string specifying if performing an exact test through the use
+#' @param alternative A string specifying whether the p-value is right-tailed,
+#'   left-tailed or two-tailed. Choices are `"right_tail"`, `"left_tail"` and
+#'   `"two_tail"`. Default is `"right_tail"`. Obviously, if the test statistic
+#'   used in argument `statistic` is positive, all alternatives will lead to the
+#'   two-tailed p-value.
+#' @param combine_with A string specifying the combining function to be used to
+#'   compute the single test statistic value from the set of p-value estimates
+#'   obtained during the non-parametric combination testing procedure. Default
+#'   is `"tippett"`, which picks Tippett's function.
+#' @param type A string specifying if performing an exact test through the use
 #'   of Phipson-Smyth estimate of the p-value or an approximate test through a
 #'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
-#' @param combining_function A string specifying the combining function to be
-#'   used to compute the single test statistic value from the set of p-value
-#'   estimates obtained during the non-parametric combination testing procedure.
-#'   Default is `"tippett"`, which picks Tippett's function.
 #' @param seed An integer specifying the seed of the random generator useful for
 #'   result reproducibility or method comparisons. Default is `NULL`.
 #'
@@ -65,11 +70,12 @@
 two_sample_test <- function(x, y,
                             statistic = stat_hotelling,
                             B = 1000L,
-                            test = "exact",
-                            combining_function = "tippett",
+                            alternative = "right_tail",
+                            combine_with = "tippett",
+                            type = "exact",
                             seed = NULL) {
 
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) withr::local_seed(seed)
 
   l <- convert_to_list(x, y)
   x <- l[[1]]
@@ -86,12 +92,16 @@ two_sample_test <- function(x, y,
   if (n1 == n2)
     M <- M / 2
 
-  test <- match.arg(test, c("approximate", "exact"))
-  if (test == "approximate" & M <= B) {
+  # B can be either a number of combinations to draw or the list of combinations
+
+  type <- match.arg(type, c("approximate", "exact"))
+  if (type == "approximate" & M <= B) {
     B <- M
     group1_perm <- utils::combn(n, n1)[, 1:B]
   } else
     group1_perm <- replicate(B, sample.int(n))[1:n1, ]
+
+  alternative <- match.arg(alternative, c("left_tail", "right_tail", "two_tail"))
 
   if (!npc)
     Tp <- sapply(
@@ -114,18 +124,21 @@ two_sample_test <- function(x, y,
         X = 1:(B+1),
         FUN = stats2pvalue,
         Tp = .,
-        test = "approximate",
         B = B,
-        M = M
+        M = M,
+        type = "approximate",
+        alternative = alternative
       )) %>%
       purrr::transpose() %>%
       purrr::simplify_all() %>%
-      purrr::map_dbl(combine_pvalues, method = combining_function)
+      purrr::map_dbl(combine_pvalues, combine_with = combine_with)
   }
+
+  altern <- if (npc) "right_tail" else alternative
 
   list(
     statistic = Tp[1],
-    pvalue = stats2pvalue(1, Tp, test, B, M),
+    pvalue = stats2pvalue(1, Tp, B, M, type = type, alternative = altern),
     permuted_statistics = Tp[-1]
   )
 }

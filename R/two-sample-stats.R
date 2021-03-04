@@ -1,4 +1,4 @@
-#' Hotelling's statistic for two-sample testing
+#' Test Statistics for the Two-Sample Problem
 #'
 #' This function implements the original Hotelling's $T^2$ statistic which is
 #' defined for multivariate data when the number $n$ of observations is greater
@@ -13,7 +13,7 @@
 #'   `stat_*()` functions). Not used here.
 #'
 #' @return A real scalar giving the value of Hotelling's $T^2$ statistic.
-#' @export
+#' @name test-statistic
 #'
 #' @examples
 #' n <- 10L
@@ -28,6 +28,12 @@
 #' y <- rnorm(n = n, mean = my, sd = sigma)
 #' y <- as.list(y)
 #' stat_hotelling(c(x, y), 1:n)
+#' stat_t(c(x, y), 1:n)
+#' stat_mean(c(x, y), 1:n)
+NULL
+
+#' @rdname test-statistic
+#' @export
 stat_hotelling <- function(data, indices, ...) {
   n <- length(data)
   nx <- length(indices)
@@ -43,4 +49,40 @@ stat_hotelling <- function(data, indices, ...) {
   Sinv <- solve(Spooled)
   D <- Xbar - Ybar
   as.numeric(t(D) %*% Sinv %*% D)
+}
+
+#' @rdname test-statistic
+#' @export
+stat_t <- function(data, indices, ...) {
+  n <- length(data)
+  n1 <- length(indices)
+  n2 <- n - n1
+  indices2 <- seq_len(n)[-indices]
+  x1 <- unlist(data[indices])
+  x2 <- unlist(data[indices2])
+  stats::t.test(x1, x2, var.equal = TRUE)$statistic
+}
+
+#' @rdname test-statistic
+#' @export
+stat_f <- function(data, indices, ...) {
+  n <- length(data)
+  n1 <- length(indices)
+  n2 <- n - n1
+  indices2 <- seq_len(n)[-indices]
+  x1 <- unlist(data[indices])
+  x2 <- unlist(data[indices2])
+  stats::var.test(x1, x2)$statistic
+}
+
+#' @rdname test-statistic
+#' @export
+stat_mean <- function(data, indices, ...) {
+  n <- length(data)
+  n1 <- length(indices)
+  n2 <- n - n1
+  indices2 <- seq_len(n)[-indices]
+  x1 <- unlist(data[indices])
+  x2 <- unlist(data[indices2])
+  mean(x1) - mean(x2)
 }
