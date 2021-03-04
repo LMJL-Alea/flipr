@@ -8,7 +8,15 @@
   - Windows Server 2008 R2 SP1, R-devel, 32/64 bit
   - Ubuntu Linux 20.04.1 LTS, R-release, GCC
   - Fedora Linux, R-devel, clang, gfortran
-  - Oracle Solaris 10, x86, 32 bit, R-release
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs.
+
+There was 1 NOTE:
+
+    * checking installed package size ... NOTE
+      installed size is 12.6Mb
+      sub-directories of 1Mb or more:
+        doc  12.4Mb
+
+The size varies according to the system on which the package is installed.
