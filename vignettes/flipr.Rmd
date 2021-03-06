@@ -159,8 +159,8 @@ dfa %>%
 
 In the example above, we chose to compute two-tailed $p$-values
 (`alternative = "two_tail"`) using Student's $t$-statistic to perform
-the individual tests (`statistic = stat_t`) and $10,000$ permutations
-sampled with replacement (`B=10000`). We fixed the seed for the
+the individual tests (`statistic = stat_t`) and $100,000$ permutations
+sampled with replacement (`B=100000`). We fixed the seed for the
 generation of the permutations in order to use the same set of sampled
 permutations for each point of the $p$-value function.
 
