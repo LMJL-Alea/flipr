@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+load("../R/sysdata.rda")
 ```
 
 ```{r setup, message = FALSE}
@@ -53,6 +54,7 @@ mu1 <- 1
 mu2 <- 4
 sd1 <- 1
 sd2 <- 1
+B <- 100000
 ```
 
 We will consider three different scenari:
@@ -102,9 +104,12 @@ hypothesis is $\delta = \delta_0$ as a function of $\delta_0$
 With [**flipr**](https://astamm.github.io/flipr/), it is easy to trace
 such a $p$-value function:
 
-```{r, fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
-delta_pe <- mean(a2) - mean(a1)
+```{r}
 null_spec <- function(y, parameters) {y - parameters[1]}
+```
+
+```{r, eval=FALSE}
+delta_pe <- mean(a2) - mean(a1)
 dfa <- tibble(
   delta = generate_grid(delta_pe, delta_pe - 2, delta_pe + 2, 20), 
   pvalue = delta %>% 
@@ -113,13 +118,35 @@ dfa <- tibble(
       x = a1, 
       y = a2, 
       statistic = stat_t, 
-      B = 10000, 
+      B = B, 
       seed = 1234, 
       alternative = "two_tail"
     )
-)
+) %>% 
+  mutate(
+    pvalue_alt = delta %>%
+      map_dbl(~ {
+        t.test(
+          x = a2, 
+          y = a1, 
+          alternative = "two.sided", 
+          mu = .x, 
+          var.equal = TRUE
+        )$p.value
+      })
+  ) %>% 
+  select(
+    delta, 
+    `Parametric Approach` = pvalue_alt, 
+    `Permutation Approach` = pvalue
+  ) %>% 
+  pivot_longer(-delta)
+```
+
+```{r, fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
 dfa %>% 
-  ggplot(aes(delta, pvalue)) + 
+  subset(name == "Permutation Approach") %>% 
+  ggplot(aes(delta, value)) + 
   geom_line() + 
   labs(
     title = "P-value function for the mean difference", 
@@ -167,25 +194,6 @@ generate the same $p$-value function using Student's parametric $t$-test
 as follows:
 
 ```{r, fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
-dfa <- dfa %>% 
-  mutate(
-    pvalue_alt = delta %>%
-      map_dbl(~ {
-        t.test(
-          x = a2, 
-          y = a1, 
-          alternative = "two.sided", 
-          mu = .x, 
-          var.equal = TRUE
-        )$p.value
-      })
-  ) %>% 
-  select(
-    delta, 
-    `Parametric Approach` = pvalue_alt, 
-    `Permutation Approach` = pvalue
-  ) %>% 
-  pivot_longer(-delta)
 dfa %>% 
   ggplot(aes(delta, value, color = name)) + 
   geom_line() + 
@@ -209,8 +217,7 @@ samples) and sample sizes are low (here $10$ for each sample), we get
 the following $p$-value functions (cutting below $0.001$ since the usual
 range of useful $p$-values is from $0.01$ and above):
 
-```{r fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
-B <- 10000
+```{r, eval=FALSE}
 deltb_pe <- mean(b2) - mean(b1)
 dfb <- tibble(
   delta = generate_grid(deltb_pe, deltb_pe - 2, deltb_pe + 2, 20), 
@@ -243,6 +250,9 @@ dfb <- tibble(
     Permutation = pvalue
   ) %>% 
   pivot_longer(-delta)
+```
+
+```{r fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
 dfb %>% 
   filter(value > 1e-3) %>% 
   ggplot(aes(delta, value, color = name)) + 
@@ -273,7 +283,7 @@ for each sample), we get the following $p$-value functions (cutting
 below $0.001$ since the usual range of useful $p$-values is from $0.01$
 and above):
 
-```{r fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
+```{r, eval=FALSE}
 deltc_pe <- mean(c2) - mean(c1)
 dfc <- tibble(
   delta = generate_grid(deltc_pe, deltc_pe - 2, deltc_pe + 2, 20), 
@@ -306,6 +316,9 @@ dfc <- tibble(
     Permutation = pvalue
   ) %>% 
   pivot_longer(-delta)
+```
+
+```{r fig.asp=0.8, fig.width=6, out.width="97%", dpi=300}
 dfc %>% 
   filter(value > 1e-3) %>% 
   ggplot(aes(delta, value, color = name)) + 
