@@ -43,7 +43,10 @@ Suggests:
     plotly,
     htmlwidgets,
     htmltools,
-    pracma
+    pracma,
+    usethis
 VignetteBuilder: knitr
 URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
 BugReports: https://github.com/astamm/flipr/issues/
+Depends: 
+    R (>= 2.10)
