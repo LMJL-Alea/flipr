@@ -85,13 +85,9 @@ stat_t2 <- function(data, indices) {
   indices2 <- seq_len(n)[-indices]
   x1 <- unlist(data[indices])
   x2 <- unlist(data[indices2])
-  stats::t.test(x = x1, y = x2, var.equal = TRUE)$statistic^2
+  stats::t.test(x = x1, y = x2, var.equal = TRUE)$statistic
 }
 ```
-
-Note that the square is needed as permutation tests look for large
-values of the test statistic to find evidence against the null
-hypothesis.
 
 Now we can simply use the function `flipr::two_sample_test()` to get the
 result of the test:
@@ -101,10 +97,11 @@ test_t2 <- flipr::two_sample_test(
   x = x1, 
   y = x2, 
   statistic = stat_t2, 
-  B = 10000
+  B = 100000, 
+  alternative = "two_tail"
 )
 test_t2$pvalue
-#> [1] 0.0001945701
+#> [1] 2.461321e-05
 ```
 
 We can compare the resulting p-value with the one obtained using the
