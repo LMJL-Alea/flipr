@@ -1,3 +1,8 @@
+# flipr 0.2.1
+
+* Fix warning when installing the package on Oracle Solaris 10, x86, 32 bit,
+R-release due to pandoc version not available preventing the `pvalue-function` vignette from knitting properly.
+
 # flipr 0.2.0
 
 ## New features

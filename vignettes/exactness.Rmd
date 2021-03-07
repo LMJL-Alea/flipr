@@ -159,11 +159,11 @@ fig <- p1 %>%
   plotly::hide_legend()
 htmlwidgets::saveWidget(
   widget = fig, 
-  file = "plotly-fig.html", 
+  file = "exactness-fig1.html", 
   selfcontained = rmarkdown::pandoc_available("1.12.3")
 )
 htmltools::tags$iframe(
-  src = "plotly-fig.html",
+  src = "exactness-fig1.html",
   scrolling = "no", 
   seamless = "seamless",
   frameBorder = "0",
