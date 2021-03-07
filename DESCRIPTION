@@ -1,6 +1,6 @@
 Package: flipr
 Title: Flexible Inference via Permutations in R
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person(given = "Alessia", 
            family = "Pini", 
@@ -43,8 +43,7 @@ Suggests:
     plotly,
     htmlwidgets,
     htmltools,
-    pracma,
-    usethis
+    pracma
 VignetteBuilder: knitr
 URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
 BugReports: https://github.com/astamm/flipr/issues/
