@@ -206,14 +206,7 @@ df_fisher <- crossing(delta = delta_out, rho = rho_out) %>%
     )
   }))
 
-pvalue_fisher <- t(matrix(
-  data = df_fisher$pvalue,
-  nrow = ngrid_out + 1,
-  ncol = ngrid_out + 1,
-  byrow = TRUE
-))
-
-saveRDS(pvalue_fisher, "data-raw/pvalue_fisher.rds")
+saveRDS(df_fisher, "data-raw/df_fisher.rds")
 
 # Tippett method to combine test statistics
 
@@ -238,11 +231,4 @@ df_tippett <- crossing(delta = delta_out, rho = rho_out) %>%
     )
   }))
 
-pvalue_tippett <- t(matrix(
-  data = df_tippett$pvalue,
-  nrow = ngrid_out + 1,
-  ncol = ngrid_out + 1,
-  byrow = TRUE
-))
-
-saveRDS(pvalue_tippett, "data-raw/pvalue_tippett.rds")
+saveRDS(df_tippett, "data-raw/df_tippett.rds")
