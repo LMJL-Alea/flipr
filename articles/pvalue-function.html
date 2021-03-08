@@ -385,13 +385,6 @@ Y = \delta + \rho X.
     <span class="op">)</span>
   <span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">pvalue_fisher</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">df_fisher</span><span class="op">$</span><span class="va">pvalue</span>, 
-  nrow <span class="op">=</span> <span class="va">ngrid_out</span> <span class="op">+</span> <span class="fl">1</span>, 
-  ncol <span class="op">=</span> <span class="va">ngrid_out</span> <span class="op">+</span> <span class="fl">1</span>, 
-  byrow <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span><span class="op">)</span>
-
 <span class="co"># Tippett method to combine test statistics</span>
 
 <span class="va">Z_tippett</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span>
@@ -413,104 +406,35 @@ Y = \delta + \rho X.
       xp <span class="op">=</span> <span class="va">.x</span>, 
       yp <span class="op">=</span> <span class="va">.y</span>
     <span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">pvalue_tippett</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">df_tippett</span><span class="op">$</span><span class="va">pvalue</span>, 
-  nrow <span class="op">=</span> <span class="va">ngrid_out</span> <span class="op">+</span> <span class="fl">1</span>, 
-  ncol <span class="op">=</span> <span class="va">ngrid_out</span> <span class="op">+</span> <span class="fl">1</span>, 
-  byrow <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="op">}</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fig1</span> <span class="op">&lt;-</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/plot_ly.html">plot_ly</a></span><span class="op">(</span>
-  x <span class="op">=</span> <span class="va">delta_out</span>, 
-  y <span class="op">=</span> <span class="va">rho_out</span>, 
-  z <span class="op">=</span> <span class="va">pvalue_fisher</span>
-<span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/add_trace.html">add_surface</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/layout.html">layout</a></span><span class="op">(</span>scene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"delta"</span><span class="op">)</span>, 
-    yaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"rho"</span><span class="op">)</span>, 
-    zaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"p-value"</span><span class="op">)</span>
-  <span class="op">)</span><span class="op">)</span>
-<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
-  widget <span class="op">=</span> <span class="va">fig1</span>, 
-  file <span class="op">=</span> <span class="st">"pf-fig1.html"</span>, 
-  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
-  src <span class="op">=</span> <span class="st">"pf-fig1.html"</span>,
-  scrolling <span class="op">=</span> <span class="st">"no"</span>, 
-  seamless <span class="op">=</span> <span class="st">"seamless"</span>,
-  frameBorder <span class="op">=</span> <span class="st">"0"</span>,
-  width <span class="op">=</span> <span class="st">"100%"</span>, 
-  height <span class="op">=</span> <span class="fl">400</span>
-<span class="op">)</span></code></pre></div>
-<p><iframe src="pf-fig1.html" scrolling="no" seamless="seamless" frameborder="0" width="100%" height="400"></iframe></p>
+<code class="sourceCode R"><span class="va">df_fisher</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rho</span> <span class="op">&gt;=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">rho</span>, z <span class="op">=</span> <span class="va">pvalue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_contour_filled</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">labs</span><span class="op">(</span>
+    title <span class="op">=</span> <span class="st">"Contour plot of the p-value surface"</span>, 
+    subtitle <span class="op">=</span> <span class="st">"Using Fisher's non-parametric combination"</span>, 
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, 
+    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">rho</span><span class="op">)</span>, 
+    fill <span class="op">=</span> <span class="st">"p-value"</span>
+  <span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="pvalue-function_files/figure-html/unnamed-chunk-8-1.png" width="97%"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fig2_fisher</span> <span class="op">&lt;-</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/plot_ly.html">plot_ly</a></span><span class="op">(</span>
-  type <span class="op">=</span> <span class="st">"contour"</span>, 
-  x <span class="op">=</span> <span class="va">delta_out</span>, 
-  y <span class="op">=</span> <span class="va">rho_out</span>, 
-  z <span class="op">=</span> <span class="va">pvalue_fisher</span>, 
-  autocontour <span class="op">=</span> <span class="cn">FALSE</span>,
-  contours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    start <span class="op">=</span> <span class="fl">0.05</span>,
-    end <span class="op">=</span> <span class="fl">1</span>,
-    size <span class="op">=</span> <span class="fl">0.05</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/layout.html">layout</a></span><span class="op">(</span>
-    xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"\\delta"</span><span class="op">)</span><span class="op">)</span>, 
-    yaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"\\rho"</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/config.html">config</a></span><span class="op">(</span>mathjax <span class="op">=</span> <span class="st">"cdn"</span><span class="op">)</span>
-<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
-  widget <span class="op">=</span> <span class="va">fig2_fisher</span>, 
-  file <span class="op">=</span> <span class="st">"pf-fig2-fisher.html"</span>, 
-  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
-  src <span class="op">=</span> <span class="st">"pf-fig2-fisher.html"</span>,
-  scrolling <span class="op">=</span> <span class="st">"no"</span>, 
-  seamless <span class="op">=</span> <span class="st">"seamless"</span>,
-  frameBorder <span class="op">=</span> <span class="st">"0"</span>,
-  width <span class="op">=</span> <span class="st">"100%"</span>, 
-  height <span class="op">=</span> <span class="fl">400</span>
-<span class="op">)</span></code></pre></div>
-<p><iframe src="pf-fig2-fisher.html" scrolling="no" seamless="seamless" frameborder="0" width="100%" height="400"></iframe></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fig2_tippett</span> <span class="op">&lt;-</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/plot_ly.html">plot_ly</a></span><span class="op">(</span>
-  type <span class="op">=</span> <span class="st">"contour"</span>, 
-  x <span class="op">=</span> <span class="va">delta_out</span>, 
-  y <span class="op">=</span> <span class="va">rho_out</span>, 
-  z <span class="op">=</span> <span class="va">pvalue_tippett</span>, 
-  autocontour <span class="op">=</span> <span class="cn">FALSE</span>,
-  contours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    start <span class="op">=</span> <span class="fl">0.05</span>,
-    end <span class="op">=</span> <span class="fl">1</span>,
-    size <span class="op">=</span> <span class="fl">0.05</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/layout.html">layout</a></span><span class="op">(</span>
-    xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"\\delta"</span><span class="op">)</span><span class="op">)</span>, 
-    yaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"\\rho"</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/config.html">config</a></span><span class="op">(</span>mathjax <span class="op">=</span> <span class="st">"cdn"</span><span class="op">)</span>
-<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
-  widget <span class="op">=</span> <span class="va">fig2_tippett</span>, 
-  file <span class="op">=</span> <span class="st">"pf-fig2-tippett.html"</span>, 
-  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
-  src <span class="op">=</span> <span class="st">"pf-fig2-tippett.html"</span>,
-  scrolling <span class="op">=</span> <span class="st">"no"</span>, 
-  seamless <span class="op">=</span> <span class="st">"seamless"</span>,
-  frameBorder <span class="op">=</span> <span class="st">"0"</span>,
-  width <span class="op">=</span> <span class="st">"100%"</span>, 
-  height <span class="op">=</span> <span class="fl">400</span>
-<span class="op">)</span></code></pre></div>
-<p><iframe src="pf-fig2-tippett.html" scrolling="no" seamless="seamless" frameborder="0" width="100%" height="400"></iframe></p>
+<code class="sourceCode R"><span class="va">df_tippett</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rho</span> <span class="op">&gt;=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">rho</span>, z <span class="op">=</span> <span class="va">pvalue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_contour_filled</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">labs</span><span class="op">(</span>
+    title <span class="op">=</span> <span class="st">"Contour plot of the p-value surface"</span>, 
+    subtitle <span class="op">=</span> <span class="st">"Using Tippett's non-parametric combination"</span>, 
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, 
+    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">rho</span><span class="op">)</span>, 
+    fill <span class="op">=</span> <span class="st">"p-value"</span>
+  <span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="pvalue-function_files/figure-html/unnamed-chunk-9-1.png" width="97%"></p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
