@@ -1,3 +1,8 @@
+abort <- function(msg) {
+  cli::cli_alert_danger(msg)
+  withr::with_options(list(show.error.messages = FALSE), stop())
+}
+
 convert_to_list <- function(...) {
   l <- rlang::list2(...)
   n <- length(l)
