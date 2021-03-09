@@ -34,7 +34,8 @@ Imports:
     ggplot2,
     tibble,
     withr,
-    viridisLite
+    viridisLite,
+    Rcpp
 Suggests: 
     rmarkdown,
     knitr,
@@ -49,3 +50,5 @@ URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
 BugReports: https://github.com/astamm/flipr/issues/
 Depends: 
     R (>= 2.10)
+LinkingTo: 
+    Rcpp
