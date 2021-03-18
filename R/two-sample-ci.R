@@ -94,3 +94,46 @@ two_sample_ci <- function(null_specification,
 
   c(lb, ub)
 }
+
+two_sample_ci_new <- function(pvalue_function,
+                              alpha = 0.05,
+                              point_estimate = NULL,
+                              lower_bound = 0,
+                              upper_bound = 1) {
+  stopifnot(length(attr(pvalue_function, "statistic")) == 1)
+
+  if (is.null(point_estimate))
+  {
+    point_estimate <- two_sample_pe_new(
+      pvalue_function = pvalue_function,
+      lower_bound = lower_bound,
+      upper_bound = upper_bound
+    )
+  }
+
+  cost <- function(.x) {
+    pvalues <- pvalue_function(.x)
+    pvalues - alpha
+  }
+
+  if (point_estimate > 0) {
+    lbi <- c(point_estimate / 10, point_estimate)
+    ubi <- c(point_estimate, point_estimate * 10)
+  } else {
+    lbi <- c(point_estimate * 10, point_estimate)
+    ubi <- c(point_estimate, point_estimate / 10)
+  }
+
+  lb <- stats::uniroot(
+    f = cost,
+    interval = lbi,
+    extendInt = "upX"
+  )$root
+  ub <- stats::uniroot(
+    f = cost,
+    interval = ubi,
+    extendInt = "downX"
+  )$root
+
+  c(lb, ub)
+}

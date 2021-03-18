@@ -174,15 +174,6 @@ two_sample_viz <- function(null_specification,
     )
 }
 
-generate_grid <- function(center_value, min_value, max_value, n) {
-  stopifnot(center_value > min_value && center_value < max_value)
-  c(
-    seq(min_value, center_value, len = n / 2 + 1)[1:(n / 2)],
-    center_value,
-    seq(center_value, max_value, len = n / 2 + 1)[-1]
-  )
-}
-
 format_title <- function(x) {
   x <- gsub("_", "-", x)
   paste0(toupper(substring(x, 1, 1)), tolower(substring(x, 2)))

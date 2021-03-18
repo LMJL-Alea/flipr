@@ -1,3 +1,20 @@
+generate_grid <- function(l, n = 20) {
+  #  named list of c(center, min, max) for each parameter (name is the parameter name)
+  l %>%
+    purrr::map(~ {
+      center_value <- .x[1]
+      min_value <- .x[2]
+      max_value <- .x[3]
+      stopifnot(center_value > min_value && center_value < max_value)
+      c(
+        seq(min_value, center_value, len = n / 2 + 1)[1:(n / 2)],
+        center_value,
+        seq(center_value, max_value, len = n / 2 + 1)[-1]
+      )
+    }) %>%
+    purrr::cross_df()
+}
+
 abort <- function(msg) {
   cli::cli_alert_danger(msg)
   withr::with_options(list(show.error.messages = FALSE), stop())

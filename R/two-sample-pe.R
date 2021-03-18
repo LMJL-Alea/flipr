@@ -100,3 +100,54 @@ two_sample_pe <- function(null_specification,
   }
   x0
 }
+
+two_sample_pe_new <- function(pvalue_function,
+                              lower_bound = 0,
+                              upper_bound = 1,
+                              verbose = FALSE) {
+  stopifnot(length(attr(pvalue_function, "statistic")) == 1)
+
+  continue_loop <- TRUE
+  while (continue_loop) {
+    if (verbose) {
+      writeLines(paste0(
+        "Searching point estimate on the interval [",
+        lower_bound,
+        ", ",
+        upper_bound,
+        "]..."
+      ))
+    }
+    opt <- stats::optimise(
+      f = pvalue_function,
+      interval = c(lower_bound, upper_bound),
+      maximum = TRUE
+    )
+    x0 <- opt$maximum
+    fval <- opt$objective
+    if (verbose) {
+      writeLines(paste0(
+        "Local maximum ",
+        round(fval, 3),
+        " reached at x0 = ",
+        round(x0, 3),
+        "."
+      ))
+    }
+    condition_lb <- abs(x0 - lower_bound) / abs(lower_bound) < 0.01
+    condition_ub <- abs(x0 - upper_bound) / abs(upper_bound) < 0.01
+    condition_pv <- abs(fval - 1) > 0.01
+    continue_loop <- condition_lb || condition_ub || condition_pv
+    if (condition_lb)
+      lower_bound <- lower_bound - 1.5 * (upper_bound - lower_bound)
+    if (condition_ub)
+      upper_bound <- upper_bound + 1.5 * (upper_bound - lower_bound)
+    if (condition_pv) {
+      if (!condition_lb)
+        lower_bound <- lower_bound - 0.5 * (upper_bound - lower_bound)
+      if (!condition_ub)
+        upper_bound <- upper_bound + 0.5 * (upper_bound - lower_bound)
+    }
+  }
+  x0
+}
