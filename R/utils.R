@@ -1,4 +1,5 @@
 generate_grid <- function(l, n = 20) {
+  names(l) <- paste0("param", 1:length(l))
   #  named list of c(center, min, max) for each parameter (name is the parameter name)
   l %>%
     purrr::map(~ {
