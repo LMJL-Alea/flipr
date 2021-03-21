@@ -38,7 +38,7 @@ be structured for compatibility with the \strong{flipr} framwork. Default is
 
 \item{alternative}{A string specifying whether the p-value is right-tailed,
 left-tailed or two-tailed. Choices are \code{"right_tail"}, \code{"left_tail"} and
-\code{"two_tail"}. Default is \code{"right_tail"}. Obviously, if the test statistic
+\code{"two_tail"}. Default is \code{"two_tail"}. Obviously, if the test statistic
 used in argument \code{statistic} is positive, all alternatives will lead to the
 two-tailed p-value.}
 

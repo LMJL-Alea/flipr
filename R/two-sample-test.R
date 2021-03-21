@@ -28,7 +28,7 @@
 #' @param B The number of sampled permutation. Default is `1000L`.
 #' @param alternative A string specifying whether the p-value is right-tailed,
 #'   left-tailed or two-tailed. Choices are `"right_tail"`, `"left_tail"` and
-#'   `"two_tail"`. Default is `"right_tail"`. Obviously, if the test statistic
+#'   `"two_tail"`. Default is `"two_tail"`. Obviously, if the test statistic
 #'   used in argument `statistic` is positive, all alternatives will lead to the
 #'   two-tailed p-value.
 #' @param combine_with A string specifying the combining function to be used to
@@ -67,13 +67,16 @@
 #' y <- rnorm(n = n, mean = my, sd = sigma)
 #' t2 <- two_sample_test(x, y)
 #' t2$pvalue
-two_sample_test <- function(x, y,
+two_sample_test <- function(x, y = NULL,
                             statistic = stat_hotelling,
                             B = 1000L,
-                            alternative = "right_tail",
+                            alternative = "two_tail",
                             combine_with = "tippett",
                             type = "exact",
                             seed = NULL) {
+
+  if (is.null(y) && !inherits(x, "dist"))
+    abort("The x argument should be a dist object if the y argument is not supplied.")
 
   if (!is.null(seed)) withr::local_seed(seed)
 
