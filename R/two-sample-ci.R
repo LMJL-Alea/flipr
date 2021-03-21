@@ -100,8 +100,6 @@ two_sample_ci_new <- function(pvalue_function,
                               point_estimate = NULL,
                               lower_bound = 0,
                               upper_bound = 1) {
-  stopifnot(length(attr(pvalue_function, "statistic")) == 1)
-
   if (is.null(point_estimate))
   {
     point_estimate <- two_sample_pe_new(
@@ -112,7 +110,7 @@ two_sample_ci_new <- function(pvalue_function,
   }
 
   cost <- function(.x) {
-    pvalues <- pvalue_function(.x)
+    pvalues <- pvalue_function$get_value(.x)
     pvalues - alpha
   }
 

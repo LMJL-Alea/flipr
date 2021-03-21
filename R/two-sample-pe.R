@@ -105,8 +105,6 @@ two_sample_pe_new <- function(pvalue_function,
                               lower_bound = 0,
                               upper_bound = 1,
                               verbose = FALSE) {
-  stopifnot(length(attr(pvalue_function, "statistic")) == 1)
-
   continue_loop <- TRUE
   while (continue_loop) {
     if (verbose) {
@@ -119,7 +117,7 @@ two_sample_pe_new <- function(pvalue_function,
       ))
     }
     opt <- stats::optimise(
-      f = pvalue_function,
+      f = pvalue_function$get_value,
       interval = c(lower_bound, upper_bound),
       maximum = TRUE
     )
