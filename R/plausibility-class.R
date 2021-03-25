@@ -232,6 +232,27 @@ PlausibilityFunction <- R6::R6Class(
       )$pvalue
     },
 
+    #' @field ncores An integer value specifying the number of cores to run
+    #'   optimization and grid computation in parallel. Defaults to `1L`.
+    ncores = 1L,
+
+    #' @description Change the value of the `ncores` field.
+    #'
+    #' @param val New value for the number of cores to use for optimization and
+    #'   grid computation in parallel.
+    #'
+    #' @examples
+    #' x <- rnorm(10)
+    #' y <- rnorm(10, mean = 2)
+    #' null_spec <- function(y, parameters) {y - parameters[1]}
+    #' pf <- PlausibilityFunction$new(null_spec, x, y)
+    #' pf$ncores
+    #' pf$set_ncores(2)
+    #' pf$ncores
+    set_ncores = function(val) {
+      self$ncores <- val
+    },
+
     #' @field point_estimates A numeric vector providing point estimates for the
     #'   parameters of interest.
     point_estimates = NULL,
@@ -278,6 +299,9 @@ PlausibilityFunction <- R6::R6Class(
         return()
       }
       cli::cli_alert_info("Computing point estimates for all parameters...")
+      cl <- FALSE
+      if (self$ncores > 1 && requireNamespace("parallel", quietly = TRUE))
+        cl <- parallel::makeCluster(self$ncores)
       self$point_estimates <- rgenoud::genoud(
         fn = self$get_value,
         nvars = private$nparams,
@@ -286,8 +310,11 @@ PlausibilityFunction <- R6::R6Class(
         max.generations = 20,
         wait.generations = 5,
         BFGSburnin = 5,
-        print.level = 0
+        print.level = 0,
+        cluster = cl
       )$par
+      if (self$ncores > 1 && requireNamespace("parallel", quietly = TRUE))
+        parallel::stopCluster(cl)
       private$set_univariate_nulls()
     },
 
@@ -328,6 +355,7 @@ PlausibilityFunction <- R6::R6Class(
             "..."
           ))
           pe <- two_sample_pe_new(pvf_temp)
+          print(pe)
 
           cli::cli_alert_info(paste(
             "Computing a confidence interval with confidence level",
@@ -365,9 +393,28 @@ PlausibilityFunction <- R6::R6Class(
         nrow(self$design),
         "..."
       ))
-      self$response <- self$design %>%
-        purrr::array_tree(margin = 1) %>%
-        purrr::map_dbl(self$get_value)
+      if (requireNamespace("progressr", quietly = TRUE)) {
+        p <- progressr::progressor(along = 1:nrow(self$design))
+      }
+      if (self$ncores > 1 && requireNamespace("furrr", quietly = TRUE)) {
+        self$response <- self$design %>%
+          purrr::array_tree(margin = 1) %>%
+          furrr::future_map_dbl(~ {
+            if (requireNamespace("progressr", quietly = TRUE)) {
+              p()
+            }
+            self$get_value(.x)
+          })
+      } else {
+        self$response <- self$design %>%
+          purrr::array_tree(margin = 1) %>%
+          purrr::map_dbl(~ {
+            if (requireNamespace("progressr", quietly = TRUE)) {
+              p()
+            }
+            self$get_value(.x)
+          })
+      }
     },
 
     get_prediction = function(parameters) {

@@ -118,6 +118,18 @@ pf <- PlausibilityFunction$new(null_spec, x, y)
 pf$get_value(2)
 
 ## ------------------------------------------------
+## Method `PlausibilityFunction$set_ncores`
+## ------------------------------------------------
+
+x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {y - parameters[1]}
+pf <- PlausibilityFunction$new(null_spec, x, y)
+pf$ncores
+pf$set_ncores(2)
+pf$ncores
+
+## ------------------------------------------------
 ## Method `PlausibilityFunction$set_point_estimates`
 ## ------------------------------------------------
 
@@ -173,6 +185,9 @@ are \code{"tippett"} and \verb{"fisher} for now. Default is \code{"tippett"}.}
 \item{\code{seed}}{A numeric value specifying the seed from which permutations are
 randomly sampled. Default is \code{1234}.}
 
+\item{\code{ncores}}{An integer value specifying the number of cores to run
+optimization and grid computation in parallel. Defaults to \code{1L}.}
+
 \item{\code{point_estimates}}{A numeric vector providing point estimates for the
 parameters of interest.}
 }
@@ -191,6 +206,7 @@ parameters of interest.}
 \item \href{#method-set_aggregator}{\code{PlausibilityFunction$set_aggregator()}}
 \item \href{#method-set_seed}{\code{PlausibilityFunction$set_seed()}}
 \item \href{#method-get_value}{\code{PlausibilityFunction$get_value()}}
+\item \href{#method-set_ncores}{\code{PlausibilityFunction$set_ncores()}}
 \item \href{#method-set_point_estimates}{\code{PlausibilityFunction$set_point_estimates()}}
 \item \href{#method-update_point_estimates}{\code{PlausibilityFunction$update_point_estimates()}}
 \item \href{#method-set_max_confidence}{\code{PlausibilityFunction$set_max_confidence()}}
@@ -514,6 +530,38 @@ y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {y - parameters[1]}
 pf <- PlausibilityFunction$new(null_spec, x, y)
 pf$get_value(2)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_ncores"></a>}}
+\if{latex}{\out{\hypertarget{method-set_ncores}{}}}
+\subsection{Method \code{set_ncores()}}{
+Change the value of the \code{ncores} field.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_ncores(val)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{val}}{New value for the number of cores to use for optimization and
+grid computation in parallel.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {y - parameters[1]}
+pf <- PlausibilityFunction$new(null_spec, x, y)
+pf$ncores
+pf$set_ncores(2)
+pf$ncores
 }
 \if{html}{\out{</div>}}
 
