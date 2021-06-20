@@ -1,9 +1,9 @@
 #' Two-Sample Permutation Test
 #'
-#' This function carries out an hypothesis test where the null hypothesis is
-#' that the two samples are ruled by the same underlying generative probability
-#' distribution against the alternative hypothesis that they are ruled by two
-#' separate generative probability distributions.
+#' This function carries out an hypothesis test in which the null hypothesis is
+#' that the two samples are governed by the same underlying generative
+#' probability distribution against the alternative hypothesis that they are
+#' governed by two different generative probability distributions.
 #'
 #' @section User-supplied statistic function:
 #' A user-specified function should have at least two arguments:
@@ -12,29 +12,38 @@
 #' concatenated observations with the original `n1` observations from the first
 #' sample on top and the original `n2` observations from the second sample
 #' below;
-#' - the second argument is `indices` which should be an integer vector giving
+#' - the second argument is `perm_data` which should be an integer vector giving
 #' the indices in `data` that are considered to belong to the first sample.
 #'
-#' See the \code{\link{stat_hotelling}} function for an example.
+#' See the \code{\link{stat_t}} function for an example.
 #'
-#' @param x A list or matrix representing the 1st sample.
-#' @param y A list or matrix representing the 2nd sample.
-#' @param statistic A character vector specifying the chosen test statistic(s).
-#'   These can be \code{\link{stat_hotelling}} or user-specified functions that
-#'   define desired statistics. See the section *User-supplied statistic
-#'   function* for more information on how these user-supplied functions should
-#'   be structured for compatibility with the **flipr** framwork. Default is
-#'   \code{\link{stat_hotelling}}.
-#' @param B The number of sampled permutation. Default is `1000L`.
-#' @param alternative A string specifying whether the p-value is right-tailed,
-#'   left-tailed or two-tailed. Choices are `"right_tail"`, `"left_tail"` and
-#'   `"two_tail"`. Default is `"two_tail"`. Obviously, if the test statistic
-#'   used in argument `statistic` is positive, all alternatives will lead to the
-#'   two-tailed p-value.
+#' @param x A numeric vector or a numeric matrix or a list representing the 1st
+#'   sample.
+#' @param y A numeric vector or a numeric matrix or a list representing the 2nd
+#'   sample.
+#' @param stats A list of functions produced by \code{\link[rlang]{as_function}}
+#'   specifying the chosen test statistic(s). A number of test statistic
+#'   functions are implemented in the package and can be used as such.
+#'   Alternatively, one can provide its own implementation of test statistics
+#'   that (s)he deems relevant for the problem at hand. See the section
+#'   *User-supplied statistic function* for more information on how these
+#'   user-supplied functions should be structured for compatibility with the
+#'   **flipr** framwork. Default is \code{\link{stat_t}}.
+#' @param B The number of sampled permutations. Default is `1000L`.
+#' @param M The total number of possible permutations. Defaults to `NULL`, which
+#'   means that it is automatically computed from the given sample size(s).
+#' @param alternative A single string or a character vector specifying whether
+#'   the p-value is right-tailed, left-tailed or two-tailed. Choices are
+#'   `"right_tail"`, `"left_tail"` and `"two_tail"`. Default is `"two_tail"`. If
+#'   a single string is provided, it is assumed that it should be applied to all
+#'   test statistics provided by the user. Alternative, the length of
+#'   `alternative` should match the length of the `stats` parameter and it is
+#'   assumed that there is a one-to-one correspondence.
 #' @param combine_with A string specifying the combining function to be used to
 #'   compute the single test statistic value from the set of p-value estimates
-#'   obtained during the non-parametric combination testing procedure. Default
-#'   is `"tippett"`, which picks Tippett's function.
+#'   obtained during the non-parametric combination testing procedure. For now,
+#'   choices are either `"tippett"` or `"fisher"`. Default is `"tippett"`, which
+#'   picks Tippett's function.
 #' @param type A string specifying if performing an exact test through the use
 #'   of Phipson-Smyth estimate of the p-value or an approximate test through a
 #'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
@@ -68,8 +77,9 @@
 #' t2 <- two_sample_test(x, y)
 #' t2$pvalue
 two_sample_test <- function(x, y = NULL,
-                            statistic = stat_hotelling,
+                            stats = stat_t,
                             B = 1000L,
+                            M = NULL,
                             alternative = "two_tail",
                             combine_with = "tippett",
                             type = "exact",
@@ -83,74 +93,35 @@ two_sample_test <- function(x, y = NULL,
   l <- convert_to_list(x, y)
   x <- l[[1]]
   y <- l[[2]]
-
   n1 <- length(x)
   n2 <- length(y)
   n <- n1 + n2
   stat_data <- c(x, y)
 
-  npc <- length(statistic) > 1
+  # Compute total number of permutations yielding to distinct values of the test
+  # statistic
+  if (is.null(M)) M <- choose(n, n1) - 1
 
-  M <- choose(n, n1)
-  if (n1 == n2)
-    M <- M / 2
-
-  # B can be either a number of combinations to draw or the list of combinations
-
-  type <- match.arg(type, c("approximate", "exact"))
-  if (type == "approximate" & M <= B) {
+  # Generate permutation data
+  if (M <= B) {
     B <- M
-    group1_perm <- utils::combn(n, n1)[, 1:B]
-  } else
-    group1_perm <- replicate(B, sample.int(n))[1:n1, ]
-
-  alternative <- match.arg(alternative, c("left_tail", "right_tail", "two_tail"))
-
-  if (!npc)
-    Tp <- sapply(
-      X = 0:B,
-      FUN = get_permuted_statistic,
-      indices1 = group1_perm,
-      stat_data = stat_data,
-      statistic = statistic
-    )
-  else {
-    Tp <- statistic %>%
-      purrr::map(~ sapply(
-        X = 0:B,
-        FUN = get_permuted_statistic,
-        indices1 = group1_perm,
-        stat_data = stat_data,
-        statistic = .
-      )) %>%
-      purrr::map(~ sapply(
-        X = 1:(B+1),
-        FUN = stats2pvalue,
-        Tp = .,
-        B = B,
-        M = M,
-        type = "approximate",
-        alternative = alternative
-      )) %>%
-      purrr::transpose() %>%
-      purrr::simplify_all() %>%
-      purrr::map_dbl(combine_pvalues, combine_with = combine_with)
+    perm_data <- utils::combn(n, n1)[, 1:B]
+  } else {
+    perm_data <- replicate(B, sample.int(n))[1:n1, ]
   }
-
-  altern <- if (npc) "right_tail" else alternative
-
-  list(
-    statistic = Tp[1],
-    pvalue = stats2pvalue(1, Tp, B, M, type = type, alternative = altern),
-    permuted_statistics = Tp[-1]
+  perm_data <- cbind(
+    seq_len(nrow(perm_data)),
+    perm_data
   )
-}
 
-get_permuted_statistic <- function(i, indices1, stat_data, statistic) {
-  if (i == 0)
-    indices <- seq_len(nrow(indices1))
-  else
-    indices <- indices1[, i]
-
-  rlang::as_function(statistic)(stat_data, indices)
+  run_permutation_scheme(
+    type = type,
+    alternative = alternative,
+    stats = stats,
+    B = B,
+    perm_data = perm_data,
+    stat_data = stat_data,
+    M = M,
+    combine_with = combine_with
+  )
 }

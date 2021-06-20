@@ -36,7 +36,9 @@ Imports:
     withr,
     viridisLite,
     Rcpp,
-    R6
+    R6,
+    pbapply,
+    dials
 Suggests: 
     rmarkdown,
     knitr,
@@ -45,10 +47,7 @@ Suggests:
     plotly,
     htmlwidgets,
     htmltools,
-    pracma,
-    parallel,
-    furrr,
-    progressr
+    pracma
 VignetteBuilder: knitr
 URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
 BugReports: https://github.com/astamm/flipr/issues/

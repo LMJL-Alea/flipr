@@ -1,6 +1,5 @@
 generate_grid <- function(l, n = 20) {
-  names(l) <- paste0("param", 1:length(l))
-  #  named list of c(center, min, max) for each parameter (name is the parameter name)
+  # list of c(center, min, max) for each parameter
   l %>%
     purrr::map(~ {
       center_value <- .x[1]
@@ -13,6 +12,7 @@ generate_grid <- function(l, n = 20) {
         seq(center_value, max_value, len = n / 2 + 1)[-1]
       )
     }) %>%
+    purrr::set_names(paste0("param", 1:length(.))) %>%
     purrr::cross_df()
 }
 
@@ -25,30 +25,37 @@ convert_to_list <- function(...) {
   l <- rlang::list2(...)
   n <- length(l)
 
+  # Case "No input samples"
   if (n == 0) return(NULL)
 
+  # Case of univariate data
   if (is.numeric(l[[1]])) {
-    coherent_inputs <- TRUE
-    for (i in 2:n) {
-      if (!is.numeric(l[[i]])) {
-        coherent_inputs <- FALSE
-        break
+    if (n > 1) {
+      coherent_inputs <- TRUE
+      for (i in 2:n) {
+        if (!is.numeric(l[[i]])) {
+          coherent_inputs <- FALSE
+          break
+        }
       }
+      stopifnot(coherent_inputs)
     }
-    stopifnot(coherent_inputs)
-    return(purrr::map(l, convert_vector_to_list))
+    return(purrr::map(l, purrr::array_tree, margin = 1))
   }
 
+  # Case of multivariate data
   if (is.matrix(l[[1]])) {
-    coherent_inputs <- TRUE
-    for (i in 2:n) {
-      if (!is.numeric(l[[i]]) || (ncol(l[[i]]) != ncol(l[[1]]))) {
-        coherent_inputs <- FALSE
-        break
+    if (n > 1) {
+      coherent_inputs <- TRUE
+      for (i in 2:n) {
+        if (!is.numeric(l[[i]]) || (ncol(l[[i]]) != ncol(l[[1]]))) {
+          coherent_inputs <- FALSE
+          break
+        }
       }
+      stopifnot(coherent_inputs)
     }
-    stopifnot(coherent_inputs)
-    return(purrr::map(l, convert_matrix_to_list))
+    return(purrr::map(l, purrr::array_tree, margin = 1))
   }
 
   coherent_inputs <- TRUE
@@ -63,10 +70,15 @@ convert_to_list <- function(...) {
   l
 }
 
-convert_vector_to_list <- function(x) {
-  as.list(x)
+flipn <- function(n) {
+  signs <- c(-1, 1)
+  l <- replicate(n, signs, simplify = FALSE)
+  expand.grid(rlang::dots_splice(l)) %>%
+    as.matrix() %>%
+    `colnames<-`(NULL) %>%
+    t()
 }
 
-convert_matrix_to_list <- function(x) {
-  purrr::map(1:nrow(x), ~ x[.x, ])
+get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun) {
+  stat_fun(stat_data, perm_data[, i + 1])
 }
