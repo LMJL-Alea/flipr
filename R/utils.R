@@ -1,18 +1,22 @@
-generate_grid <- function(l, n = 20) {
-  # list of c(center, min, max) for each parameter
-  l %>%
-    purrr::map(~ {
-      center_value <- .x[1]
-      min_value <- .x[2]
-      max_value <- .x[3]
+grid_centered <- function(x, point_estimates, levels = 20) {
+  if (levels %% 2 != 0)
+    abort("The `levels` argument should be even.")
+  y <- dials::parameters(x)
+  params <- y$object
+  names(params) <- y$id
+  params %>%
+    purrr::map2(point_estimates, ~ {
+      center_value <- .y
+      rngs <- dials::range_get(.x, original = FALSE)
+      min_value <- rngs$lower
+      max_value <- rngs$upper
       stopifnot(center_value > min_value && center_value < max_value)
       c(
-        seq(min_value, center_value, len = n / 2 + 1)[1:(n / 2)],
+        seq(min_value, center_value, len = levels / 2 + 1)[1:(levels / 2)],
         center_value,
-        seq(center_value, max_value, len = n / 2 + 1)[-1]
+        seq(center_value, max_value, len = levels / 2 + 1)[-1]
       )
     }) %>%
-    purrr::set_names(paste0("param", 1:length(.))) %>%
     purrr::cross_df()
 }
 
