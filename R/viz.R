@@ -21,34 +21,17 @@
 #'   x, y
 #' )
 #' plot_pf(pf)
-plot_pf <- function(pf, ngrid = 100, ncores = 1) {
+plot_pf <- function(pf, ngrid = 10, ncores = 1, subtitle = "") {
   if (pf$nparams > 2)
     abort("Only one- or two-dimensional plausibility functions can currently be plotted.")
 
-  for (i in 1:pf$nparams) {
-    rngs <- dials::range_get(pf$param_list[[i]], original = FALSE)
-    if (dials::is_unknown(rngs[1]) || dials::is_unknown(rngs[2]))
-      abort("Ranges for parameters are not set. Consider running the `$set_parameter_bounds()` method.")
-  }
-
-  df <- pf$param_list |>
-    # dials::grid_latin_hypercube(size = ngrid) |>
-    dials::grid_regular(levels = 10) |>
-    tibble::add_row(
-      pf$point_estimates |>
-        set_names(names(pf$param_list)) |>
-        tibble::as_tibble_row()
-    )
-  df$pvalue <- df |>
-    purrr::array_tree(margin = 1) |>
-    pbapply::pbsapply(pf$get_value)
-
-  return(df)
+  if (is.null(pf$grid))
+    abort("The plausbility function has not yet been evaluated on a grid of parameters. Consider running the `$set_grid()` method first.")
 
   color_palette <- viridisLite::viridis(3)
 
   if (pf$nparams == 1) {
-    df %>%
+    pf$grid %>%
       ggplot(aes(.data$parameter, .data$pvalue)) +
       geom_line() +
       labs(
@@ -97,14 +80,15 @@ plot_pf <- function(pf, ngrid = 100, ncores = 1) {
         )
       )
   } else {
-    df |>
-      ggplot(aes_string(names(pf$param_list)[1], names(pf$param_list)[2], z = "pvalue")) +
+    nm <- names(pf$param_list)
+    pf$grid |>
+      ggplot(aes_string(nm[1], nm[2], z = "pvalue")) +
       geom_contour_filled(binwidth = 0.05) +
       labs(
-        title = "Contour plot of the p-value surface",
-        subtitle = "Using Tippett's non-parametric combination",
-        x = expression(delta),
-        y = expression(rho),
+        title = "Contour plot of the plausibility function",
+        subtitle = subtitle,
+        x = pf$param_list[[1]]$label,
+        y = pf$param_list[[2]]$label,
         fill = "p-value"
       ) +
       theme_minimal()
