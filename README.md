@@ -54,31 +54,59 @@ remotes::install_github("astamm/flipr")
 
 ## Example
 
+``` r
+library(flipr)
+```
+
 We hereby use the very simple t-test for comparing the means of two
 univariate samples to show how easy it is to carry out a permutation
 test with [**flipr**](https://astamm.github.io/flipr/).
 
-Let us first generate a first sample of size 10 governed by a Gaussian
-distribution of mean 0 and unit variance:
+Let us first generate two samples of size 15 each governed by Gaussian
+distributions with equal variance but different means:
 
 ``` r
-set.seed(1234)
-x1 <- rnorm(n = 10, mean = 0, sd = 1)
+set.seed(123)
+n <- 15
+x1 <- rnorm(n = n, mean = 0, sd = 1)
+x2 <- rnorm(n = n, mean = 1, sd = 1)
 ```
 
-Let us then generate a second sample of size 10 governed by a Gaussian
-distribution of mean 3 and unit variance:
+Let *δ* = *μ*<sub>2</sub> − *μ*<sub>1</sub>. In order for the `x2`
+sample to be exchangeable with the `x1` sample, one can subtract *δ* to
+each observation of the `x2` sample. To do that, let us define the
+following null specification function:
 
 ``` r
-set.seed(1234)
-x2 <- rnorm(n = 10, mean = 3, sd = 1)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters)
+}
 ```
 
-We can implement the squared *t*-statistic as a function that plays well
-with [**flipr**](https://astamm.github.io/flipr/) as follows:
+Next, we need to decide which test statistic(s) we are going to use for
+performing the test. Here, we are only interested in one parameter,
+namely the mean difference *δ*. Since the two samples share the same
+variance we can use the *t*-statistic with a pooled estimated of the
+common variance. We need to implement it for easy computation on a
+permuted version of the data. Hence, the skeleton function to implement
+test statistics compatible with **flipr** is:
 
 ``` r
-stat_t2 <- function(data, indices) {
+my_stat_fun <- function(data, indices) {
+  # data: A list of n1 + n2 element in which the first n1 elements are the
+  # observations of the first sample and the last n2 elements contain the
+  # observations of the second sample
+  
+  # indices: An integer vector of indices of observations that belong to the
+  # first sample in the current permuted version of the data
+}
+```
+
+We can therefore implement the *t*-statistic as a function that plays
+well with [**flipr**](https://astamm.github.io/flipr/) as follows:
+
+``` r
+my_t_stat <- function(data, indices) {
   n <- length(data)
   n1 <- length(indices)
   n2 <- n - n1
@@ -89,26 +117,79 @@ stat_t2 <- function(data, indices) {
 }
 ```
 
-Now we can simply use the function `flipr::two_sample_test()` to get the
-result of the test:
+We then declare a list of test statistics function:
 
 ``` r
-test_t2 <- flipr::two_sample_test(
-  x = x1, 
-  y = x2, 
-  statistic = stat_t2, 
-  B = 100000, 
-  alternative = "two_tail"
+stat_functions <- list(my_t_stat)
+```
+
+Finally we need to define a named list that tells **flipr** which test
+statistics among the ones declared in the `stat_functions` list above
+should be used for each inferred parameter. This is used to determine
+bounds on each parameter for the plausibility function. This list, often
+termed `stat_assignments`, should therefore have as many elements as
+there are parameters to be inferred. Each element should be named after
+the name of a parameter to be inferred and should list the indices
+corresponding to the test statistics that should be used for that
+parameter in `stat_functions`. In our example, it means that:
+
+``` r
+stat_assignments <- list(delta = 1)
+```
+
+Now we can instantiate a plausibility function as follows:
+
+``` r
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x1, x2
 )
-test_t2$pvalue
-#> [1] 2.461321e-05
+#> ! Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.
+```
+
+Now assume we want to test the following hypotheses:
+
+*H*<sub>0</sub> : *δ* = 0  v.s.  *H*<sub>1</sub> : *δ* ≠ 0.
+
+We just have to evaluate the plausbility function in 0 to get the
+corresponding p-value as follows:
+
+``` r
+pf$get_value(0)
+#> [1] 0.1068931
 ```
 
 We can compare the resulting p-value with the one obtained using the
 more classic parametric test:
 
 ``` r
-test_student <- t.test(x = x1, y = x2, var.equal = TRUE)
-test_student$p.value
-#> [1] 2.584312e-06
+t.test(x = x1, y = x2, var.equal = TRUE)$p.value
+#> [1] 0.1030946
+```
+
+The permutation p-value does not quite match the parametric one. This is
+because of two reasons:
+
+1.  The resolution of a permutation p-value is of the order of
+    1/(*B* + 1), where *B* is the number of sampled permutations. By
+    default, the plausibility function is instantiated with *B* = 1000:
+
+``` r
+pf$nperms
+#> [1] 1000
+```
+
+2.  We randomly sample *B* permutations out of the
+    $\\binom{n\_1+n\_2}{n\_1}$ possible permutations and therefore
+    introduce extra variability in the p-value.
+
+If we were to ask for more permutations, say *B* = 1, 000, 000, we would
+be much closer to the parametric *p*-value:
+
+``` r
+pf$set_nperms(1000000)
+pf$get_value(0)
+#> [1] 0.1029993
 ```

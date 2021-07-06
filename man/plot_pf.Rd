@@ -4,7 +4,7 @@
 \alias{plot_pf}
 \title{Visualization of Plausibility Functions}
 \usage{
-plot_pf(pf, ngrid = 100, ncores = 1)
+plot_pf(pf, ngrid = 10, ncores = 1, subtitle = "")
 }
 \arguments{
 \item{pf}{A \code{\link{PlausibilityFunction}} object.}

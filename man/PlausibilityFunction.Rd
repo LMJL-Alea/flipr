@@ -189,16 +189,47 @@ pf$set_parameter_bounds()
 pf$param_list
 
 ## ------------------------------------------------
-## Method `PlausibilityFunction$set_ngrid`
+## Method `PlausibilityFunction$set_grid`
 ## ------------------------------------------------
 
 x <- rnorm(10)
 y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$ngrid
-pf$set_ngrid(10)
-pf$ngrid
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean_param = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$set_point_estimates(mean(y) - mean(x))
+pf$set_parameter_bounds()
+pf$set_grid(npoints = 3L)
+
+## ------------------------------------------------
+## Method `PlausibilityFunction$evaluate_grid`
+## ------------------------------------------------
+
+x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean_param = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$set_point_estimates(mean(y) - mean(x))
+pf$set_parameter_bounds()
+pf$set_grid(npoints = 3L)
+pf$evaluate_grid()
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$get_prediction`
@@ -264,18 +295,8 @@ to compute bounds on each parameter of interest in order to fit a
 Kriging model that approximates the expensive plausibility function on
 a hypercube. Defaults to \code{0.99}.}
 
-\item{\code{ngrid}}{An integer specifying the size of the grid for each
-individual parameter of interest for building the hypercube on which
-the plausibility function will be approximated by a Kriging model.
-Defaults to \code{20}.}
-
-\item{\code{design}}{A \code{\link[tibble]{tibble}} storing the grid of the
-hypercube on which the exact plausibility function is to be evaluated
-for later fitting an appropriate Kriging model. Defaults to \code{NULL}.}
-
-\item{\code{response}}{A numeric vector storing the plausibility function
-evaluations on the grid specified by the field \code{design}. Defaults to
-\code{NULL}.}
+\item{\code{grid}}{A tibble storing evaluations of the plausibility function on
+a regular centered grid of the parameter space. Defaults to \code{NULL}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -292,8 +313,9 @@ evaluations on the grid specified by the field \code{design}. Defaults to
 \item \href{#method-set_point_estimates}{\code{PlausibilityFunction$set_point_estimates()}}
 \item \href{#method-set_max_conf_level}{\code{PlausibilityFunction$set_max_conf_level()}}
 \item \href{#method-set_parameter_bounds}{\code{PlausibilityFunction$set_parameter_bounds()}}
-\item \href{#method-set_ngrid}{\code{PlausibilityFunction$set_ngrid()}}
-\item \href{#method-setup_approximation}{\code{PlausibilityFunction$setup_approximation()}}
+\item \href{#method-set_grid}{\code{PlausibilityFunction$set_grid()}}
+\item \href{#method-evaluate_grid}{\code{PlausibilityFunction$evaluate_grid()}}
+\item \href{#method-set_kriging_model}{\code{PlausibilityFunction$set_kriging_model()}}
 \item \href{#method-get_prediction}{\code{PlausibilityFunction$get_prediction()}}
 \item \href{#method-clone}{\code{PlausibilityFunction$clone()}}
 }
@@ -727,20 +749,20 @@ pf$param_list
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_ngrid"></a>}}
-\if{latex}{\out{\hypertarget{method-set_ngrid}{}}}
-\subsection{Method \code{set_ngrid()}}{
-Change the value of the \code{ngrid} field.
+\if{html}{\out{<a id="method-set_grid"></a>}}
+\if{latex}{\out{\hypertarget{method-set_grid}{}}}
+\subsection{Method \code{set_grid()}}{
+Computes a tibble storing a regular centered grid of the
+parameter space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_ngrid(val)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_grid(npoints = 20L)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{val}}{New value for the size of the grid for each individual
-parameter of interest for building the hypercube on which the
-plausibility function will be approximated by a Kriging model.}
+\item{\code{npoints}}{An integer specifying the number of points to discretize
+each dimension. Defaults to \code{20L}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -748,11 +770,20 @@ plausibility function will be approximated by a Kriging model.}
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- rnorm(10)
 y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$ngrid
-pf$set_ngrid(10)
-pf$ngrid
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean_param = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$set_point_estimates(mean(y) - mean(x))
+pf$set_parameter_bounds()
+pf$set_grid(npoints = 3L)
 }
 \if{html}{\out{</div>}}
 
@@ -760,33 +791,59 @@ pf$ngrid
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setup_approximation"></a>}}
-\if{latex}{\out{\hypertarget{method-setup_approximation}{}}}
-\subsection{Method \code{setup_approximation()}}{
-Fit a Kriging model to approximate the plausibility
-function.
+\if{html}{\out{<a id="method-evaluate_grid"></a>}}
+\if{latex}{\out{\hypertarget{method-evaluate_grid}{}}}
+\subsection{Method \code{evaluate_grid()}}{
+Updates the \code{grid} field with a \code{pvalue} column storing
+evaluations of the plausibility function on the regular centered grid
+of the parameter space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$setup_approximation(overwrite = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$evaluate_grid(ncores = 1L)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{overwrite}}{A boolean specifying whether the \code{design}, \code{response}
-and \code{kriging_model} fields should be updated if they already have a
-non-null value. Defaults to \code{FALSE}.}
-
-\item{\code{recompute_pe}}{A boolean specifying whether a point estimate of each
-parameter should be recomputed prior to finding its bounds or if it
-should be retrieved from the \code{point_estimates} field. Defaults to
-\code{FALSE}.}
-
-\item{\code{point_estimates}}{A numeric vector of point estimates for the
-parameters of interest. Defaults to \code{NULL} in which case it is computed
-through the method \verb{$update_point_estimates()}.}
+\item{\code{ncores}}{An integer specifying the number of cores to run
+evaluations in parallel. Defaults to \code{1L}.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean_param = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$set_point_estimates(mean(y) - mean(x))
+pf$set_parameter_bounds()
+pf$set_grid(npoints = 3L)
+pf$evaluate_grid()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_kriging_model"></a>}}
+\if{latex}{\out{\hypertarget{method-set_kriging_model}{}}}
+\subsection{Method \code{set_kriging_model()}}{
+Fit a Kriging model to approximate the plausibility
+function.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_kriging_model()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_prediction"></a>}}
