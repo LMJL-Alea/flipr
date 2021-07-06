@@ -63,11 +63,13 @@ get_ci <- function(object,
     type = type,
     point_estimate = point_estimate
   )
-  rngs <- if (!dials::is_unknown(rngs$lower))
-    ci[2]
+  if (!dials::is_unknown(rngs$lower))
+    rngs$upper <- ci[2]
   else if (!dials::is_unknown(rngs$upper))
-    ci[1]
-  else
-    ci
+    rngs$lower <- ci[1]
+  else {
+    rngs$lower <- ci[1]
+    rngs$upper <- ci[2]
+  }
   dials::range_set(object, rngs)
 }
