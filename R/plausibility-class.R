@@ -468,65 +468,97 @@ PlausibilityFunction <- R6::R6Class(
       }
     },
 
-    #' @field ngrid An integer specifying the size of the grid for each
-    #'   individual parameter of interest for building the hypercube on which
-    #'   the plausibility function will be approximated by a Kriging model.
-    #'   Defaults to `20`.
-    ngrid = 20,
+    #' @field grid A tibble storing evaluations of the plausibility function on
+    #'   a regular centered grid of the parameter space. Defaults to `NULL`.
+    grid = NULL,
 
-    #' @description Change the value of the `ngrid` field.
+    #' @description Computes a tibble storing a regular centered grid of the
+    #'   parameter space.
     #'
-    #' @param val New value for the size of the grid for each individual
-    #'   parameter of interest for building the hypercube on which the
-    #'   plausibility function will be approximated by a Kriging model.
+    #' @param npoints An integer specifying the number of points to discretize
+    #'   each dimension. Defaults to `20L`.
     #'
     #' @examples
     #' x <- rnorm(10)
     #' y <- rnorm(10, mean = 2)
-    #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-    #' pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-    #' pf$ngrid
-    #' pf$set_ngrid(10)
-    #' pf$ngrid
-    set_ngrid = function(val) {
-      self$ngrid <- val
+    #' null_spec <- function(y, parameters) {
+    #'   purrr::map(y, ~ .x - parameters[1])
+    #' }
+    #' stat_functions <- list(stat_t)
+    #' stat_assignments <- list(mean_param = 1)
+    #' pf <- PlausibilityFunction$new(
+    #'   null_spec = null_spec,
+    #'   stat_functions = stat_functions,
+    #'   stat_assignments = stat_assignments,
+    #'   x, y
+    #' )
+    #' pf$set_point_estimates(mean(y) - mean(x))
+    #' pf$set_parameter_bounds()
+    #' pf$set_grid(npoints = 3L)
+    set_grid = function(npoints = 20L) {
+      for (i in 1:self$nparams) {
+        rngs <- dials::range_get(self$param_list[[i]], original = FALSE)
+        if (dials::is_unknown(rngs$lower) || dials::is_unknown(rngs$upper))
+          abort("Ranges for parameters are not set. Consider running the `$set_parameter_bounds()` method first.")
+      }
+      self$grid <- grid_centered(self$param_list, self$point_estimates, levels = npoints)
     },
 
-    #' @field design A \code{\link[tibble]{tibble}} storing the grid of the
-    #'   hypercube on which the exact plausibility function is to be evaluated
-    #'   for later fitting an appropriate Kriging model. Defaults to `NULL`.
-    design = NULL,
-
-    #' @field response A numeric vector storing the plausibility function
-    #'   evaluations on the grid specified by the field `design`. Defaults to
-    #'   `NULL`.
-    response = NULL,
+    #' @description Updates the `grid` field with a `pvalue` column storing
+    #'   evaluations of the plausibility function on the regular centered grid
+    #'   of the parameter space.
+    #'
+    #' @param ncores An integer specifying the number of cores to run
+    #'   evaluations in parallel. Defaults to `1L`.
+    #'
+    #' @examples
+    #' x <- rnorm(10)
+    #' y <- rnorm(10, mean = 2)
+    #' null_spec <- function(y, parameters) {
+    #'   purrr::map(y, ~ .x - parameters[1])
+    #' }
+    #' stat_functions <- list(stat_t)
+    #' stat_assignments <- list(mean_param = 1)
+    #' pf <- PlausibilityFunction$new(
+    #'   null_spec = null_spec,
+    #'   stat_functions = stat_functions,
+    #'   stat_assignments = stat_assignments,
+    #'   x, y
+    #' )
+    #' pf$set_point_estimates(mean(y) - mean(x))
+    #' pf$set_parameter_bounds()
+    #' pf$set_grid(npoints = 3L)
+    #' pf$evaluate_grid()
+    evaluate_grid = function(ncores = 1L) {
+      if (is.null(self$grid))
+        abort("There is no grid set up for evaluation yet. Consider running the `$set_grid()` method first.")
+      cl <- NULL
+      if (ncores > 1)
+        cl <- parallel::makeCluster(ncores)
+      self$grid$pvalue <- self$grid |>
+        purrr::array_tree(margin = 1) |>
+        pbapply::pbsapply(self$get_value, cl = cl)
+      if (ncores > 1L)
+        parallel::stopCluster(cl)
+    },
 
     #' @description Fit a Kriging model to approximate the plausibility
     #'   function.
-    #'
-    #' @param overwrite A boolean specifying whether the `design`, `response`
-    #'   and `kriging_model` fields should be updated if they already have a
-    #'   non-null value. Defaults to `FALSE`.
-    #' @param recompute_pe A boolean specifying whether a point estimate of each
-    #'   parameter should be recomputed prior to finding its bounds or if it
-    #'   should be retrieved from the `point_estimates` field. Defaults to
-    #'   `FALSE`.
-    #' @param point_estimates A numeric vector of point estimates for the
-    #'   parameters of interest. Defaults to `NULL` in which case it is computed
-    #'   through the method `$update_point_estimates()`.
-    setup_approximation = function(overwrite = FALSE) {
-      if (!is.null(private$kriging_model) && !overwrite) {
-        cli::cli_alert_warning(
-          "The Kriging model has already been fitted. Run `$update_kriging_model(overwrite = TRUE)` if you want the model to be fitted again."
-        )
-        return()
-      }
-
-      private$update_point_estimates(guess = self$point_estimates)
-      private$update_design()
-      private$update_response()
-      # private$fit_kriging_model()
+    set_kriging_model = function() {
+      if (is.null(self$grid))
+        abort("There is no `grid` field to estimate the Kriging model from. Please consider running the `$set_grid()` method first.")
+      cli::cli_alert_info("Computing Kriging model for interpolation using the `DiceKriging::km()` function...")
+      resp <- qnorm(self$grid$pvalue)
+      valid_points <- is.finite(resp)
+      resp <- resp[valid_points]
+      design <- subset(self$grid, select = -pvalue)[valid_points, ]
+      private$kriging_model <- DiceKriging::km(
+        design = design,
+        response = resp,
+        nugget = sqrt(.Machine$double.eps),
+        control = list(trace = FALSE),
+        covtype = "exp"
+      )
     },
 
     #' @description Computes an indicator of the plausibility of specific values
@@ -553,7 +585,7 @@ PlausibilityFunction <- R6::R6Class(
     #' pf$get_prediction(2)
     get_prediction = function(parameters) {
       if (is.null(private$kriging_model)) {
-        abort("No Kriging model is available for the computation of predictions. Consider fitting one using the method `$update_kriging_model()`.")
+        abort("No Kriging model is available for the computation of predictions. Consider fitting one using the method `$set_kriging_model()` first.")
       }
       interp <- predict(
         private$kriging_model,
@@ -562,9 +594,7 @@ PlausibilityFunction <- R6::R6Class(
         se.compute = FALSE,
         checkNames = FALSE
       )
-      # exp(-exp(interp$mean))
-      # pnorm(interp$mean)
-      exp(-interp$mean)
+      pnorm(interp$mean)
     }
   ),
   private = list(
@@ -606,82 +636,11 @@ PlausibilityFunction <- R6::R6Class(
         })
     },
 
-    update_point_estimates = function(guess = NULL) {
-      cli::cli_alert_info("Computing point estimates for all parameters...")
-      self$point_estimates <- if (!is.null(guess) && length(guess) == self$nparams) {
-        stats::optim(
-          par = guess,
-          fn = function(.x) -self$get_value(.x),
-          method = "BFGS"
-        )$par
-      } else {
-        rgenoud::genoud(
-          fn = self$get_value,
-          nvars = self$nparams,
-          max = TRUE,
-          pop.size = 25 * self$nparams,
-          max.generations = 10 * self$nparams,
-          wait.generations = 2 * self$nparams + 1,
-          BFGSburnin = 2 * self$nparams + 1,
-          print.level = 0,
-          cluster = if (self$ncores == 1) FALSE else self$cluster,
-          balance = self$nparams > 2
-        )$par
-      }
-      private$set_univariate_nulls()
-    },
-
-    update_design = function() {
-      grid_list <- 1:self$nparams %>%
-        pbapply::pblapply(
-          FUN = self$get_parameter_bounds,
-          cl = if (self$ncores == 1) NULL else self$cluster
-        )
-
-      self$design <- generate_grid(grid_list, n = self$ngrid)
-    },
-
-    update_response = function() {
-      cli::cli_alert_info(paste(
-        "Computing the exact plausibility function on a grid of size",
-        nrow(self$design),
-        "..."
-      ))
-
-      if (nrow(self$design) > 1000)
-        cli::cli_alert_warning(
-          "The output grid size is too large and will take too long to compute. Please consider either a coarser grid or inferring less parameters or reducing the number of permutations (it is though recommended that B > 1000)."
-        )
-
-      self$response <- self$design %>%
-        purrr::array_tree(margin = 1) %>%
-        pbapply::pbsapply(
-          FUN = self$get_value,
-          cl = if (self$ncores == 1) NULL else self$cluster
-        )
-
-      parallel::stopCluster(self$cluster)
-    },
-
-    kriging_model = NULL,
-    fit_kriging_model = function() {
-      cli::cli_alert_info("Computing Kriging model for interpolation using the `DiceKriging::km()` function...")
-      # response_trsf <- log(-log(self$response))
-      # response_trsf <- qnorm(self$response)
-      response_trsf <- -log(self$response)
-      valid_points <- is.finite(response_trsf)
-      private$kriging_model <- DiceKriging::km(
-        design = self$design[valid_points, ],
-        response = response_trsf[valid_points],
-        nugget = sqrt(.Machine$double.eps),
-        control = list(trace = FALSE),
-        covtype = "exp"
-      )
-    },
-
     stat_assignments = NULL,
     set_stat_assignments = function(val) {
       private$stat_assignments <- val
-    }
+    },
+
+    kriging_model = NULL
   )
 )
