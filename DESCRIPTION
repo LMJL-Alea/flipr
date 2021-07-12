@@ -47,7 +47,8 @@ Suggests:
     plotly,
     htmlwidgets,
     htmltools,
-    pracma
+    pracma,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
 BugReports: https://github.com/astamm/flipr/issues/
@@ -55,3 +56,4 @@ Depends:
     R (>= 2.10)
 LinkingTo: 
     Rcpp
+Config/testthat/edition: 3

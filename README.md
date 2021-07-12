@@ -182,7 +182,7 @@ pf$nperms
 ```
 
 2.  We randomly sample *B* permutations out of the
-    $\\binom{n\_1+n\_2}{n\_1}$ possible permutations and therefore
+    $\binom{n_1+n_2}{n_1}$ possible permutations and therefore
     introduce extra variability in the p-value.
 
 If we were to ask for more permutations, say *B* = 1, 000, 000, we would

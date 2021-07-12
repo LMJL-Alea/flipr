@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // stat_student_impl
 double stat_student_impl(const Rcpp::NumericVector& distanceMatrix, const Rcpp::IntegerVector& firstGroupIndices, const Rcpp::IntegerVector& secondGroupIndices);
 RcppExport SEXP _flipr_stat_student_impl(SEXP distanceMatrixSEXP, SEXP firstGroupIndicesSEXP, SEXP secondGroupIndicesSEXP) {
