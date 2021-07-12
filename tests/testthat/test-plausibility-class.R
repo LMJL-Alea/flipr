@@ -17,14 +17,13 @@
 #     stat_assignments = stat_assignments,
 #     x1, x2
 #   )
-#
 #   # Act
-#   pvalue0 <- pf$get_value(1)
-#
+#   actual <- pf$get_value(1)
 #   # Assert
-#
-#   })
-
+#   expected <- 1
+#   expect_equal(actual, expected)
+# })
+# PB : ET EN PLUS CEST UN SNAPSHOT
 
 
 
@@ -136,7 +135,7 @@ test_that("Snapshot test - Two normal distrutions with different means and varia
 #   stat_assignments <- list(delta = 2)
 #
 #   # Act & assert
-#   expect_warning(pf <- PlausibilityFunction$new(
+#   expect_message(pf <- PlausibilityFunction$new(
 #     seed = 1234,
 #     null_spec = null_spec,
 #     stat_functions = stat_functions,
