@@ -1,117 +1,38 @@
 #' Test Statistics for the One-Sample Problem
 #'
 #' This is a collection of functions that provide test statistics to be used
-#' into the permutation scheme for performing tests. These test statistics can
-#' be divided into two categories: traditional statistics that use empirical
-#' moments and inter-point statistics that only rely on pairwise dissimilarities
-#' between data points.
+#' into the permutation scheme for performing one-sample testing.
 #'
-#' @section Traditional Test Statistics:
+#' @param data A list storing the sample from which the user wants to make
+#'   inference.
+#' @param flips A numeric vectors of `-1`s and `1`s to be used to randomly flip
+#'   some data points around the center of symmetric of the distribution of the
+#'   sample.
 #'
-#' - \code{\link{stat_hotelling}} implements Hotelling's \eqn{T^2} statistic for
-#' multivariate data with \eqn{p < n}.
-#' - \code{\link{stat_student}} or \code{\link{stat_t}} implements Student's
-#' statistic (originally assuming equal variances and thus using the pooled
-#' empirical variance estimator). See \code{\link[stats]{t.test}} for details.
-#' - \code{\link{stat_welch}} implements Student-Welch statistic which is
-#' essentially a modification of Student's statistic accounting for unequal
-#' variances. See \code{\link[stats]{t.test}} for details.
-#' - \code{\link{stat_fisher}} or \code{\link{stat_f}} implements Fisher's
-#' variance ratio statistic. See \code{\link[stats]{var.test}} for details.
-#' - \code{\link{stat_mean}} implements a statistic that computes the difference
-#' between the means.
-#' - \code{\link{stat_bs}} implements the statistic proposed by Bai & Saranadasa
-#' (1996) for high-dimensional multivariate data.
-#'
-#' @section Inter-Point Test Statistics:
-#'
-#' - \code{\link{stat_student_ip}} or \code{\link{stat_t_ip}} implements a
-#' Student-like test statistic based on inter-point distances only as described
-#' in Lovato et al. (2020).
-#' - \code{\link{stat_fisher_ip}} or \code{\link{stat_f_ip}} implements a
-#' Fisher-like test statistic based on inter-point distances only as described
-#' in Lovato et al. (2020).
-#' - \code{\link{stat_bg_ip}} implements the statistic proposed by Biswas &
-#' Ghosh (2014).
-#' - \code{\link{stat_energy_ip}} implements the class of energy-based
-#' statistics as described in Székely & Rizzo (2013);
-#' - \code{\link{stat_cq_ip}} implements the statistic proposed by Chen & Qin
-#' (2010).
-#' - \code{\link{stat_mod_ip}} implements a statistic that computes the mean of
-#' inter-point distances.
-#' - \code{\link{stat_dom_ip}} implements a statistic that computes the distance
-#' between the medoids of the two samples, possibly standardized by the pooled
-#' corresponding variances.
-#'
-#' @references
-#' Bai, Z., & Saranadasa, H. (1996). Effect of high dimension: by an example of
-#' a two sample problem. Statistica Sinica, 311-329.
-#'
-#' Lovato, I., Pini, A., Stamm, A., & Vantini, S. (2020). Model-free two-sample
-#' test for network-valued data. Computational Statistics & Data Analysis, 144,
-#' 106896.
-#'
-#' Biswas, M., & Ghosh, A. K. (2014). A nonparametric two-sample test applicable
-#' to high dimensional data. Journal of Multivariate Analysis, 123, 160-171.
-#'
-#' Székely, G. J., & Rizzo, M. L. (2013). Energy statistics: A class of
-#' statistics based on distances. Journal of statistical planning and inference,
-#' 143(8), 1249-1272.
-#'
-#' Chen, S. X., & Qin, Y. L. (2010). A two-sample test for high-dimensional data
-#' with applications to gene-set testing. The Annals of Statistics, 38(2),
-#' 808-835.
-#'
-#' @param data Either a list of the `n1 + n2` concatenated observations with the
-#'   original `n1` observations from the first sample on top and the original
-#'   `n2` observations from the second sample below. Or a dissimilarity matrix
-#'   stored as a \code{\link[stats]{dist}} object for all inter-point statistics
-#'   whose function name should end with `_ip()`.
-#' @param indices An integer vector specifying the indices in `data` that are
-#'   considered to belong to the first sample.
-#' @param validate Boolean indicating whether the format of the input data
-#'   should be checked before the statistic is actually computed. Default is
-#'   `FALSE` as these functions are meant to be used deeply into the permutation
-#'   mechanism and thus called a large number of times.
-#' @param alpha A scalar value specifying the power to which the dissimilarities
-#'   should be elevated in the computation of the inter-point energy statistic.
-#'   Default is `1L`.
-#' @param standardize A boolean specifying whether the distance between medoids
-#'   in the \code{\link{stat_dom_ip}} function should be normalized by the
-#'   pooled corresponding variances. Default is `TRUE`.
-#'
-#' @return A real scalar giving the value of test statistic for the permutation
-#'   specified by the integer vector `indices`.
-#' @name test-statistic
+#' @return A numeric value evaluating the desired test statistic.
+#' @name one-sample-stats
 #'
 #' @examples
-#' n <- 10L
-#' mx <- 0
-#' sigma <- 1
-#'
-#' # Two different models for the two populations
-#' x <- rnorm(n = n, mean = mx, sd = sigma)
-#' x <- as.list(x)
-#' delta <- 10
-#' my <- mx + delta
-#' y <- rnorm(n = n, mean = my, sd = sigma)
-#' y <- as.list(y)
-#' stat_hotelling(c(x, y), 1:n)
-#' stat_t(c(x, y), 1:n)
-#' stat_mean(c(x, y), 1:n)
+#' n <- 10
+#' x <- as.list(rnorm(n))
+#' flips <- sample(c(-1, 1), n, replace = TRUE)
+#' stat_max(x, flips)
 NULL
 
-#' @rdname test-statistic
+#' @rdname one-sample-stats
 #' @export
-stat_max <- function(data, perm_data) {
-  data <- one_sample_prep(data, perm_data)
+stat_max <- function(data, flips) {
+  stopifnot(inherits(data, "list"))
+  n <- length(data)
+
+  data <- one_sample_prep(data, flips)
   Xbar <- purrr::map_dbl(data, mean)
   max(abs(Xbar))
 }
 
-one_sample_prep <- function(data, perm_data) {
+one_sample_prep <- function(data, flips) {
   data %>%
     purrr::transpose() %>%
     purrr::simplify_all() %>%
-    purrr::map(~ .x * perm_data)
+    purrr::map(~ .x * flips)
 }
