@@ -38,7 +38,8 @@ Imports:
     Rcpp,
     R6,
     pbapply,
-    dials
+    dials,
+    usethis
 Suggests: 
     rmarkdown,
     knitr,
