@@ -84,17 +84,29 @@
 #' n <- 10L
 #' mx <- 0
 #' sigma <- 1
-#'
-#' # Two different models for the two populations
-#' x <- rnorm(n = n, mean = mx, sd = sigma)
-#' x <- as.list(x)
 #' delta <- 10
 #' my <- mx + delta
+#' x <- rnorm(n = n, mean = mx, sd = sigma)
 #' y <- rnorm(n = n, mean = my, sd = sigma)
+#' D <- dist(c(x, y))
+#'
+#' x <- as.list(x)
 #' y <- as.list(y)
-#' stat_hotelling(c(x, y), 1:n)
+#'
+#' stat_welch(c(x, y), 1:n)
 #' stat_t(c(x, y), 1:n)
+#' stat_f(c(x, y), 1:n)
 #' stat_mean(c(x, y), 1:n)
+#' stat_hotelling(c(x, y), 1:n)
+#' stat_bs(c(x, y), 1:n)
+#'
+#' stat_t_ip(D, 1:n)
+#' stat_f_ip(D, 1:n)
+#' stat_bg_ip(D, 1:n)
+#' stat_energy_ip(D, 1:n)
+#' stat_cq_ip(D, 1:n)
+#' stat_mod_ip(D, 1:n)
+#' stat_dom_ip(D, 1:n)
 NULL
 
 #' @rdname two-sample-stats
@@ -180,7 +192,6 @@ stat_bs <- function(data, indices1) {
 #' @export
 stat_student_ip <- function(data, indices1) {
   l <- two_sample_prep(data, indices1)
-  print(l)
   stat_student_impl(data, l$idx1, l$idx2)
 }
 
@@ -223,34 +234,40 @@ stat_cq_ip <- function(data, indices1) {
 #' @rdname two-sample-stats
 #' @export
 stat_mod_ip <- function(data, indices1) {
-  if (!inherits(data, "dist"))
-    abort("The input data for the inter-point Mean-Of-Distances statistic should be a dist object.")
-  xy <- data[indices1, -indices1]
-  mean(xy)
+  l <- two_sample_prep(data, indices1)
+  l <- purrr::cross(l)
+  dist_values <- purrr::map_dbl(l, ~ getElement(
+    distObject = data,
+    rowIndex = .x$idx1,
+    colIndex = .x$idx2
+  ))
+  mean(dist_values)
 }
 
 #' @rdname two-sample-stats
 #' @export
 stat_dom_ip <- function(data, indices1, standardize = TRUE) {
-  if (!inherits(data, "dist"))
-    abort("The input data for the inter-point Distance-Of-Medoids statistic should be a dist object.")
+  l <- two_sample_prep(data, indices1)
 
-  n <- attr(data, "Size")
-  n1 <- length(indices1)
-  n2 <- n - n1
+  ssd1_vec <- purrr::map_dbl(l$idx1, function(idx) {
+    sum(purrr::map_dbl(l$idx1, ~ getElement(
+      distObject = data,
+      rowIndex = idx,
+      colIndex = .x
+    ))^2)
+  })
+  km1 <- l$idx1[which.min(ssd1_vec)]
 
-  ssd1_vec <- numeric(n1)
-  for (i in seq_along(indices1))
-    ssd1_vec[i] <- sum(data[indices1[i], indices1]^2)
-  km1 <- indices1[which.min(ssd1_vec)]
+  ssd2_vec <- purrr::map_dbl(l$idx2, function(idx) {
+    sum(purrr::map_dbl(l$idx2, ~ getElement(
+      distObject = data,
+      rowIndex = idx,
+      colIndex = .x
+    ))^2)
+  })
+  km2 <- l$idx2[which.min(ssd2_vec)]
 
-  ssd2_vec <- numeric(n2)
-  indices1 <- seq_len(n)[-indices1]
-  for (i in seq_along(indices1))
-    ssd2_vec[i] <- sum(data[indices1[i], indices1]^2)
-  km2 <- indices1[which.min(ssd2_vec)]
-
-  stat <- data[km1, km2]
+  stat <- getElement(data, km1, km2)
 
   if (!standardize)
     return(stat)

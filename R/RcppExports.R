@@ -21,3 +21,7 @@ stat_cq_impl <- function(similarityMatrix, firstGroupIndices, secondGroupIndices
     .Call(`_flipr_stat_cq_impl`, similarityMatrix, firstGroupIndices, secondGroupIndices)
 }
 
+getElement <- function(distObject, rowIndex, colIndex) {
+    .Call(`_flipr_getElement`, distObject, rowIndex, colIndex)
+}
+

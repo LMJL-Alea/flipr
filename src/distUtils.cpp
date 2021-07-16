@@ -14,6 +14,6 @@ double getElement(const Rcpp::NumericVector &distObject,
     j = k;
   }
   unsigned int numberOfDataPoints = distObject.attr("Size");
-  unsigned int linearIndex = numberOfDataPoints * i - (i + 1) * i / 2 + j - i - 1;
-  return distObject[linearIndex];
+  unsigned int linearIndex = numberOfDataPoints * (i - 1) - i * (i - 1) / 2 + j - i - 1;
+  return distObject(linearIndex);
 }

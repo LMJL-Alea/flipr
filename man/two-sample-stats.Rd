@@ -131,17 +131,29 @@ corresponding variances.
 n <- 10L
 mx <- 0
 sigma <- 1
-
-# Two different models for the two populations
-x <- rnorm(n = n, mean = mx, sd = sigma)
-x <- as.list(x)
 delta <- 10
 my <- mx + delta
+x <- rnorm(n = n, mean = mx, sd = sigma)
 y <- rnorm(n = n, mean = my, sd = sigma)
+D <- dist(c(x, y))
+
+x <- as.list(x)
 y <- as.list(y)
-stat_hotelling(c(x, y), 1:n)
+
+stat_welch(c(x, y), 1:n)
 stat_t(c(x, y), 1:n)
+stat_f(c(x, y), 1:n)
 stat_mean(c(x, y), 1:n)
+stat_hotelling(c(x, y), 1:n)
+stat_bs(c(x, y), 1:n)
+
+stat_t_ip(D, 1:n)
+stat_f_ip(D, 1:n)
+stat_bg_ip(D, 1:n)
+stat_energy_ip(D, 1:n)
+stat_cq_ip(D, 1:n)
+stat_mod_ip(D, 1:n)
+stat_dom_ip(D, 1:n)
 }
 \references{
 Bai, Z., & Saranadasa, H. (1996). Effect of high dimension: by an example of
