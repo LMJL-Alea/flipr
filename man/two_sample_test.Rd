@@ -18,10 +18,13 @@ two_sample_test(
 }
 \arguments{
 \item{x}{A numeric vector or a numeric matrix or a list representing the 1st
-sample.}
+sample. Alternatively, it can be a distance matrix stored as an object of
+class \code{\link[stats]{dist}}, in which case test statistics based on
+inter-point distances (marked with the \verb{_ip} suffix) should be used.}
 
 \item{y}{A numeric vector or a numeric matrix or a list representing the 2nd
-sample.}
+sample. Alternative, it can be left to \code{NULL} if \code{x} is provided with a
+distance matrix.}
 
 \item{stats}{A list of functions produced by \code{\link[rlang]{as_function}}
 specifying the chosen test statistic(s). A number of test statistic

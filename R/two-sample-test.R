@@ -18,9 +18,12 @@
 #' See the \code{\link{stat_t}} function for an example.
 #'
 #' @param x A numeric vector or a numeric matrix or a list representing the 1st
-#'   sample.
+#'   sample. Alternatively, it can be a distance matrix stored as an object of
+#'   class \code{\link[stats]{dist}}, in which case test statistics based on
+#'   inter-point distances (marked with the `_ip` suffix) should be used.
 #' @param y A numeric vector or a numeric matrix or a list representing the 2nd
-#'   sample.
+#'   sample. Alternative, it can be left to `NULL` if `x` is provided with a
+#'   distance matrix.
 #' @param stats A list of functions produced by \code{\link[rlang]{as_function}}
 #'   specifying the chosen test statistic(s). A number of test statistic
 #'   functions are implemented in the package and can be used as such.
@@ -90,17 +93,26 @@ two_sample_test <- function(x, y = NULL,
 
   if (!is.null(seed)) withr::local_seed(seed)
 
-  l <- convert_to_list(x, y)
-  x <- l[[1]]
-  y <- l[[2]]
-  n1 <- length(x)
-  n2 <- length(y)
-  n <- n1 + n2
-  stat_data <- c(x, y)
+  if (is.null(y)) {
+    stat_data <- x
+  } else {
+    l <- convert_to_list(x, y)
+    x <- l[[1]]
+    y <- l[[2]]
+    n1 <- length(x)
+    n2 <- length(y)
+    n <- n1 + n2
+    stat_data <- c(x, y)
+  }
 
   # Compute total number of permutations yielding to distinct values of the test
   # statistic
-  if (is.null(M)) M <- choose(n, n1) - 1
+  if (is.null(M)) {
+    M <- choose(n, n1)
+    if (n1 == n2)
+      M <- M / 2
+    M <- M - 1
+  }
 
   # Generate permutation data
   if (M <= B) {
