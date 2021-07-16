@@ -3,10 +3,12 @@ on:
     branches:
       - main
       - master
+      - db-statistics
   pull_request:
     branches:
       - main
       - master
+      - db-statistics
 
 name: test-coverage
 
