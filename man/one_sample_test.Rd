@@ -6,7 +6,7 @@
 \usage{
 one_sample_test(
   x,
-  stats = stat_max,
+  stats = list(stat_max),
   B = 1000L,
   M = NULL,
   alternative = "two_tail",
@@ -26,7 +26,7 @@ Alternatively, one can provide its own implementation of test statistics
 that (s)he deems relevant for the problem at hand. See the section
 \emph{User-supplied statistic function} for more information on how these
 user-supplied functions should be structured for compatibility with the
-\strong{flipr} framwork. Default is \code{\link{stat_t}}.}
+\strong{flipr} framework. Default is \code{list(\link{stat_t})}.}
 
 \item{B}{The number of sampled permutations. Default is \code{1000L}.}
 

@@ -41,7 +41,7 @@
 #' t2 <- one_sample_test(x2)
 #' t2$pvalue
 one_sample_test <- function(x,
-                            stats = stat_max,
+                            stats = list(stat_max),
                             B = 1000L,
                             M = NULL,
                             alternative = "two_tail",
