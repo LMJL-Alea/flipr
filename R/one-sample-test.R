@@ -11,13 +11,18 @@
 #'
 #' - the first argument is `data` which should be a list of the `n`
 #' observations from the sample;
-#' - the second argument is `perm_data` which should be an integer vector giving
+#' - the second argument is `flips` which should be an integer vector giving
 #' the signs by which each observation in `data` should be multiplied.
+#'
+#' It is possible to use the \code{\link{use_stat}} function with `nsamples = 1`
+#' to have **flipr** automatically generate a template file for writing down
+#' your own test statistics in a way that makes it compatible with the **flipr**
+#' framework.
 #'
 #' See the \code{\link{stat_max}} function for an example.
 #'
 #' @param x A numeric vector or a numeric matrix or a list representing the
-#'   sample.
+#'   sample from which the user wants to make inference.
 #' @inheritParams two_sample_test
 #'
 #' @return A \code{\link[base]{list}} with three components: the value of the
@@ -48,6 +53,8 @@ one_sample_test <- function(x,
                             combine_with = "tippett",
                             type = "exact",
                             seed = NULL) {
+  if (!is.numeric(x) && !is.matrix(x) && !is.list(x))
+    abort("The input data should be of class numeric, matrix or list.")
 
   if (!is.null(seed)) withr::local_seed(seed)
 
@@ -57,7 +64,8 @@ one_sample_test <- function(x,
 
   # Compute total number of permutations yielding to distinct values of the test
   # statistic
-  if (is.null(M)) M <- 2^n - 1
+  if (is.null(M))
+    M <- 2^n - 1
 
   # Generate permutation data
   if (M <= B) {

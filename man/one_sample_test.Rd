@@ -17,7 +17,7 @@ one_sample_test(
 }
 \arguments{
 \item{x}{A numeric vector or a numeric matrix or a list representing the
-sample.}
+sample from which the user wants to make inference.}
 
 \item{stats}{A list of functions produced by \code{\link[rlang]{as_function}}
 specifying the chosen test statistic(s). A number of test statistic
@@ -73,9 +73,14 @@ A user-specified function should have at least two arguments:
 \itemize{
 \item the first argument is \code{data} which should be a list of the \code{n}
 observations from the sample;
-\item the second argument is \code{perm_data} which should be an integer vector giving
+\item the second argument is \code{flips} which should be an integer vector giving
 the signs by which each observation in \code{data} should be multiplied.
 }
+
+It is possible to use the \code{\link{use_stat}} function with \code{nsamples = 1}
+to have \strong{flipr} automatically generate a template file for writing down
+your own test statistics in a way that makes it compatible with the \strong{flipr}
+framework.
 
 See the \code{\link{stat_max}} function for an example.
 }
