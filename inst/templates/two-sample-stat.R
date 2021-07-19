@@ -1,6 +1,6 @@
 #' Test Statistic for the Two-Sample Problem
 #'
-#' This function computes the test statistics...
+#' This function computes the test statistic...
 #'
 #' @param data A list storing the concatenation of the two samples from which
 #'   the user wants to make inference. Alternatively, a distance matrix stored
@@ -23,9 +23,8 @@ stat_{{{name}}} <- function(data, indices1) {
   else
     stop("The `data` input should be of class either list or dist.")
 
-  nx <- length(indices1)
-  ny <- n - nx
   indices2 <- seq_len(n)[-indices1]
+
   x <- data[indices1]
   y <- data[indices2]
 

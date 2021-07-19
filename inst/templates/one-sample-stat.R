@@ -1,6 +1,6 @@
 #' Test Statistic for the One-Sample Problem
 #'
-#' This function computes the test statistics...
+#' This function computes the test statistic...
 #'
 #' @param data A list storing the sample from which the user wants to make
 #'   inference.
