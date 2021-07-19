@@ -209,7 +209,7 @@ The permutation $p$-value does not quite match the parametric one. This is becau
 ```{r}
 pf$nperms
 ```
-2. We randomly sample $B$ permutations out of the $\binom{n_1+n_2}{n_1}$ possible permutations and therefore introduce extra variability in the $p$-value.
+2. We randomly sample $B$ permutations out of the $\binom{n_x+n_y}{n_x}$ possible permutations and therefore introduce extra variability in the $p$-value.
 
 If we were to ask for more permutations, say $B = 1,000,000$, we would be much closer to the parametric $p$-value:
 ```{r}
