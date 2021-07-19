@@ -4,10 +4,24 @@
 \alias{plot_pf}
 \title{Visualization of Plausibility Functions}
 \usage{
-plot_pf(pf, ngrid = 10, ncores = 1, subtitle = "")
+plot_pf(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "")
 }
 \arguments{
 \item{pf}{A \code{\link{PlausibilityFunction}} object.}
+
+\item{alpha}{A numeric value specifying a significance level to contrast the
+plausibility function against. Defaults to \code{0.05}.}
+
+\item{ngrid}{An integer specifying the grid size on which the plausibility
+function will be evaluated. Specifically if \code{K} is the number of parameters
+under investigation, the grid will be of size \code{(ngrid + 1)^K}. Defaults to
+\code{10L}.}
+
+\item{ncores}{An integer specifying the number of cores to use for
+parallelized computations. Defaults to \code{1L}.}
+
+\item{subtitle}{A string for specifying a subtitle to the plot. Defaults to
+\code{""} leading to no subtitle.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.
@@ -28,5 +42,9 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_point_estimates(mean(y) - mean(x))
+pf$set_parameter_bounds()
+pf$set_grid(2L)
+pf$evaluate_grid()
 plot_pf(pf)
 }

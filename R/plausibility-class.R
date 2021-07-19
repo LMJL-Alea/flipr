@@ -475,8 +475,8 @@ PlausibilityFunction <- R6::R6Class(
     #' @description Computes a tibble storing a regular centered grid of the
     #'   parameter space.
     #'
-    #' @param npoints An integer specifying the number of points to discretize
-    #'   each dimension. Defaults to `20L`.
+    #' @param npoints An even integer specifying the number of points to
+    #'   discretize each dimension. Defaults to `20L`.
     #'
     #' @examples
     #' x <- rnorm(10)
@@ -494,7 +494,7 @@ PlausibilityFunction <- R6::R6Class(
     #' )
     #' pf$set_point_estimates(mean(y) - mean(x))
     #' pf$set_parameter_bounds()
-    #' pf$set_grid(npoints = 3L)
+    #' pf$set_grid(npoints = 2L)
     set_grid = function(npoints = 20L) {
       for (i in 1:self$nparams) {
         rngs <- dials::range_get(self$param_list[[i]], original = FALSE)
@@ -527,7 +527,7 @@ PlausibilityFunction <- R6::R6Class(
     #' )
     #' pf$set_point_estimates(mean(y) - mean(x))
     #' pf$set_parameter_bounds()
-    #' pf$set_grid(npoints = 3L)
+    #' pf$set_grid(npoints = 2L)
     #' pf$evaluate_grid()
     evaluate_grid = function(ncores = 1L) {
       if (is.null(self$grid))
@@ -573,16 +573,7 @@ PlausibilityFunction <- R6::R6Class(
     #'   hypothesis test.
     #'
     #' @examples
-    #' x <- rnorm(10)
-    #' y <- rnorm(10, mean = 2)
-    #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-    #' pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-    #' pf$get_prediction(2)
-    #' pf$update_kriging_model(
-    #'   recompute_pe = FALSE,
-    #'   point_estimates = mean(y) - mean(x)
-    #' )
-    #' pf$get_prediction(2)
+    #' # TO DO
     get_prediction = function(parameters) {
       if (is.null(private$kriging_model)) {
         abort("No Kriging model is available for the computation of predictions. Consider fitting one using the method `$set_kriging_model()` first.")

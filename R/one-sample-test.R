@@ -72,7 +72,7 @@ one_sample_test <- function(x,
     B <- M
     perm_data <- flipn(n)[, 1:B]
   } else {
-    perm_data <- replicate(B, rbinom(n, 1, 0.5) * 2 - 1)
+    perm_data <- replicate(B, stats::rbinom(n, 1, 0.5) * 2 - 1)
   }
   perm_data <- cbind(
     rep(1, nrow(perm_data)),

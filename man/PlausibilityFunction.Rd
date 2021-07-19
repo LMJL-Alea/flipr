@@ -207,7 +207,7 @@ pf <- PlausibilityFunction$new(
 )
 pf$set_point_estimates(mean(y) - mean(x))
 pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_grid(npoints = 2L)
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$evaluate_grid`
@@ -228,23 +228,14 @@ pf <- PlausibilityFunction$new(
 )
 pf$set_point_estimates(mean(y) - mean(x))
 pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_grid(npoints = 2L)
 pf$evaluate_grid()
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$get_prediction`
 ## ------------------------------------------------
 
-x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$get_prediction(2)
-pf$update_kriging_model(
-  recompute_pe = FALSE,
-  point_estimates = mean(y) - mean(x)
-)
-pf$get_prediction(2)
+# TO DO
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -761,8 +752,8 @@ parameter space.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{npoints}}{An integer specifying the number of points to discretize
-each dimension. Defaults to \code{20L}.}
+\item{\code{npoints}}{An even integer specifying the number of points to
+discretize each dimension. Defaults to \code{20L}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -783,7 +774,7 @@ pf <- PlausibilityFunction$new(
 )
 pf$set_point_estimates(mean(y) - mean(x))
 pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_grid(npoints = 2L)
 }
 \if{html}{\out{</div>}}
 
@@ -826,7 +817,7 @@ pf <- PlausibilityFunction$new(
 )
 pf$set_point_estimates(mean(y) - mean(x))
 pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_grid(npoints = 2L)
 pf$evaluate_grid()
 }
 \if{html}{\out{</div>}}
@@ -870,16 +861,7 @@ hypothesis test.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$get_prediction(2)
-pf$update_kriging_model(
-  recompute_pe = FALSE,
-  point_estimates = mean(y) - mean(x)
-)
-pf$get_prediction(2)
+\preformatted{# TO DO
 }
 \if{html}{\out{</div>}}
 

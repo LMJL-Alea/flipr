@@ -248,6 +248,8 @@ stat_mod_ip <- function(data, indices1) {
 #' @export
 stat_dom_ip <- function(data, indices1, standardize = TRUE) {
   l <- two_sample_prep(data, indices1)
+  n1 <- length(l$idx1)
+  n2 <- length(l$idx2)
 
   ssd1_vec <- purrr::map_dbl(l$idx1, function(idx) {
     sum(purrr::map_dbl(l$idx1, ~ getElement(
@@ -274,7 +276,7 @@ stat_dom_ip <- function(data, indices1, standardize = TRUE) {
 
   ssd1 <- min(ssd1_vec)
   ssd2 <- min(ssd2_vec)
-  pooled_variance <- (ssd1 + ssd2) / (n - 2)
+  pooled_variance <- (ssd1 + ssd2) / (n1 + n2 - 2)
   stat / sqrt(pooled_variance)
 }
 

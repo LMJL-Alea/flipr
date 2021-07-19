@@ -39,7 +39,9 @@ Imports:
     R6,
     pbapply,
     dials,
-    usethis
+    usethis,
+    optimParallel,
+    rgenoud
 Suggests: 
     rmarkdown,
     knitr,
