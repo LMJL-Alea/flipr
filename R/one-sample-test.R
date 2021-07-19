@@ -62,15 +62,15 @@ one_sample_test <- function(x,
   stat_data <- l[[1]]
   n <- length(stat_data)
 
-  # Compute total number of permutations yielding to distinct values of the test
-  # statistic
+  # Compute total number of permutations yielding to distinct
+  # values of the test statistic
   if (is.null(M))
     M <- 2^n - 1
 
   # Generate permutation data
   if (M <= B) {
     B <- M
-    perm_data <- flipn(n)
+    perm_data <- flipn(n)[, 1:B]
   } else {
     perm_data <- replicate(B, rbinom(n, 1, 0.5) * 2 - 1)
   }

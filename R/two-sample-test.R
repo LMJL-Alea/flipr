@@ -130,19 +130,15 @@ two_sample_test <- function(x, y,
     stat_data <- c(x, y)
   }
 
-  # Compute total number of permutations yielding to distinct values of the test
-  # statistic
-  if (is.null(M)) {
-    M <- choose(n, n1)
-    if (n1 == n2)
-      M <- M / 2
-    M <- M - 1
-  }
+  # Compute total number of permutations yielding to distinct
+  # values of the test statistic
+  if (is.null(M))
+    M <- choose(n, n1) - 1
 
   # Generate permutation data
   if (M <= B) {
     B <- M
-    perm_data <- utils::combn(n, n1)[, 1:B]
+    perm_data <- utils::combn(n, n1)[, 1:B + 1]
   } else {
     perm_data <- replicate(B, sample.int(n))[1:n1, ]
   }
