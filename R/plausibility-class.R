@@ -501,7 +501,11 @@ PlausibilityFunction <- R6::R6Class(
         if (dials::is_unknown(rngs$lower) || dials::is_unknown(rngs$upper))
           abort("Ranges for parameters are not set. Consider running the `$set_parameter_bounds()` method first.")
       }
-      self$grid <- grid_centered(self$param_list, self$point_estimates, levels = npoints)
+      self$grid <- grid_biregular(
+        self$param_list,
+        center = self$point_estimates,
+        levels = npoints
+      )
     },
 
     #' @description Updates the `grid` field with a `pvalue` column storing

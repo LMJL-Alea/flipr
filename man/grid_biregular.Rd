@@ -20,6 +20,10 @@ grid_biregular(
 \code{\link[dials:penalty]{penalty()}}). None of the objects can have \code{unknown()} values in
 the parameter ranges or values.}
 
+\item{center}{A numeric vector specifying the point onto which the biregular
+grid should be centered. Defaults to \code{NULL}, in which case
+\code{\link[dials]{grid_regular}} is used instead.}
+
 \item{levels}{An integer for the number of values of each parameter to use
 to make the regular grid. \code{levels} can be a single integer or a vector of
 integers that is the same length as the number of parameters in \code{...}.
@@ -71,5 +75,5 @@ range(mix_grid_2$mixture)
 }
 }
 \examples{
-# TO DO
+grid_biregular(dials::mixture(), center = 0.2)
 }
