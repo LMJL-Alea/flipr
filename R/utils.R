@@ -171,3 +171,47 @@ flipn <- function(n) {
 get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun) {
   stat_fun(stat_data, perm_data[, i + 1])
 }
+
+#' Extract ranges from parameter list
+#'
+#' This function extracts the ranges of a parameter list created via
+#' \code{\link[dials]{parameters}} into a list of length-2 numeric vectors.
+#'
+#' @param param_list A list of \code{\link[dials]{param}} objects storing
+#'   information about the parameters under investigation.
+#'
+#' @return A list of length-2 numeric vectors specifying the ranges for each
+#'   parameter under investigation.
+#' @export
+#'
+#' @examples
+#' x <- rnorm(10)
+#' y <- rnorm(10, mean = 2)
+#' null_spec <- function(y, parameters) {
+#'   purrr::map(y, ~ .x - parameters[1])
+#' }
+#' stat_functions <- list(stat_t)
+#' stat_assignments <- list(mean_param = 1)
+#' pf <- PlausibilityFunction$new(
+#'   null_spec = null_spec,
+#'   stat_functions = stat_functions,
+#'   stat_assignments = stat_assignments,
+#'   x, y
+#' )
+#' pf$set_point_estimates(point_estimate = mean(y) - mean(x))
+#' pf$set_parameter_bounds(
+#'   point_estimate = pf$point_estimates,
+#'   conf_level = pf$max_conf_level
+#' )
+#' get_ranges(pf$param_list)
+get_ranges <- function(param_list) {
+  purrr::map(param_list, list(dials::range_get, unlist, as.numeric))
+}
+
+equal_ranges <- function(param_list, range_list) {
+  is_equal(get_ranges(param_list), range_list)
+}
+
+is_equal <- function(x, y) {
+  isTRUE(all.equal(x, y))
+}

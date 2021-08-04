@@ -2,6 +2,7 @@
 
 export("%>%")
 export(PlausibilityFunction)
+export(get_ranges)
 export(grid_biregular)
 export(one_sample_test)
 export(plot_pf)
