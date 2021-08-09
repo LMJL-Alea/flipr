@@ -177,7 +177,7 @@ get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun) {
 #' This function extracts the ranges of a parameter list created via
 #' \code{\link[dials]{parameters}} into a list of length-2 numeric vectors.
 #'
-#' @param param_list A list of \code{\link[dials]{param}} objects storing
+#' @param param_list An object of class \code{\link[dials]{parameters}} storing
 #'   information about the parameters under investigation.
 #'
 #' @return A list of length-2 numeric vectors specifying the ranges for each

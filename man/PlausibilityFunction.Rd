@@ -224,12 +224,6 @@ pf$set_grid(
   npoints = 2L
 )
 pf$evaluate_grid(grid = pf$grid)
-
-## ------------------------------------------------
-## Method `PlausibilityFunction$get_prediction`
-## ------------------------------------------------
-
-# TO DO
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -285,8 +279,6 @@ a regular centered grid of the parameter space. Defaults to \code{NULL}.}
 \item \href{#method-set_parameter_bounds}{\code{PlausibilityFunction$set_parameter_bounds()}}
 \item \href{#method-set_grid}{\code{PlausibilityFunction$set_grid()}}
 \item \href{#method-evaluate_grid}{\code{PlausibilityFunction$evaluate_grid()}}
-\item \href{#method-set_kriging_model}{\code{PlausibilityFunction$set_kriging_model()}}
-\item \href{#method-get_prediction}{\code{PlausibilityFunction$get_prediction()}}
 \item \href{#method-clone}{\code{PlausibilityFunction$clone()}}
 }
 }
@@ -798,49 +790,6 @@ pf$set_grid(
   npoints = 2L
 )
 pf$evaluate_grid(grid = pf$grid)
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_kriging_model"></a>}}
-\if{latex}{\out{\hypertarget{method-set_kriging_model}{}}}
-\subsection{Method \code{set_kriging_model()}}{
-Fit a Kriging model to approximate the plausibility
-function.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_kriging_model(grid)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_prediction"></a>}}
-\if{latex}{\out{\hypertarget{method-get_prediction}{}}}
-\subsection{Method \code{get_prediction()}}{
-Computes an indicator of the plausibility of specific values
-for the parameters of interest in the form of a p-value of an
-hypothesis test against these values. The computation is an
-approximation obtained by using a Kriging model to approximate the
-exact plausibility function on a hypercube.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$get_prediction(parameters)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameters}}{A vector whose length should match the \code{nparams} field
-providing specific values of the parameters of interest for assessment
-of their plausibility in the form of a p-value of the corresponding
-hypothesis test.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{# TO DO
 }
 \if{html}{\out{</div>}}
 

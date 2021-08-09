@@ -7,7 +7,7 @@
 get_ranges(param_list)
 }
 \arguments{
-\item{param_list}{A list of \code{\link[dials]{param}} objects storing
+\item{param_list}{An object of class \code{\link[dials]{parameters}} storing
 information about the parameters under investigation.}
 }
 \value{

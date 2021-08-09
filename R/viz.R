@@ -31,9 +31,16 @@
 #'   x, y
 #' )
 #' pf$set_point_estimates(mean(y) - mean(x))
-#' pf$set_parameter_bounds()
-#' pf$set_grid(2L)
-#' pf$evaluate_grid()
+#' pf$set_parameter_bounds(
+#'   point_estimate = pf$point_estimates,
+#'   conf_level = pf$max_conf_level
+#' )
+#' pf$set_grid(
+#'   point_estimate = pf$point_estimates,
+#'   range_list = get_ranges(pf$param_list),
+#'   npoints = 2L
+#' )
+#' pf$evaluate_grid(grid = pf$grid)
 #' plot_pf(pf)
 plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
   if (pf$nparams > 2)

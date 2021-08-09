@@ -583,55 +583,6 @@ PlausibilityFunction <- R6::R6Class(
         pbapply::pbsapply(self$get_value, cl = cl)
       if (ncores > 1L)
         parallel::stopCluster(cl)
-    },
-
-    #' @description Fit a Kriging model to approximate the plausibility
-    #'   function.
-    set_kriging_model = function(grid) {
-      if (!is.null(private$kriging_model) && is_equal(grid, self$grid)) {
-        abort("There is already a fitted kriging model for the provided grid.")
-      }
-
-      cli::cli_alert_info("Computing Kriging model for interpolation using the `DiceKriging::km()` function...")
-
-      resp <- qnorm(self$grid$pvalue)
-      valid_points <- is.finite(resp)
-      resp <- resp[valid_points]
-      design <- subset(self$grid, select = -pvalue)[valid_points, ]
-      private$kriging_model <- DiceKriging::km(
-        design = design,
-        response = resp,
-        nugget = sqrt(.Machine$double.eps),
-        control = list(trace = FALSE),
-        covtype = "exp"
-      )
-    },
-
-    #' @description Computes an indicator of the plausibility of specific values
-    #'   for the parameters of interest in the form of a p-value of an
-    #'   hypothesis test against these values. The computation is an
-    #'   approximation obtained by using a Kriging model to approximate the
-    #'   exact plausibility function on a hypercube.
-    #'
-    #' @param parameters A vector whose length should match the `nparams` field
-    #'   providing specific values of the parameters of interest for assessment
-    #'   of their plausibility in the form of a p-value of the corresponding
-    #'   hypothesis test.
-    #'
-    #' @examples
-    #' # TO DO
-    get_prediction = function(parameters) {
-      if (is.null(private$kriging_model)) {
-        abort("No Kriging model is available for the computation of predictions. Consider fitting one using the method `$set_kriging_model()` first.")
-      }
-      interp <- predict(
-        private$kriging_model,
-        newdata = rbind(parameters),
-        type = "UK",
-        se.compute = FALSE,
-        checkNames = FALSE
-      )
-      pnorm(interp$mean)
     }
   ),
   private = list(
@@ -677,8 +628,6 @@ PlausibilityFunction <- R6::R6Class(
     set_stat_assignments = function(val) {
       private$stat_assignments <- val
     },
-
-    kriging_model = NULL,
 
     npoints = 20L,
     set_npoints = function(val) {
