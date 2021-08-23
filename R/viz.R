@@ -23,21 +23,20 @@
 #' y <- rnorm(10, mean = 2)
 #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 #' stat_functions <- list(stat_t)
-#' stat_assignments <- list(mean_param = 1)
+#' stat_assignments <- list(mean = 1)
 #' pf <- PlausibilityFunction$new(
 #'   null_spec = null_spec,
 #'   stat_functions = stat_functions,
 #'   stat_assignments = stat_assignments,
 #'   x, y
 #' )
-#' pf$set_point_estimates(mean(y) - mean(x))
+#' pf$set_point_estimate(mean(y) - mean(x))
 #' pf$set_parameter_bounds(
-#'   point_estimate = pf$point_estimates,
+#'   point_estimate = pf$point_estimate,
 #'   conf_level = pf$max_conf_level
 #' )
 #' pf$set_grid(
-#'   point_estimate = pf$point_estimates,
-#'   range_list = get_ranges(pf$param_list),
+#'   parameters = pf$parameters,
 #'   npoints = 2L
 #' )
 #' pf$evaluate_grid(grid = pf$grid)
@@ -52,7 +51,7 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
   color_palette <- viridisLite::viridis(3)
 
   if (pf$nparams == 1) {
-    nm <- names(pf$param_list)
+    nm <- names(pf$parameters)
     pf$grid %>%
       ggplot(aes_string(nm[1], "pvalue")) +
       geom_line() +
@@ -77,7 +76,7 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
         color = color_palette[3]
       ) +
       geom_vline(
-        xintercept = unlist(pf$param_list[[1]]$range),
+        xintercept = unlist(pf$parameters[[1]]$range),
         color = color_palette[2],
         linetype = "dashed"
       ) +
@@ -89,28 +88,28 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
       geom_area(
         data = pf$grid %>%
           subset(
-            pf$grid[[nm[1]]] >= pf$param_list[[1]]$range$lower &
-              pf$grid[[nm[1]]] <= pf$param_list[[1]]$range$upper
+            pf$grid[[nm[1]]] >= pf$parameters[[1]]$range$lower &
+              pf$grid[[nm[1]]] <= pf$parameters[[1]]$range$upper
           ),
         fill = color_palette[2],
         alpha = 0.2
       ) +
       scale_x_continuous(
         breaks = round(
-          x = c(pf$param_list[[1]]$range$lower, pf$point_estimate, pf$param_list[[1]]$range$upper),
+          x = c(pf$parameters[[1]]$range$lower, pf$point_estimate, pf$parameters[[1]]$range$upper),
           digits = 3
         )
       )
   } else {
-    nm <- names(pf$param_list)
+    nm <- names(pf$parameters)
     pf$grid |>
       ggplot(aes_string(nm[1], nm[2], z = "pvalue")) +
       geom_contour_filled(binwidth = 0.05) +
       labs(
         title = "Contour plot of the plausibility function",
         subtitle = subtitle,
-        x = pf$param_list[[1]]$label,
-        y = pf$param_list[[2]]$label,
+        x = pf$parameters[[1]]$label,
+        y = pf$parameters[[2]]$label,
         fill = "p-value"
       ) +
       theme_minimal()

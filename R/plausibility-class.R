@@ -50,25 +50,20 @@ PlausibilityFunction <- R6::R6Class(
       private$set_data(...)
 
       param_names <- names(stat_assignments)
-      self$param_list <- list2()
+      self$parameters <- list2()
       for (param in param_names) {
-        param_label <- strsplit(param, "_")[[1]]
-        param_label <- param_label[-length(param_label)]
-        param_label <- paste(param_label, collapse = " ")
-        param_label <- toupper(param_label)
-
-        self$param_list <- c(
-          self$param_list,
-          list2(!!param := eval_tidy(expr(dials::new_quant_param(
+        param_label <- format_param_label(param)
+        self$parameters <- c(
+          self$parameters,
+          list2(!!param := eval_tidy(expr(new_inferred_param(
               type = "double",
-              range = c(dials::unknown(), dials::unknown()),
-              inclusive = c(TRUE, TRUE),
               label = unlist(list2(!!param := !!param_label)),
               finalize = get_ci
             )
           )))
         )
       }
+      self$point_estimate <- get_point_estimate(self$parameters)
 
       if (is.null(seed)) {
         cli::cli_alert_warning(
@@ -96,7 +91,7 @@ PlausibilityFunction <- R6::R6Class(
     #' y <- rnorm(10, mean = 2)
     #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -124,7 +119,7 @@ PlausibilityFunction <- R6::R6Class(
     #' y <- rnorm(10, mean = 2)
     #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -152,7 +147,7 @@ PlausibilityFunction <- R6::R6Class(
     #' y <- rnorm(10, mean = 2)
     #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -189,7 +184,7 @@ PlausibilityFunction <- R6::R6Class(
     #' y <- rnorm(10, mean = 2)
     #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -223,7 +218,7 @@ PlausibilityFunction <- R6::R6Class(
     #' y <- rnorm(10, mean = 2)
     #' null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -284,7 +279,7 @@ PlausibilityFunction <- R6::R6Class(
     #'   purrr::map(y, ~ .x - parameters[1])
     #' }
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
@@ -298,11 +293,11 @@ PlausibilityFunction <- R6::R6Class(
       self$max_conf_level <- val
     },
 
-    #' @field point_estimates A numeric vector providing point estimates for the
+    #' @field point_estimate A numeric vector providing point estimates for the
     #'   parameters of interest.
-    point_estimates = NULL,
+    point_estimate = NULL,
 
-    #' @description Change the value of the `point_estimates` field.
+    #' @description Change the value of the `point_estimate` field.
     #'
     #' @param point_estimate A numeric vector providing rough point estimates for the
     #'   parameters under investigation.
@@ -329,28 +324,33 @@ PlausibilityFunction <- R6::R6Class(
     #'   purrr::map(y, ~ .x - parameters[1])
     #' }
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
-    #' pf$point_estimates
-    #' pf$set_point_estimates(mean(y) - mean(x))
-    #' pf$point_estimates
-    set_point_estimates = function(point_estimate = NULL,
-                                   lower_bound = -10,
-                                   upper_bound =  10,
-                                   ncores = 1L,
-                                   estimate = FALSE,
-                                   overwrite = FALSE) {
-      if (!is.null(self$point_estimates) && !overwrite) {
-        abort("A point estimate has already been set. If you want to compute it again, please re-run the `$set_point_estimates()` method with `overwrite = TRUE)`.")
+    #' pf$point_estimate
+    #' pf$set_point_estimate(mean(y) - mean(x))
+    #' pf$point_estimate
+    set_point_estimate = function(point_estimate = NULL,
+                                  lower_bound = -10,
+                                  upper_bound =  10,
+                                  ncores = 1L,
+                                  estimate = FALSE,
+                                  overwrite = FALSE) {
+      if (!anyNA(self$point_estimate) && !overwrite) {
+        abort("A point estimate has already been set. If you want to compute it again, please re-run the `$set_point_estimate()` method with `overwrite = TRUE)`.")
+      }
+
+      if (!is.null(point_estimate) && !rlang::is_named(point_estimate)) {
+        cli::cli_alert_warning("The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.")
+        names(point_estimate) <- names(self$parameters)
       }
 
       if (!is.null(point_estimate) && !estimate) {
-        self$point_estimates <- point_estimate
+        self$point_estimate <- point_estimate
       } else {
         if (length(lower_bound) == 1)
           lower_bound <- rep(lower_bound, self$nparams)
@@ -363,24 +363,29 @@ PlausibilityFunction <- R6::R6Class(
           upper_bound = upper_bound,
           ncores = ncores
         )
-        self$point_estimates <- opt$par
+        self$point_estimate <- opt$par
+        names(self$point_estimate) <- names(self$parameters)
       }
+      self$parameters <- purrr::map2(self$parameters, self$point_estimate, ~ {
+        .x$point_estimate <- .y
+        .x
+      })
       private$set_univariate_nulls()
     },
 
-    #' @field param_list A list of functions of class `param` produced via
+    #' @field parameters A list of functions of class `param` produced via
     #'   \code{\link[dials]{new_quant_param}} that stores the parameters to be
     #'   inferred along with important properties such as their name, range,
     #'   etc. Defaults to `NULL`.
-    param_list = NULL,
+    parameters = NULL,
 
-    #' @description Change the value of the `param_list` field.
+    #' @description Change the value of the `parameters` field.
     #'
     #' Updates the range of the parameters under investigation.
     #'
     #' @param point_estimate A numeric vector providing a point estimate for
     #'   each parameter under investigation. If no estimator is known by the
-    #'   user, (s)he can resort to the `$set_point_estimates()` method to get a
+    #'   user, (s)he can resort to the `$set_point_estimate()` method to get a
     #'   point estimate by maximizing the plausibility function.
     #' @param conf_level A numeric value specifying the confidence level to be
     #'   used for setting parameter bounds. It should be in (0,1).
@@ -392,23 +397,23 @@ PlausibilityFunction <- R6::R6Class(
     #'   purrr::map(y, ~ .x - parameters[1])
     #' }
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
-    #' pf$set_point_estimates(point_estimate = mean(y) - mean(x))
-    #' pf$param_list
+    #' pf$set_point_estimate(point_estimate = mean(y) - mean(x))
+    #' pf$parameters
     #' pf$set_parameter_bounds(
-    #'   point_estimate = pf$point_estimates,
+    #'   point_estimate = pf$point_estimate,
     #'   conf_level = pf$max_conf_level
     #' )
-    #' pf$param_list
+    #' pf$parameters
     set_parameter_bounds = function(point_estimate, conf_level) {
-      if (!any(dials::has_unknowns(self$param_list)) &&
-          is_equal(point_estimate, self$point_estimates) &&
+      if (!any(dials::has_unknowns(self$parameters)) &&
+          is_equal(point_estimate, self$point_estimate) &&
           conf_level == self$max_conf_level) {
         abort("Parameter bounds have already been computed for the provided point estimate and confidence level.")
       }
@@ -416,9 +421,9 @@ PlausibilityFunction <- R6::R6Class(
       if (length(point_estimate) != self$nparams)
         abort("The length of the point estimate does not match the number of parameters.")
 
-      if (is.null(self$point_estimates) || !is_equal(point_estimate, self$point_estimates)) {
-        cli::cli_alert_info("Setting new point estimate in field `$point_estimates`.")
-        self$set_point_estimates(point_estimate)
+      if (is.null(self$point_estimate) || !is_equal(point_estimate, self$point_estimate)) {
+        cli::cli_alert_info("Setting new point estimate in field `$point_estimate`.")
+        self$set_point_estimate(point_estimate)
       }
 
       if (conf_level != self$max_conf_level) {
@@ -437,22 +442,21 @@ PlausibilityFunction <- R6::R6Class(
         pvf_temp$set_nperms(self$nperms)
         pvf_temp$set_alternative(self$alternative)
 
-        pe <- self$point_estimates[param_index]
+        pe <- self$point_estimate[param_index]
         conf_level <- 1 - (1 - self$max_conf_level) / self$nparams
 
         cli::cli_alert_info(paste0(
           "Computing a confidence interval with confidence level ",
           conf_level,
           " for parameter ",
-          names(self$param_list)[param_index],
+          names(self$parameters)[param_index],
           "..."
         ))
 
-        self$param_list[[param_index]] <- dials::finalize(
-          object = self$param_list[[param_index]],
+        self$parameters[[param_index]] <- dials::finalize(
+          object = self$parameters[[param_index]],
           pf = pvf_temp,
-          conf_level = conf_level,
-          point_estimate = pe
+          conf_level = conf_level
         )
       }
     },
@@ -464,10 +468,9 @@ PlausibilityFunction <- R6::R6Class(
     #' @description Computes a tibble storing a regular centered grid of the
     #'   parameter space.
     #'
-    #' @param point_estimate A numeric vector specifying a point estimate for
-    #'   the parameters under investigation.
-    #' @param range_list A list of length-2 numeric vectors specifying ranges
-    #'   for the parameters under investigation.
+    #' @param parameters A list of \code{\link[dials]{new_quant_param}} objects
+    #'   containing information about the parameters under investigation. It
+    #'   should contain the fields `point_estimate` and `range`.
     #' @param npoints An integer specifying the number of points to discretize
     #'   each dimension. Defaults to `20L`.
     #'
@@ -478,27 +481,28 @@ PlausibilityFunction <- R6::R6Class(
     #'   purrr::map(y, ~ .x - parameters[1])
     #' }
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
-    #' pf$set_point_estimates(mean(y) - mean(x))
+    #' pf$set_point_estimate(mean(y) - mean(x))
     #' pf$set_parameter_bounds(
-    #'   point_estimate = pf$point_estimates,
+    #'   point_estimate = pf$point_estimate,
     #'   conf_level = pf$max_conf_level
     #' )
     #' pf$set_grid(
-    #'   point_estimate = pf$point_estimates,
-    #'   range_list = get_ranges(pf$param_list),
+    #'   parameters = pf$parameters,
     #'   npoints = 2L
     #' )
-    set_grid = function(point_estimate, range_list, npoints = 20L) {
+    set_grid = function(parameters, npoints = 20L) {
+      point_estimate <- get_point_estimate(parameters)
+      range_list <- get_ranges(parameters)
       if (!is.null(self$grid) &&
-          is_equal(point_estimate, self$point_estimates) &&
-          equal_ranges(self$param_list, range_list) &&
+          is_equal(self$point_estimate, point_estimate) &&
+          equal_ranges(self$parameters, range_list) &&
           npoints == private$npoints) {
         abort("A grid have already been generated for the provided point estimate, ranges and grid size.")
       }
@@ -509,14 +513,18 @@ PlausibilityFunction <- R6::R6Class(
       if (length(range_list) != self$nparams)
         abort("The length of the parameter list does not match the number of parameters.")
 
-      if (is.null(self$point_estimates) || !is_equal(point_estimate, self$point_estimates)) {
-        cli::cli_alert_info("Setting new point estimate in field `$point_estimates`.")
-        self$set_point_estimates(point_estimate)
+      if (is.null(self$point_estimate) || !is_equal(self$point_estimate, point_estimate)) {
+        cli::cli_alert_info("Setting new point estimate in field `$point_estimate`.")
+        self$set_point_estimate(point_estimate)
       }
 
-      if (any(dials::has_unknowns(self$param_list)) || !equal_ranges(self$param_list, range_list)) {
-        cli::cli_alert_info("Setting new parameter ranges in field `$param_list`.")
-        self$param_list <- purrr::map2(self$param_list, range_list, dials::range_set)
+      if (any(dials::has_unknowns(self$parameters)) || !equal_ranges(self$parameters, range_list)) {
+        cli::cli_alert_info("Setting new parameter ranges in field `$parameters`.")
+        self$parameters <- purrr::map2(self$parameters, range_list, dials::range_set)
+        self$parameters <- purrr::map2(self$parameters, self$point_estimate, ~ {
+          .x$point_estimate <- .y
+          .x
+        })
       }
 
       if (npoints != private$npoints) {
@@ -525,8 +533,8 @@ PlausibilityFunction <- R6::R6Class(
       }
 
       self$grid <- grid_biregular(
-        self$param_list,
-        center = self$point_estimates,
+        self$parameters,
+        center = self$point_estimate,
         levels = private$npoints
       )
     },
@@ -547,21 +555,20 @@ PlausibilityFunction <- R6::R6Class(
     #'   purrr::map(y, ~ .x - parameters[1])
     #' }
     #' stat_functions <- list(stat_t)
-    #' stat_assignments <- list(mean_param = 1)
+    #' stat_assignments <- list(mean = 1)
     #' pf <- PlausibilityFunction$new(
     #'   null_spec = null_spec,
     #'   stat_functions = stat_functions,
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
-    #' pf$set_point_estimates(mean(y) - mean(x))
+    #' pf$set_point_estimate(mean(y) - mean(x))
     #' pf$set_parameter_bounds(
-    #'   point_estimate = pf$point_estimates,
+    #'   point_estimate = pf$point_estimate,
     #'   conf_level = pf$max_conf_level
     #' )
     #' pf$set_grid(
-    #'   point_estimate = pf$point_estimates,
-    #'   range_list = get_ranges(pf$param_list),
+    #'   parameters = pf$parameters,
     #'   npoints = 2L
     #' )
     #' pf$evaluate_grid(grid = pf$grid)
@@ -618,7 +625,7 @@ PlausibilityFunction <- R6::R6Class(
     set_univariate_nulls = function() {
       private$univariate_nulls <- 1:self$nparams %>%
         purrr::map(~ function(y, parameters) {
-          all_parameters <- self$point_estimates
+          all_parameters <- self$point_estimate
           all_parameters[.x] <- parameters[1]
           private$null_spec(y, all_parameters)
         })

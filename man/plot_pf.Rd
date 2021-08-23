@@ -35,21 +35,20 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
+pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
-  point_estimate = pf$point_estimates,
+  point_estimate = pf$point_estimate,
   conf_level = pf$max_conf_level
 )
 pf$set_grid(
-  point_estimate = pf$point_estimates,
-  range_list = get_ranges(pf$param_list),
+  parameters = pf$parameters,
   npoints = 2L
 )
 pf$evaluate_grid(grid = pf$grid)
