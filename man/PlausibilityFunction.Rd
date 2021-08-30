@@ -16,7 +16,7 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -35,7 +35,7 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -54,7 +54,7 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -73,7 +73,7 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -85,6 +85,27 @@ pf$set_aggregator("fisher")
 pf$aggregator
 
 ## ------------------------------------------------
+## Method `PlausibilityFunction$set_pvalue_formula`
+## ------------------------------------------------
+
+x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$pvalue_formula
+pf$set_pvalue_formula("estimate")
+pf$pvalue_formula
+
+## ------------------------------------------------
 ## Method `PlausibilityFunction$get_value`
 ## ------------------------------------------------
 
@@ -92,7 +113,7 @@ x <- rnorm(10)
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -100,50 +121,6 @@ pf <- PlausibilityFunction$new(
   x, y
 )
 pf$get_value(2)
-
-## ------------------------------------------------
-## Method `PlausibilityFunction$set_ncores`
-## ------------------------------------------------
-
-x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {
-  purrr::map(y, ~ .x - parameters[1])
-}
-stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
-pf <- PlausibilityFunction$new(
-  null_spec = null_spec,
-  stat_functions = stat_functions,
-  stat_assignments = stat_assignments,
-  x, y
-)
-pf$ncores
-pf$cluster
-pf$set_ncores(2)
-pf$ncores
-pf$cluster
-
-## ------------------------------------------------
-## Method `PlausibilityFunction$set_point_estimates`
-## ------------------------------------------------
-
-x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {
-  purrr::map(y, ~ .x - parameters[1])
-}
-stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
-pf <- PlausibilityFunction$new(
-  null_spec = null_spec,
-  stat_functions = stat_functions,
-  stat_assignments = stat_assignments,
-  x, y
-)
-pf$point_estimates
-pf$set_point_estimates(mean(y) - mean(x))
-pf$point_estimates
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$set_max_conf_level`
@@ -155,7 +132,7 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -167,6 +144,27 @@ pf$set_max_conf_level(0.999)
 pf$max_conf_level
 
 ## ------------------------------------------------
+## Method `PlausibilityFunction$set_point_estimate`
+## ------------------------------------------------
+
+x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$point_estimate
+pf$set_point_estimate(mean(y) - mean(x))
+pf$point_estimate
+
+## ------------------------------------------------
 ## Method `PlausibilityFunction$set_parameter_bounds`
 ## ------------------------------------------------
 
@@ -176,17 +174,20 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$param_list
-pf$set_parameter_bounds()
-pf$param_list
+pf$set_point_estimate(point_estimate = mean(y) - mean(x))
+pf$parameters
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
+)
+pf$parameters
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$set_grid`
@@ -198,16 +199,22 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_point_estimate(mean(y) - mean(x))
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
+)
+pf$set_grid(
+  parameters = pf$parameters,
+  npoints = 2L
+)
 
 ## ------------------------------------------------
 ## Method `PlausibilityFunction$evaluate_grid`
@@ -219,41 +226,27 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
-pf$evaluate_grid()
-
-## ------------------------------------------------
-## Method `PlausibilityFunction$get_prediction`
-## ------------------------------------------------
-
-x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$get_prediction(2)
-pf$update_kriging_model(
-  recompute_pe = FALSE,
-  point_estimates = mean(y) - mean(x)
+pf$set_point_estimate(mean(y) - mean(x))
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
 )
-pf$get_prediction(2)
+pf$set_grid(
+  parameters = pf$parameters,
+  npoints = 2L
+)
+pf$evaluate_grid(grid = pf$grid)
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_list}}{A list of functions of class \code{param} produced via
-\code{\link[dials]{new_quant_param}} that stores the parameters to be
-inferred along with important properties such as their name, range,
-etc. Defaults to \code{NULL}.}
-
 \item{\code{nparams}}{An integer specifying the number of parameters to be
 inferred. Default is \code{1L}.}
 
@@ -272,28 +265,25 @@ aggregate test statistic values when non-parametric combination is used
 (i.e. when multiple test statistics are used). Choices are \code{"tippett"}
 and \verb{"fisher} for now. Defaults to \code{"tippett"}.}
 
-\item{\code{ncores}}{An integer value specifying the number of cores to use for:
-\itemize{
-\item maximizing the plausibility function to compute point estimates of the
-parameters of interest; and,
-\item computing the exact plausibility function on a sensible grid of
-parameter values.
-}
-
-Defaults to \code{1L}.}
-
-\item{\code{cluster}}{A cluster object created via
-\code{\link[parallel]{makeCluster}}. Defaults to \code{FALSE} in which case
-no cluster is created and computations are run sequentially.}
-
-\item{\code{point_estimates}}{A numeric vector providing point estimates for the
-parameters of interest.}
+\item{\code{pvalue_formula}}{A string specifying which formula to use for
+computing the permutation p-value. Choices are either \code{probability}
+(default) or \code{estimator}. The former provides p-values that lead to
+exact hypothesis tests while the latter provides an unbiased estimate
+of the traditional p-value.}
 
 \item{\code{max_conf_level}}{A numeric value specifying the maximum confidence
 level that we aim to achieve for the confidence regions. This is used
 to compute bounds on each parameter of interest in order to fit a
 Kriging model that approximates the expensive plausibility function on
 a hypercube. Defaults to \code{0.99}.}
+
+\item{\code{point_estimate}}{A numeric vector providing point estimates for the
+parameters of interest.}
+
+\item{\code{parameters}}{A list of functions of class \code{param} produced via
+\code{\link[dials]{new_quant_param}} that stores the parameters to be
+inferred along with important properties such as their name, range,
+etc. Defaults to \code{NULL}.}
 
 \item{\code{grid}}{A tibble storing evaluations of the plausibility function on
 a regular centered grid of the parameter space. Defaults to \code{NULL}.}
@@ -308,15 +298,13 @@ a regular centered grid of the parameter space. Defaults to \code{NULL}.}
 \item \href{#method-set_nperms_max}{\code{PlausibilityFunction$set_nperms_max()}}
 \item \href{#method-set_alternative}{\code{PlausibilityFunction$set_alternative()}}
 \item \href{#method-set_aggregator}{\code{PlausibilityFunction$set_aggregator()}}
+\item \href{#method-set_pvalue_formula}{\code{PlausibilityFunction$set_pvalue_formula()}}
 \item \href{#method-get_value}{\code{PlausibilityFunction$get_value()}}
-\item \href{#method-set_ncores}{\code{PlausibilityFunction$set_ncores()}}
-\item \href{#method-set_point_estimates}{\code{PlausibilityFunction$set_point_estimates()}}
 \item \href{#method-set_max_conf_level}{\code{PlausibilityFunction$set_max_conf_level()}}
+\item \href{#method-set_point_estimate}{\code{PlausibilityFunction$set_point_estimate()}}
 \item \href{#method-set_parameter_bounds}{\code{PlausibilityFunction$set_parameter_bounds()}}
 \item \href{#method-set_grid}{\code{PlausibilityFunction$set_grid()}}
 \item \href{#method-evaluate_grid}{\code{PlausibilityFunction$evaluate_grid()}}
-\item \href{#method-set_kriging_model}{\code{PlausibilityFunction$set_kriging_model()}}
-\item \href{#method-get_prediction}{\code{PlausibilityFunction$get_prediction()}}
 \item \href{#method-clone}{\code{PlausibilityFunction$clone()}}
 }
 }
@@ -390,7 +378,7 @@ Change the value of the \code{nperms} field.
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -429,7 +417,7 @@ permutations.}
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -467,7 +455,7 @@ Change the value of the \code{alternative} field.
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -507,7 +495,7 @@ is used (i.e. when multiple test statistics are used).}
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -517,6 +505,47 @@ pf <- PlausibilityFunction$new(
 pf$aggregator
 pf$set_aggregator("fisher")
 pf$aggregator
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_pvalue_formula"></a>}}
+\if{latex}{\out{\hypertarget{method-set_pvalue_formula}{}}}
+\subsection{Method \code{set_pvalue_formula()}}{
+Change the value of the \code{pvalue_formula} field.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_pvalue_formula(val)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{val}}{New value for the string specifying which formula should be
+used to compute the permutation p-value.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$pvalue_formula
+pf$set_pvalue_formula("estimate")
+pf$pvalue_formula
 }
 \if{html}{\out{</div>}}
 
@@ -550,7 +579,7 @@ hypothesis test.}
 y <- rnorm(10, mean = 2)
 null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -558,113 +587,6 @@ pf <- PlausibilityFunction$new(
   x, y
 )
 pf$get_value(2)
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_ncores"></a>}}
-\if{latex}{\out{\hypertarget{method-set_ncores}{}}}
-\subsection{Method \code{set_ncores()}}{
-Change the value of the \code{ncores} field.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_ncores(val)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{val}}{New value for the number of cores to use for parallel
-computations.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {
-  purrr::map(y, ~ .x - parameters[1])
-}
-stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
-pf <- PlausibilityFunction$new(
-  null_spec = null_spec,
-  stat_functions = stat_functions,
-  stat_assignments = stat_assignments,
-  x, y
-)
-pf$ncores
-pf$cluster
-pf$set_ncores(2)
-pf$ncores
-pf$cluster
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_point_estimates"></a>}}
-\if{latex}{\out{\hypertarget{method-set_point_estimates}{}}}
-\subsection{Method \code{set_point_estimates()}}{
-Change the value of the \code{point_estimates} field.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_point_estimates(
-  val = NULL,
-  lower_bound = -10,
-  upper_bound = 10,
-  ncores = 1L,
-  estimate = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{val}}{A numeric vector providing rough point estimates for the
-parameters under investigation.}
-
-\item{\code{lower_bound}}{A scalar or numeric vector specifying the lower bounds
-for each parameter under investigation. If it is a scalar, the value is
-used as lower bound for all parameters. Defaults to \code{-10}.}
-
-\item{\code{upper_bound}}{A scalar or numeric vector specifying the lower bounds
-for each parameter under investigation. If it is a scalar, the value is
-used as lower bound for all parameters. Defaults to \code{10}.}
-
-\item{\code{ncores}}{An integer specifying the number of cores to use for
-maximizing the plausibility function to get a point estimate of the
-parameters. Defaults to \code{1L}.}
-
-\item{\code{estimate}}{A boolean specifying whether the rough point estimate
-provided by \code{val} should serve as initial point for maximizing the
-plausibility function (\code{estimate = TRUE}) or as final point estimate
-for the parameters (\code{estimate = FALSE}). Defaults to \code{FALSE}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {
-  purrr::map(y, ~ .x - parameters[1])
-}
-stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
-pf <- PlausibilityFunction$new(
-  null_spec = null_spec,
-  stat_functions = stat_functions,
-  stat_assignments = stat_assignments,
-  x, y
-)
-pf$point_estimates
-pf$set_point_estimates(mean(y) - mean(x))
-pf$point_estimates
 }
 \if{html}{\out{</div>}}
 
@@ -696,7 +618,7 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -713,16 +635,49 @@ pf$max_conf_level
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_parameter_bounds"></a>}}
-\if{latex}{\out{\hypertarget{method-set_parameter_bounds}{}}}
-\subsection{Method \code{set_parameter_bounds()}}{
-Change the value of the \code{param_list} field.
-
-Updates the range of the parameters under investigation.
+\if{html}{\out{<a id="method-set_point_estimate"></a>}}
+\if{latex}{\out{\hypertarget{method-set_point_estimate}{}}}
+\subsection{Method \code{set_point_estimate()}}{
+Change the value of the \code{point_estimate} field.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_parameter_bounds()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_point_estimate(
+  point_estimate = NULL,
+  lower_bound = -10,
+  upper_bound = 10,
+  ncores = 1L,
+  estimate = FALSE,
+  overwrite = FALSE
+)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{point_estimate}}{A numeric vector providing rough point estimates for the
+parameters under investigation.}
+
+\item{\code{lower_bound}}{A scalar or numeric vector specifying the lower bounds
+for each parameter under investigation. If it is a scalar, the value is
+used as lower bound for all parameters. Defaults to \code{-10}.}
+
+\item{\code{upper_bound}}{A scalar or numeric vector specifying the lower bounds
+for each parameter under investigation. If it is a scalar, the value is
+used as lower bound for all parameters. Defaults to \code{10}.}
+
+\item{\code{ncores}}{An integer specifying the number of cores to use for
+maximizing the plausibility function to get a point estimate of the
+parameters. Defaults to \code{1L}.}
+
+\item{\code{estimate}}{A boolean specifying whether the rough point estimate
+provided by \code{val} should serve as initial point for maximizing the
+plausibility function (\code{estimate = TRUE}) or as final point estimate
+for the parameters (\code{estimate = FALSE}). Defaults to \code{FALSE}.}
+
+\item{\code{overwrite}}{A boolean specifying whether to force the computation if
+it has already been set. Defaults to \code{FALSE}.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- rnorm(10)
@@ -731,17 +686,68 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$param_list
-pf$set_parameter_bounds()
-pf$param_list
+pf$point_estimate
+pf$set_point_estimate(mean(y) - mean(x))
+pf$point_estimate
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_parameter_bounds"></a>}}
+\if{latex}{\out{\hypertarget{method-set_parameter_bounds}{}}}
+\subsection{Method \code{set_parameter_bounds()}}{
+Change the value of the \code{parameters} field.
+
+Updates the range of the parameters under investigation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_parameter_bounds(point_estimate, conf_level)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{point_estimate}}{A numeric vector providing a point estimate for
+each parameter under investigation. If no estimator is known by the
+user, (s)he can resort to the \verb{$set_point_estimate()} method to get a
+point estimate by maximizing the plausibility function.}
+
+\item{\code{conf_level}}{A numeric value specifying the confidence level to be
+used for setting parameter bounds. It should be in (0,1).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$set_point_estimate(point_estimate = mean(y) - mean(x))
+pf$parameters
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
+)
+pf$parameters
 }
 \if{html}{\out{</div>}}
 
@@ -755,12 +761,16 @@ pf$param_list
 Computes a tibble storing a regular centered grid of the
 parameter space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_grid(npoints = 20L)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_grid(parameters, npoints = 20L)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{parameters}}{A list of \code{\link[dials]{new_quant_param}} objects
+containing information about the parameters under investigation. It
+should contain the fields \code{point_estimate} and \code{range}.}
+
 \item{\code{npoints}}{An integer specifying the number of points to discretize
 each dimension. Defaults to \code{20L}.}
 }
@@ -774,16 +784,22 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
+pf$set_point_estimate(mean(y) - mean(x))
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
+)
+pf$set_grid(
+  parameters = pf$parameters,
+  npoints = 2L
+)
 }
 \if{html}{\out{</div>}}
 
@@ -798,12 +814,15 @@ Updates the \code{grid} field with a \code{pvalue} column storing
 evaluations of the plausibility function on the regular centered grid
 of the parameter space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$evaluate_grid(ncores = 1L)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$evaluate_grid(grid, ncores = 1L)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{grid}}{A \code{\link[tibble]{tibble}} storing a grid that spans the
+space of parameters under investigation.}
+
 \item{\code{ncores}}{An integer specifying the number of cores to run
 evaluations in parallel. Defaults to \code{1L}.}
 }
@@ -817,69 +836,23 @@ null_spec <- function(y, parameters) {
   purrr::map(y, ~ .x - parameters[1])
 }
 stat_functions <- list(stat_t)
-stat_assignments <- list(mean_param = 1)
+stat_assignments <- list(mean = 1)
 pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
   x, y
 )
-pf$set_point_estimates(mean(y) - mean(x))
-pf$set_parameter_bounds()
-pf$set_grid(npoints = 3L)
-pf$evaluate_grid()
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_kriging_model"></a>}}
-\if{latex}{\out{\hypertarget{method-set_kriging_model}{}}}
-\subsection{Method \code{set_kriging_model()}}{
-Fit a Kriging model to approximate the plausibility
-function.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_kriging_model()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_prediction"></a>}}
-\if{latex}{\out{\hypertarget{method-get_prediction}{}}}
-\subsection{Method \code{get_prediction()}}{
-Computes an indicator of the plausibility of specific values
-for the parameters of interest in the form of a p-value of an
-hypothesis test against these values. The computation is an
-approximation obtained by using a Kriging model to approximate the
-exact plausibility function on a hypercube.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$get_prediction(parameters)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameters}}{A vector whose length should match the \code{nparams} field
-providing specific values of the parameters of interest for assessment
-of their plausibility in the form of a p-value of the corresponding
-hypothesis test.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- rnorm(10)
-y <- rnorm(10, mean = 2)
-null_spec <- function(y, parameters) {purrr::map(y, ~ .x - parameters[1])}
-pf <- PlausibilityFunction$new(null_spec, 1, x, y, stats = stat_t)
-pf$get_prediction(2)
-pf$update_kriging_model(
-  recompute_pe = FALSE,
-  point_estimates = mean(y) - mean(x)
+pf$set_point_estimate(mean(y) - mean(x))
+pf$set_parameter_bounds(
+  point_estimate = pf$point_estimate,
+  conf_level = pf$max_conf_level
 )
-pf$get_prediction(2)
+pf$set_grid(
+  parameters = pf$parameters,
+  npoints = 2L
+)
+pf$evaluate_grid(grid = pf$grid)
 }
 \if{html}{\out{</div>}}
 

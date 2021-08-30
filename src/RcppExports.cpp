@@ -76,6 +76,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getElement
+double getElement(const Rcpp::NumericVector& distObject, const unsigned int rowIndex, const unsigned int colIndex);
+RcppExport SEXP _flipr_getElement(SEXP distObjectSEXP, SEXP rowIndexSEXP, SEXP colIndexSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type distObject(distObjectSEXP);
+    Rcpp::traits::input_parameter< const unsigned int >::type rowIndex(rowIndexSEXP);
+    Rcpp::traits::input_parameter< const unsigned int >::type colIndex(colIndexSEXP);
+    rcpp_result_gen = Rcpp::wrap(getElement(distObject, rowIndex, colIndex));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_flipr_stat_student_impl", (DL_FUNC) &_flipr_stat_student_impl, 3},
@@ -83,6 +96,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_flipr_stat_bg_impl", (DL_FUNC) &_flipr_stat_bg_impl, 3},
     {"_flipr_stat_energy_impl", (DL_FUNC) &_flipr_stat_energy_impl, 4},
     {"_flipr_stat_cq_impl", (DL_FUNC) &_flipr_stat_cq_impl, 3},
+    {"_flipr_getElement", (DL_FUNC) &_flipr_getElement, 3},
     {NULL, NULL, 0}
 };
 

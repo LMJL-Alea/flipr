@@ -1,10 +1,10 @@
 #' Test Statistics for the Two-Sample Problem
 #'
 #' This is a collection of functions that provide test statistics to be used
-#' into the permutation scheme for performing tests. These test statistics can
-#' be divided into two categories: traditional statistics that use empirical
-#' moments and inter-point statistics that only rely on pairwise dissimilarities
-#' between data points.
+#' into the permutation scheme for performing two-sample testing. These test
+#' statistics can be divided into two categories: traditional statistics that
+#' use empirical moments and inter-point statistics that only rely on pairwise
+#' dissimilarities between data points.
 #'
 #' @section Traditional Test Statistics:
 #'
@@ -67,12 +67,8 @@
 #'   `n2` observations from the second sample below. Or a dissimilarity matrix
 #'   stored as a \code{\link[stats]{dist}} object for all inter-point statistics
 #'   whose function name should end with `_ip()`.
-#' @param indices An integer vector specifying the indices in `data` that are
+#' @param indices1 An integer vector specifying the indices in `data` that are
 #'   considered to belong to the first sample.
-#' @param validate Boolean indicating whether the format of the input data
-#'   should be checked before the statistic is actually computed. Default is
-#'   `FALSE` as these functions are meant to be used deeply into the permutation
-#'   mechanism and thus called a large number of times.
 #' @param alpha A scalar value specifying the power to which the dissimilarities
 #'   should be elevated in the computation of the inter-point energy statistic.
 #'   Default is `1L`.
@@ -82,36 +78,89 @@
 #'
 #' @return A real scalar giving the value of test statistic for the permutation
 #'   specified by the integer vector `indices`.
-#' @name test-statistic
+#' @name two-sample-stats
 #'
 #' @examples
 #' n <- 10L
 #' mx <- 0
 #' sigma <- 1
-#'
-#' # Two different models for the two populations
-#' x <- rnorm(n = n, mean = mx, sd = sigma)
-#' x <- as.list(x)
 #' delta <- 10
 #' my <- mx + delta
+#' x <- rnorm(n = n, mean = mx, sd = sigma)
 #' y <- rnorm(n = n, mean = my, sd = sigma)
+#' D <- dist(c(x, y))
+#'
+#' x <- as.list(x)
 #' y <- as.list(y)
-#' stat_hotelling(c(x, y), 1:n)
+#'
+#' stat_welch(c(x, y), 1:n)
 #' stat_t(c(x, y), 1:n)
+#' stat_f(c(x, y), 1:n)
 #' stat_mean(c(x, y), 1:n)
+#' stat_hotelling(c(x, y), 1:n)
+#' stat_bs(c(x, y), 1:n)
+#'
+#' stat_t_ip(D, 1:n)
+#' stat_f_ip(D, 1:n)
+#' stat_bg_ip(D, 1:n)
+#' stat_energy_ip(D, 1:n)
+#' stat_cq_ip(D, 1:n)
+#' stat_mod_ip(D, 1:n)
+#' stat_dom_ip(D, 1:n)
 NULL
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_hotelling <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for Hotelling's statistic should be a list.")
-  n <- length(data)
-  nx <- length(indices)
-  ny <- n - nx
-  indices2 <- seq_len(n)[-indices]
-  X <- purrr::reduce(data[indices], rbind)
-  Y <- purrr::reduce(data[indices2], rbind)
+stat_welch <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  x1 <- unlist(data[l$idx1])
+  x2 <- unlist(data[l$idx2])
+  as.numeric(stats::t.test(x1, x2, var.equal = FALSE)$statistic)
+}
+
+#' @rdname two-sample-stats
+#' @export
+stat_student <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  x1 <- unlist(data[l$idx1])
+  x2 <- unlist(data[l$idx2])
+  as.numeric(stats::t.test(x2, x1, var.equal = TRUE)$statistic)
+}
+
+#' @rdname two-sample-stats
+#' @export
+stat_t <- stat_student
+
+#' @rdname two-sample-stats
+#' @export
+stat_fisher <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  x1 <- unlist(data[l$idx1])
+  x2 <- unlist(data[l$idx2])
+  as.numeric(stats::var.test(x2, x1)$statistic)
+}
+
+#' @rdname two-sample-stats
+#' @export
+stat_f <- stat_fisher
+
+#' @rdname two-sample-stats
+#' @export
+stat_mean <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  x1 <- unlist(data[l$idx1])
+  x2 <- unlist(data[l$idx2])
+  mean(x1) - mean(x2)
+}
+
+#' @rdname two-sample-stats
+#' @export
+stat_hotelling <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  X <- purrr::reduce(data[l$idx1], rbind)
+  Y <- purrr::reduce(data[l$idx2], rbind)
+  nx <- length(l$idx1)
+  ny <- length(l$idx2)
   Xbar <- colMeans(X)
   Ybar <- colMeans(Y)
   Sx <- stats::cov(X)
@@ -122,81 +171,14 @@ stat_hotelling <- function(data, indices, validate = FALSE) {
   as.numeric(t(D) %*% Sinv %*% D)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_welch <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for Welch's statistic should be a list.")
-  n <- length(data)
-  n1 <- length(indices)
-  n2 <- n - n1
-  indices2 <- seq_len(n)[-indices]
-  x1 <- unlist(data[indices])
-  x2 <- unlist(data[indices2])
-  stats::t.test(x1, x2, var.equal = FALSE)$statistic
-}
-
-#' @rdname test-statistic
-#' @export
-stat_student <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for Student's statistic should be a list.")
-  n <- length(data)
-  n1 <- length(indices)
-  n2 <- n - n1
-  indices2 <- seq_len(n)[-indices]
-  x1 <- unlist(data[indices])
-  x2 <- unlist(data[indices2])
-  stats::t.test(x1, x2, var.equal = TRUE)$statistic
-}
-
-#' @rdname test-statistic
-#' @export
-stat_t <- stat_student
-
-#' @rdname test-statistic
-#' @export
-stat_fisher <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for Fisher's variance ratio statistic should be a list.")
-  n <- length(data)
-  n1 <- length(indices)
-  n2 <- n - n1
-  indices2 <- seq_len(n)[-indices]
-  x1 <- unlist(data[indices])
-  x2 <- unlist(data[indices2])
-  stats::var.test(x1, x2)$statistic
-}
-
-#' @rdname test-statistic
-#' @export
-stat_f <- stat_fisher
-
-#' @rdname test-statistic
-#' @export
-stat_mean <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for the mean difference statistic should be a list.")
-  n <- length(data)
-  n1 <- length(indices)
-  n2 <- n - n1
-  indices2 <- seq_len(n)[-indices]
-  x1 <- unlist(data[indices])
-  x2 <- unlist(data[indices2])
-  mean(x1) - mean(x2)
-}
-
-#' @rdname test-statistic
-#' @export
-stat_bs <- function(data, indices, validate = FALSE) {
-  if (validate && !is.list(data))
-    abort("The input data for the Bai-Saranadasa statistic should be a list.")
-  n <- length(data)
-  nx <- length(indices)
-  ny <- n - nx
-  indices2 <- seq_len(n)[-indices]
-  X <- purrr::reduce(data[indices], rbind)
-  Y <- purrr::reduce(data[indices2], rbind)
+stat_bs <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  X <- purrr::reduce(data[l$idx1], rbind)
+  Y <- purrr::reduce(data[l$idx2], rbind)
+  nx <- length(l$idx1)
+  ny <- length(l$idx2)
   Xbar <- colMeans(X)
   Ybar <- colMeans(Y)
   Sx <- stats::cov(X)
@@ -206,101 +188,105 @@ stat_bs <- function(data, indices, validate = FALSE) {
   as.numeric(t(D) %*% D) - (nx + ny) / (nx * ny) * sum(diag(Sn))
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_student_ip <- function(data, indices, validate = FALSE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Student's statistic should be a dist object.")
-  n <- attr(data, "Size")
-  indices2 <- seq_len(n)[-indices]
-  stat_student_impl(data, indices, indices2)
+stat_student_ip <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  stat_student_impl(data, l$idx1, l$idx2)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
 stat_t_ip <- stat_student_ip
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_fisher_ip <- function(data, indices, validate = FALSE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Fisher's variance ratio statistic should be a dist object.")
-  n <- attr(data, "Size")
-  indices2 <- seq_len(n)[-indices]
-  stat_fisher_impl(data, indices, indices2)
+stat_fisher_ip <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  stat_fisher_impl(data, l$idx1, l$idx2)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
 stat_f_ip <- stat_fisher_ip
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_bg_ip <- function(data, indices, validate = FALSE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Biswas-Ghosh statistic should be a dist object.")
-  n <- attr(data, "Size")
-  indices2 <- seq_len(n)[-indices]
-  stat_bg_impl(data, indices, indices2)
+stat_bg_ip <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  stat_bg_impl(data, l$idx1, l$idx2)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_energy_ip <- function(data, indices, validate = FALSE, alpha = 1) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point energy statistic should be a dist object.")
-  n <- attr(data, "Size")
-  indices2 <- seq_len(n)[-indices]
-  stat_energy_impl(data, indices, indices2, alpha)
+stat_energy_ip <- function(data, indices1, alpha = 1L) {
+  l <- two_sample_prep(data, indices1)
+  stat_energy_impl(data, l$idx1, l$idx2, alpha)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_cq_ip <- function(data, indices, validate = FALSE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Chen-Qin statistic should be a dist object.")
-  n <- attr(data, "Size")
-  indices2 <- seq_len(n)[-indices]
-  stat_cq_impl(data, indices, indices2)
+stat_cq_ip <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  stat_cq_impl(data, l$idx1, l$idx2)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_mod_ip <- function(data, indices, validate = FALSE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Mean-Of-Distances statistic should be a dist object.")
-  xy <- data[indices, -indices]
-  mean(xy)
+stat_mod_ip <- function(data, indices1) {
+  l <- two_sample_prep(data, indices1)
+  l <- purrr::cross(l)
+  dist_values <- purrr::map_dbl(l, ~ getElement(
+    distObject = data,
+    rowIndex = .x$idx1,
+    colIndex = .x$idx2
+  ))
+  mean(dist_values)
 }
 
-#' @rdname test-statistic
+#' @rdname two-sample-stats
 #' @export
-stat_dom_ip <- function(data, indices, validate = FALSE, standardize = TRUE) {
-  if (validate && !inherits(data, "dist"))
-    abort("The input data for the inter-point Distance-Of-Medoids statistic should be a dist object.")
+stat_dom_ip <- function(data, indices1, standardize = TRUE) {
+  l <- two_sample_prep(data, indices1)
+  n1 <- length(l$idx1)
+  n2 <- length(l$idx2)
 
-  n <- attr(data, "Size")
-  n1 <- length(indices)
-  n2 <- n - n1
+  ssd1_vec <- purrr::map_dbl(l$idx1, function(idx) {
+    sum(purrr::map_dbl(l$idx1, ~ getElement(
+      distObject = data,
+      rowIndex = idx,
+      colIndex = .x
+    ))^2)
+  })
+  km1 <- l$idx1[which.min(ssd1_vec)]
 
-  ssd1_vec <- numeric(n1)
-  for (i in seq_along(indices))
-    ssd1_vec[i] <- sum(data[indices[i], indices]^2)
-  km1 <- indices[which.min(ssd1_vec)]
+  ssd2_vec <- purrr::map_dbl(l$idx2, function(idx) {
+    sum(purrr::map_dbl(l$idx2, ~ getElement(
+      distObject = data,
+      rowIndex = idx,
+      colIndex = .x
+    ))^2)
+  })
+  km2 <- l$idx2[which.min(ssd2_vec)]
 
-  ssd2_vec <- numeric(n2)
-  indices <- seq_len(n)[-indices]
-  for (i in seq_along(indices))
-    ssd2_vec[i] <- sum(data[indices[i], indices]^2)
-  km2 <- indices[which.min(ssd2_vec)]
-
-  stat <- data[km1, km2]
+  stat <- getElement(data, km1, km2)
 
   if (!standardize)
     return(stat)
 
   ssd1 <- min(ssd1_vec)
   ssd2 <- min(ssd2_vec)
-  pooled_variance <- (ssd1 + ssd2) / (n - 2)
+  pooled_variance <- (ssd1 + ssd2) / (n1 + n2 - 2)
   stat / sqrt(pooled_variance)
+}
+
+two_sample_prep <- function(data, indices1) {
+  n <- if (inherits(data, "dist"))
+    attr(data, "Size")
+  else if (inherits(data, "list"))
+    length(data)
+  else
+    stop("The `data` input should be of class either list or dist.")
+  indices2 <- seq_len(n)[-indices1]
+  list(idx1 = indices1, idx2 = indices2)
 }

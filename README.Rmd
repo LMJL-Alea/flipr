@@ -31,7 +31,7 @@ inference on complex data. You supply your data, as complex as it might be, in
 the form of lists in which each entry stores one data point in a representation
 that suits you and [**flipr**](https://astamm.github.io/flipr/) takes care of
 the permutation magic and provides you with either point estimates or confidence
-regions or p-value of hypothesis tests. Permutation tests are especially
+regions or $p$-value of hypothesis tests. Permutation tests are especially
 appealing because they are exact no matter how small or big your sample sizes
 are. You can also use the so-called *non-parametric combination* approach in
 this setting to combine several statistics to better target the alternative
@@ -67,58 +67,118 @@ We hereby use the very simple t-test for comparing the means of two univariate
 samples to show how easy it is to carry out a permutation test with
 [**flipr**](https://astamm.github.io/flipr/).
 
-Let us first generate two samples of size $15$ each governed by Gaussian distributions with equal variance but different means:
+### Data generation
+
+Let us first generate two samples of size $15$ governed by Gaussian distributions with equal variance but different means:
 ```{r}
 set.seed(123)
 n <- 15
-x1 <- rnorm(n = n, mean = 0, sd = 1)
-x2 <- rnorm(n = n, mean = 1, sd = 1)
+x <- rnorm(n = n, mean = 0, sd = 1)
+y <- rnorm(n = n, mean = 1, sd = 1)
 ```
 
-Let $\delta = \mu_2 - \mu_1$. In order for the `x2` sample to be exchangeable with the `x1` sample, one can subtract $\delta$ to each observation of the `x2` sample. To do that, let us define the following null specification function:
+Given the data we simulated, the parameter of interest here is the difference between the means of the distributions, say $\delta = \mu_y - \mu_x$.
 
+### Make the two samples exchangeable under $H_0$
+
+In the context of null hypothesis testing, we consider the null hypothesis $H_0: \mu_y - \mu_x = \delta$. We can use a permutation scheme to approach the $p$-value if the two samples are *exchangeable* under $H_0$. This means that we need to transform for example the second sample to *make* it  exchangeable with the first sample under $H_0$. In this simple example, this can be achieved as follows. Let $X_1, \dots, X_{n_x} \sim \mathcal{N}(\mu_x, 1)$ and $Y_1, \dots, Y_{n_y} \sim \mathcal{N}(\mu_y, 1)$. We can then transform the second sample as $Y_i \longleftarrow Y_i - \delta$.
+
+We can define a proper function to do this, termed the *null specification* function, which takes two input arguments:
+
+- `y` which is a list storing the data points in the second sample;
+- `parameters` which is a numeric vector of values for the parameters under investigation (here only $\delta$ and thus `parameters` is of length $1$ with `parameters[1] = delta`).
+
+In our simple example, it boils down to:
 ```{r}
 null_spec <- function(y, parameters) {
-  purrr::map(y, ~ .x - parameters)
+  purrr::map(y, ~ .x - parameters[1])
 }
 ```
 
-Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference $\delta$. Since the two samples share the same variance we can use the $t$-statistic with a pooled estimated of the common variance. We need to implement it for easy computation on a permuted version of the data. Hence, the skeleton function to implement test statistics compatible with **flipr** is:
+### Choose suitable test statistics
+
+Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference $\delta$. Since the two samples share the same variance, we can use for example the $t$-statistic with a pooled estimate of the common variance.
+
+This statistic can be easily computed using `stats::t.test(x, y, var.equal = TRUE)$statistic`. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with [**flipr**](https://astamm.github.io/flipr/) should have at least two mandatory input arguments:
+
+- `data` which is either a concatenated list of size $n_x + n_y$ regrouping the data points of both samples or a distance matrix of size $(n_x + n_y) \times (n_x + n_y)$ stored as an object of class `dist`.
+- `indices1` which is an integer vector of size $n_x$ storing the indices of the data points belonging to the first sample in the current permuted version of the data.
+
+Some test statistics are already implemented in [**flipr**](https://astamm.github.io/flipr/) and ready to use. User-defined test statistics can be used as well, with the use of the helper function `use_stat(nsamples = 2, stat_name = )`. This function creates and saves an `.R` file in the `R/` folder of the current working directory and populates it with the following template:
 ```{r, eval=FALSE}
-my_stat_fun <- function(data, indices) {
-  # data: A list of n1 + n2 element in which the first n1 elements are the
-  # observations of the first sample and the last n2 elements contain the
-  # observations of the second sample
-  
-  # indices: An integer vector of indices of observations that belong to the
-  # first sample in the current permuted version of the data
+#' Test Statistic for the Two-Sample Problem
+#'
+#' This function computes the test statistic...
+#'
+#' @param data A list storing the concatenation of the two samples from which
+#'   the user wants to make inference. Alternatively, a distance matrix stored
+#'   in an object of class \code{\link[stats]{dist}} of pairwise distances
+#'   between data points.
+#' @param indices1 An integer vector that contains the indices of the data
+#'   points belong to the first sample in the current permuted version of the
+#'   data.
+#'
+#' @return A numeric value evaluating the desired test statistic.
+#' @export
+#'
+#' @examples
+#' # TO BE DONE BY THE DEVELOPER OF THE PACKAGE
+stat_{{{name}}} <- function(data, indices1) {
+  n <- if (inherits(data, "dist"))
+    attr(data, "Size")
+  else if (inherits(data, "list"))
+    length(data)
+  else
+    stop("The `data` input should be of class either list or dist.")
+
+  indices2 <- seq_len(n)[-indices1]
+
+  x <- data[indices1]
+  y <- data[indices2]
+
+  # Here comes the code that computes the desired test
+  # statistic from input samples stored in lists x and y
+
 }
 ```
 
-We can therefore implement the $t$-statistic as a function that plays well with
-[**flipr**](https://astamm.github.io/flipr/) as follows:
+For instance, a [**flipr**](https://astamm.github.io/flipr/)-compatible version of the $t$-statistic with pooled variance will look like:
 ```{r}
-my_t_stat <- function(data, indices) {
-  n <- length(data)
-  n1 <- length(indices)
-  n2 <- n - n1
-  indices2 <- seq_len(n)[-indices]
-  x1 <- unlist(data[indices])
-  x2 <- unlist(data[indices2])
-  stats::t.test(x = x1, y = x2, var.equal = TRUE)$statistic
+my_t_stat <- function(data, indices1) {
+  n <- if (inherits(data, "dist"))
+    attr(data, "Size")
+  else if (inherits(data, "list"))
+    length(data)
+  else
+    stop("The `data` input should be of class either list or dist.")
+
+  indices2 <- seq_len(n)[-indices1]
+
+  x <- data[indices1]
+  y <- data[indices2]
+  
+  # Here comes the code that computes the desired test
+  # statistic from input samples stored in lists x and y
+  x <- unlist(x)
+  y <- unlist(y)
+  
+  stats::t.test(x, y, var.equal = TRUE)$statistic
 }
 ```
 
-We then declare a list of test statistics function:
+Here, we are only going to use the $t$-statistic for this example, but we might be willing to use more than one statistic for a parameter or we might have several parameters under investigation, each one of them requiring a different test statistic. We therefore group all the test statistics that we need into a single list:
 ```{r}
 stat_functions <- list(my_t_stat)
 ```
 
-Finally we need to define a named list that tells **flipr** which test statistics among the ones declared in the `stat_functions` list above should be used for each inferred parameter. This is used to determine bounds on each parameter for the plausibility function. This list, often termed `stat_assignments`, should therefore have as many elements as there are parameters to be inferred. Each element should be named after the name of a parameter to be inferred and should list the indices corresponding to the test statistics that should be used for that parameter in `stat_functions`. In our example, it means that:
+### Assign test statistics to parameters
 
+Finally we need to define a named list that tells [**flipr**](https://astamm.github.io/flipr/) which test statistics among the ones declared in the `stat_functions` list should be used for each parameter under investigation. This is used to determine bounds on each parameter for the plausibility function. This list, often termed `stat_assignments`, should therefore have as many elements as there are parameters under investigation. Each element should be named after a parameter under investigation and should list the indices corresponding to the test statistics that should be used for that parameter in `stat_functions`. In our example, it boils down to:
 ```{r}
 stat_assignments <- list(delta = 1)
 ```
+
+### Use the plausibility function
 
 Now we can instantiate a plausibility function as follows:
 ```{r}
@@ -126,31 +186,31 @@ pf <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
   stat_assignments = stat_assignments,
-  x1, x2
+  x, y
 )
 ```
 
-Now assume we want to test the following hypotheses:
+Now, assume we want to test the following hypotheses:
 
 $$ H_0: \delta = 0 \quad \mbox{v.s.} \quad H_1: \delta \ne 0. $$
 
-We just have to evaluate the plausbility function in $0$ to get the corresponding p-value as follows:
+We use the `$get_value()` method for this purpose, which essentially evaluates the permutation $p$-value of a two-sided test by default:
 ```{r}
 pf$get_value(0)
 ```
 
-We can compare the resulting p-value with the one obtained using the more classic parametric test:
+We can compare the resulting $p$-value with the one obtained using the more classic parametric test:
 ```{r}
-t.test(x = x1, y = x2, var.equal = TRUE)$p.value
+t.test(x, y, var.equal = TRUE)$p.value
 ```
 
-The permutation p-value does not quite match the parametric one. This is because of two reasons:
+The permutation $p$-value does not quite match the parametric one. This is because of two reasons:
 
-1. The resolution of a permutation p-value is of the order of $1/(B+1)$, where $B$ is the number of sampled permutations. By default, the plausibility function is instantiated with $B = 1000$:
+1. The resolution of a permutation $p$-value is of the order of $1/(B+1)$, where $B$ is the number of sampled permutations. By default, the plausibility function is instantiated with $B = 1000$:
 ```{r}
 pf$nperms
 ```
-2. We randomly sample $B$ permutations out of the $\binom{n_1+n_2}{n_1}$ possible permutations and therefore introduce extra variability in the p-value.
+2. We randomly sample $B$ permutations out of the $\binom{n_x+n_y}{n_x}$ possible permutations and therefore introduce extra variability in the $p$-value.
 
 If we were to ask for more permutations, say $B = 1,000,000$, we would be much closer to the parametric $p$-value:
 ```{r}

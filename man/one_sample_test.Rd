@@ -6,7 +6,7 @@
 \usage{
 one_sample_test(
   x,
-  stats = stat_max,
+  stats = list(stat_max),
   B = 1000L,
   M = NULL,
   alternative = "two_tail",
@@ -17,7 +17,7 @@ one_sample_test(
 }
 \arguments{
 \item{x}{A numeric vector or a numeric matrix or a list representing the
-sample.}
+sample from which the user wants to make inference.}
 
 \item{stats}{A list of functions produced by \code{\link[rlang]{as_function}}
 specifying the chosen test statistic(s). A number of test statistic
@@ -26,7 +26,7 @@ Alternatively, one can provide its own implementation of test statistics
 that (s)he deems relevant for the problem at hand. See the section
 \emph{User-supplied statistic function} for more information on how these
 user-supplied functions should be structured for compatibility with the
-\strong{flipr} framwork. Default is \code{\link{stat_t}}.}
+\strong{flipr} framework. Default is \code{list(\link{stat_t})}.}
 
 \item{B}{The number of sampled permutations. Default is \code{1000L}.}
 
@@ -47,9 +47,9 @@ obtained during the non-parametric combination testing procedure. For now,
 choices are either \code{"tippett"} or \code{"fisher"}. Default is \code{"tippett"}, which
 picks Tippett's function.}
 
-\item{type}{A string specifying if performing an exact test through the use
-of Phipson-Smyth estimate of the p-value or an approximate test through a
-Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
+\item{type}{A string specifying which formula should be used to compute the
+p-value. Choices are \code{exact} (default), \code{upper_bound} and \code{estimate}. See
+Phipson & Smith (2010) for details.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}
@@ -73,9 +73,14 @@ A user-specified function should have at least two arguments:
 \itemize{
 \item the first argument is \code{data} which should be a list of the \code{n}
 observations from the sample;
-\item the second argument is \code{perm_data} which should be an integer vector giving
+\item the second argument is \code{flips} which should be an integer vector giving
 the signs by which each observation in \code{data} should be multiplied.
 }
+
+It is possible to use the \code{\link{use_stat}} function with \code{nsamples = 1}
+to have \strong{flipr} automatically generate a template file for writing down
+your own test statistics in a way that makes it compatible with the \strong{flipr}
+framework.
 
 See the \code{\link{stat_max}} function for an example.
 }

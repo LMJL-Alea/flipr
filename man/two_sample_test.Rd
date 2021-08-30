@@ -6,8 +6,8 @@
 \usage{
 two_sample_test(
   x,
-  y = NULL,
-  stats = stat_t,
+  y,
+  stats = list(stat_t),
   B = 1000L,
   M = NULL,
   alternative = "two_tail",
@@ -18,10 +18,15 @@ two_sample_test(
 }
 \arguments{
 \item{x}{A numeric vector or a numeric matrix or a list representing the 1st
-sample.}
+sample. Alternatively, it can be a distance matrix stored as an object of
+class \code{\link[stats]{dist}}, in which case test statistics based on
+inter-point distances (marked with the \verb{_ip} suffix) should be used.}
 
-\item{y}{A numeric vector or a numeric matrix or a list representing the 2nd
-sample.}
+\item{y}{A numeric vector if \code{x} is a numeric vector, or a numeric matrix if
+\code{x} is a numeric matrix, or a list if \code{x} is a list, representing the second
+sample. Alternatively, if \code{x} is an object of class
+\code{\link[stats]{dist}}, it should be a numeric scalar specifying the
+size of the first sample.}
 
 \item{stats}{A list of functions produced by \code{\link[rlang]{as_function}}
 specifying the chosen test statistic(s). A number of test statistic
@@ -30,7 +35,7 @@ Alternatively, one can provide its own implementation of test statistics
 that (s)he deems relevant for the problem at hand. See the section
 \emph{User-supplied statistic function} for more information on how these
 user-supplied functions should be structured for compatibility with the
-\strong{flipr} framwork. Default is \code{\link{stat_t}}.}
+\strong{flipr} framework. Default is \code{list(\link{stat_t})}.}
 
 \item{B}{The number of sampled permutations. Default is \code{1000L}.}
 
@@ -51,9 +56,9 @@ obtained during the non-parametric combination testing procedure. For now,
 choices are either \code{"tippett"} or \code{"fisher"}. Default is \code{"tippett"}, which
 picks Tippett's function.}
 
-\item{type}{A string specifying if performing an exact test through the use
-of Phipson-Smyth estimate of the p-value or an approximate test through a
-Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
+\item{type}{A string specifying which formula should be used to compute the
+p-value. Choices are \code{exact} (default), \code{upper_bound} and \code{estimate}. See
+Phipson & Smith (2010) for details.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}
@@ -81,6 +86,11 @@ below;
 \item the second argument is \code{perm_data} which should be an integer vector giving
 the indices in \code{data} that are considered to belong to the first sample.
 }
+
+It is possible to use the \code{\link{use_stat}} function with \code{nsamples = 2}
+to have \strong{flipr} automatically generate a template file for writing down
+your own test statistics in a way that makes it compatible with the \strong{flipr}
+framework.
 
 See the \code{\link{stat_t}} function for an example.
 }

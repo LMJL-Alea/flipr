@@ -14,11 +14,13 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(tidyverse)
+library(parallel)
 library(flipr)
+load("../R/sysdata.rda")
 ```
 
 In this article, we discuss the exactness property of permutation tests,
-which is closely related to how $p$-values are retrieved from the
+which is closely related to how $p$-values are computed from the
 permutations. This article is a summary of the paper by @phipson2010.
 
 ## Traditional formulation of a statistical test
@@ -199,72 +201,100 @@ a discrete uniform distribution on the integers $0, \dots, m_t$ and
 that, conditional on $B_t = b_t$, the random variable $B$ follows a
 binomial distribution of size $m$ and rate of success $p_t$. We can thus
 write:
-$$ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), $$where
-$F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)$ is the cumulative
+$$ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), $$
+where $F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)$ is the cumulative
 probability function of the binomial distribution of size $m$ and
 probability of success $\frac{b_t + 1}{m_t + 1}$.
 
-This estimator can be computationally intense to compute for large
-values of $m_t$, in which case one might use the following integral
-approximation:
+This can be computationally intense to compute for large values of $m_t$, in
+which case one might use the following integral approximation:
 $$ p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t. $$
+
+This approximation shows that the exact p-value $p_e$ is upper bounded by
+$$
+p_u = \frac{b+1}{m+1},
+$$
+which happens to be the exact p-value in the case of sampling permutations without replacement.
 
 ## Comparison by empirical evidence
 
 In **flipr**, you perform a permutation test using the estimator
 $\widehat{p_\infty}$ of the p-value $p_\infty$ by setting
-`type == "approximate"`. This provides a non-exact test but an unbiased
+`type == "estimate"`. This provides a non-exact test but an unbiased
 estimate of $p_\infty$. You perform a permutation test using the
 permutation p-value $p_e$ by setting `type == "exact"`. This provides an
-exact test.
+exact test. You also have the possibility of using the upper bound p-value $p_u$ using `type == "upper_bound"`.
 
 The following R code runs simulations to empirically estimate the
 probability of wrongly rejecting the null hypothesis. The generative
 model for both samples is the standard normal distribution. Sample sizes
-are set to $n_1 = n_2 = 10$. We draw $100$ permutations for each test.
+are set to $n_1 = n_2 = 5$. We draw $20$ permutations for each test. We used a significance level of $5\%$.
 
-```{r power-simulation}
-alpha <- 0.05
-R <- 1000
+```{r, eval=FALSE}
+# General setup
+nreps <- 1e4
+n1 <- 5
+n2 <- 5
 set.seed(12345)
-1:R %>% 
-  map(~ {
-    x <- rnorm(n = 10, mean = 0, sd = 1)
-    y <- rnorm(n = 10, mean = 0, sd = 1)
-    test_exact <- two_sample_test(
-      x = x, 
-      y = y, 
-      statistic = stat_hotelling, 
-      type = "exact", 
-      B = 100
+sim <- map(sample.int(.Machine$integer.max, nreps, replace = TRUE), ~ {
+    list(
+      x = rnorm(n = n1, mean = 0, sd = 1),
+      y = rnorm(n = n2, mean = 0, sd = 1),
+      s = .x
     )
-    test_approx <- two_sample_test(
-      x = x, 
-      y = y, 
-      statistic = stat_hotelling, 
-      type = "approximate", 
-      B = 100
+  })
+
+# Cluster setup
+cl <- makeCluster(detectCores(logical = FALSE))
+clusterEvalQ(cl, {
+  library(tidyverse)
+  library(flipr)
+  null_spec <- function(y, parameters) {
+    map(y, ~ .x - parameters)
+  }
+  stat_functions <- list(stat_t)
+  stat_assignments <- list(delta = 1)
+  nperms <- 20
+  alpha <- 0.05
+})
+
+alpha_estimates <- pbapply::pblapply(sim, function(.l) {
+    pf <- PlausibilityFunction$new(
+      null_spec = null_spec,
+      stat_functions = stat_functions,
+      stat_assignments = stat_assignments,
+      .l$x, .l$y,
+      seed = .l$s
     )
+    pf$set_nperms(nperms)
+    pf$set_alternative("left_tail")
+    pf$set_pvalue_formula("exact")
+    pv_exact <- pf$get_value(0)
+    pf$set_pvalue_formula("upper_bound")
+    pv_upper_bound <- pf$get_value(0)
+    pf$set_pvalue_formula("estimate")
+    pv_estimate <- pf$get_value(0)
     c(
-      approx = (test_approx$pvalue <= alpha), 
-      exact = (test_exact$pvalue <= alpha)
+      exact       = pv_exact       <= alpha,
+      upper_bound = pv_upper_bound <= alpha,
+      estimate    = pv_estimate    <= alpha
     )
-  }) %>% 
-  transpose() %>% 
-  simplify_all() %>% 
+  }, cl = cl) %>%
+  transpose() %>%
+  simplify_all() %>%
   map(mean)
+stopCluster(cl)
 ```
 
-Note that we only ran $R=1000$ simulations to estimate the probability
-of wrongly rejecting $H_0$. Hence, we encourage readers to download the
-`Rmd` file for this article and try increasing the `R` argument in the
-`params` list of the YAML header.
+```{r}
+as_tibble(alpha_estimates)
+```
 
-This simulation confirms the theoretical value of the probability of
-wrongly rejecting the null hypothesis for the *approximate* case. It
-also provides numerical evidence that using the permutation p-value
-$p_e$ provides an exact test. This is by design since $p_e$ is a genuine
+This simulation provides numerical evidence that using the permutation p-value
+$p_e$ yields an exact test. This is by design since $p_e$ is a genuine
 probability hence it is uniformly distributed on $(0,1)$ under the null
-hypothesis.
+hypothesis. We also observe that the upper bound $p_u$ is very close to the exact p-value $p_e$.
+
+Of course, one might criticize this simulation in which the number of permutations $m$ has been chosen small on purpose to prove our point. In effect, when $m$ is larger, all formulae to compute the p-value yield an asymptotically exact test. Quoting @phipson2010, *while this is true, the urgent need to avoid small $m$ disappears when the exact p-value $p_e$ is used in place of $\widehat{p_\infty}$, because $p_e$ ensures a valid statistical test regardless of the sample sizes or the number of permutations. When exact p-values are used, the only penalty for choosing $m$ small is a loss of statistical power to reject the null hypothesis. This is as it should be: more permutations should generally provide greater power*.
 
 ## References

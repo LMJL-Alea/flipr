@@ -15,12 +15,22 @@
 #' - the second argument is `perm_data` which should be an integer vector giving
 #' the indices in `data` that are considered to belong to the first sample.
 #'
+#' It is possible to use the \code{\link{use_stat}} function with `nsamples = 2`
+#' to have **flipr** automatically generate a template file for writing down
+#' your own test statistics in a way that makes it compatible with the **flipr**
+#' framework.
+#'
 #' See the \code{\link{stat_t}} function for an example.
 #'
 #' @param x A numeric vector or a numeric matrix or a list representing the 1st
-#'   sample.
-#' @param y A numeric vector or a numeric matrix or a list representing the 2nd
-#'   sample.
+#'   sample. Alternatively, it can be a distance matrix stored as an object of
+#'   class \code{\link[stats]{dist}}, in which case test statistics based on
+#'   inter-point distances (marked with the `_ip` suffix) should be used.
+#' @param y A numeric vector if `x` is a numeric vector, or a numeric matrix if
+#'   `x` is a numeric matrix, or a list if `x` is a list, representing the second
+#'   sample. Alternatively, if `x` is an object of class
+#'   \code{\link[stats]{dist}}, it should be a numeric scalar specifying the
+#'   size of the first sample.
 #' @param stats A list of functions produced by \code{\link[rlang]{as_function}}
 #'   specifying the chosen test statistic(s). A number of test statistic
 #'   functions are implemented in the package and can be used as such.
@@ -28,7 +38,7 @@
 #'   that (s)he deems relevant for the problem at hand. See the section
 #'   *User-supplied statistic function* for more information on how these
 #'   user-supplied functions should be structured for compatibility with the
-#'   **flipr** framwork. Default is \code{\link{stat_t}}.
+#'   **flipr** framework. Default is \code{list(\link{stat_t})}.
 #' @param B The number of sampled permutations. Default is `1000L`.
 #' @param M The total number of possible permutations. Defaults to `NULL`, which
 #'   means that it is automatically computed from the given sample size(s).
@@ -44,9 +54,9 @@
 #'   obtained during the non-parametric combination testing procedure. For now,
 #'   choices are either `"tippett"` or `"fisher"`. Default is `"tippett"`, which
 #'   picks Tippett's function.
-#' @param type A string specifying if performing an exact test through the use
-#'   of Phipson-Smyth estimate of the p-value or an approximate test through a
-#'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
+#' @param type A string specifying which formula should be used to compute the
+#'   p-value. Choices are `exact` (default), `upper_bound` and `estimate`. See
+#'   Phipson & Smith (2010) for details.
 #' @param seed An integer specifying the seed of the random generator useful for
 #'   result reproducibility or method comparisons. Default is `NULL`.
 #'
@@ -76,8 +86,8 @@
 #' y <- rnorm(n = n, mean = my, sd = sigma)
 #' t2 <- two_sample_test(x, y)
 #' t2$pvalue
-two_sample_test <- function(x, y = NULL,
-                            stats = stat_t,
+two_sample_test <- function(x, y,
+                            stats = list(stat_t),
                             B = 1000L,
                             M = NULL,
                             alternative = "two_tail",
@@ -85,27 +95,50 @@ two_sample_test <- function(x, y = NULL,
                             type = "exact",
                             seed = NULL) {
 
-  if (is.null(y) && !inherits(x, "dist"))
-    abort("The x argument should be a dist object if the y argument is not supplied.")
+  if (is.numeric(x)) {
+    if (!is.numeric(y) || length(y) == 1)
+      abort("When the first sample is of scalar type, the second sample should be of scalar type as well.")
+  } else if (is.matrix(x)) {
+    if (!is.matrix(y))
+      abort("When the first sample is of vector type, the second sample should be of vector type as well.")
+  } else if (is.list(x)) {
+    if (!is.list(y))
+      abort("When the first sample is stored in a list, the second sample should be stored in a list as well.")
+  } else if (inherits(x, "dist")) {
+    if (!is.numeric(y))
+      abort("When the first argument is a distance matrix, the second argument should be an integer specifying the size of the first sample.")
+    if (length(y) > 1)
+      abort("When the first argument is a distance matrix, the second argument should be an integer specifying the size of the first sample.")
+  } else {
+    abort("The first argument should be of class numeric, matrix, list or dist.")
+  }
 
   if (!is.null(seed)) withr::local_seed(seed)
 
-  l <- convert_to_list(x, y)
-  x <- l[[1]]
-  y <- l[[2]]
-  n1 <- length(x)
-  n2 <- length(y)
-  n <- n1 + n2
-  stat_data <- c(x, y)
+  if (inherits(x, "dist")) {
+    stat_data <- x
+    n <- attr(x, "Size")
+    n1 <- y
+    n2 <- n - n1
+  } else {
+    l <- convert_to_list(x, y)
+    x <- l[[1]]
+    y <- l[[2]]
+    n1 <- length(x)
+    n2 <- length(y)
+    n <- n1 + n2
+    stat_data <- c(x, y)
+  }
 
-  # Compute total number of permutations yielding to distinct values of the test
-  # statistic
-  if (is.null(M)) M <- choose(n, n1) - 1
+  # Compute total number of permutations yielding to distinct
+  # values of the test statistic
+  if (is.null(M))
+    M <- choose(n, n1) - 1
 
   # Generate permutation data
   if (M <= B) {
     B <- M
-    perm_data <- utils::combn(n, n1)[, 1:B]
+    perm_data <- utils::combn(n, n1)[, 1:B + 1]
   } else {
     perm_data <- replicate(B, sample.int(n))[1:n1, ]
   }

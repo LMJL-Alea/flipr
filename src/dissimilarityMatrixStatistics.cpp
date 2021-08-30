@@ -14,7 +14,7 @@ double stat_student_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = 0;j < n2;++j)
     {
       xyMean *= (counter_xy / (counter_xy + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, secondGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], secondGroupIndices[j]);
       xyMean += distanceValue * distanceValue / (counter_xy + 1.0);
       ++counter_xy;
 
@@ -23,7 +23,7 @@ double stat_student_impl(const Rcpp::NumericVector &distanceMatrix,
         for (unsigned int k = j + 1;k < n2;++k)
         {
           yyMean *= (counter_yy / (counter_yy + 1.0));
-          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j] - 1, secondGroupIndices[k] - 1);
+          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j], secondGroupIndices[k]);
           yyMean += distanceValue * distanceValue / (counter_yy + 1.0);
           ++counter_yy;
         }
@@ -33,7 +33,7 @@ double stat_student_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = i + 1;j < n1;++j)
     {
       xxMean *= (counter_xx / (counter_xx + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, firstGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], firstGroupIndices[j]);
       xxMean += distanceValue * distanceValue / (counter_xx + 1.0);
       ++counter_xx;
     }
@@ -68,7 +68,7 @@ double stat_fisher_impl(const Rcpp::NumericVector &distanceMatrix,
         for (unsigned int k = j + 1;k < n2;++k)
         {
           yyMean *= (counter_yy / (counter_yy + 1.0));
-          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j] - 1, secondGroupIndices[k] - 1);
+          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j], secondGroupIndices[k]);
           yyMean += distanceValue * distanceValue / (counter_yy + 1.0);
           ++counter_yy;
         }
@@ -78,7 +78,7 @@ double stat_fisher_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = i + 1;j < n1;++j)
     {
       xxMean *= (counter_xx / (counter_xx + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, firstGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], firstGroupIndices[j]);
       xxMean += distanceValue * distanceValue / (counter_xx + 1.0);
       ++counter_xx;
     }
@@ -109,7 +109,7 @@ double stat_bg_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = 0;j < n2;++j)
     {
       xyMean *= (counter_xy / (counter_xy + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, secondGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], secondGroupIndices[j]);
       xyMean += distanceValue / (counter_xy + 1.0);
       ++counter_xy;
 
@@ -118,7 +118,7 @@ double stat_bg_impl(const Rcpp::NumericVector &distanceMatrix,
         for (unsigned int k = j + 1;k < n2;++k)
         {
           yyMean *= (counter_yy / (counter_yy + 1.0));
-          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j] - 1, secondGroupIndices[k] - 1);
+          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j], secondGroupIndices[k]);
           yyMean += distanceValue / (counter_yy + 1.0);
           ++counter_yy;
         }
@@ -128,7 +128,7 @@ double stat_bg_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = i + 1;j < n1;++j)
     {
       xxMean *= (counter_xx / (counter_xx + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, firstGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], firstGroupIndices[j]);
       xxMean += distanceValue / (counter_xx + 1.0);
       ++counter_xx;
     }
@@ -151,7 +151,7 @@ double stat_energy_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = 0;j < n2;++j)
     {
       xyMean *= (counter_xy / (counter_xy + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, secondGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], secondGroupIndices[j]);
       if (alphaValue != 1)
         distanceValue = std::pow(distanceValue, (double)alphaValue);
       xyMean += distanceValue / (counter_xy + 1.0);
@@ -162,7 +162,7 @@ double stat_energy_impl(const Rcpp::NumericVector &distanceMatrix,
         for (unsigned int k = 0;k < n2;++k)
         {
           yyMean *= (counter_yy / (counter_yy + 1.0));
-          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j] - 1, secondGroupIndices[k] - 1);
+          double distanceValue = getElement(distanceMatrix, secondGroupIndices[j], secondGroupIndices[k]);
           if (alphaValue != 1)
             distanceValue = std::pow(distanceValue, (double)alphaValue);
           yyMean += distanceValue / (counter_yy + 1.0);
@@ -174,7 +174,7 @@ double stat_energy_impl(const Rcpp::NumericVector &distanceMatrix,
     for (unsigned int j = 0;j < n1;++j)
     {
       xxMean *= (counter_xx / (counter_xx + 1.0));
-      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i] - 1, firstGroupIndices[j] - 1);
+      double distanceValue = getElement(distanceMatrix, firstGroupIndices[i], firstGroupIndices[j]);
       if (alphaValue != 1)
         distanceValue = std::pow(distanceValue, (double)alphaValue);
       xxMean += distanceValue / (counter_xx + 1.0);
@@ -198,7 +198,7 @@ double stat_cq_impl(const Rcpp::NumericVector &similarityMatrix,
     for (unsigned int j = 0;j < n2;++j)
     {
       xyMean *= (counter_xy / (counter_xy + 1.0));
-      double similarityValue = getElement(similarityMatrix, firstGroupIndices[i] - 1, secondGroupIndices[j] - 1);
+      double similarityValue = getElement(similarityMatrix, firstGroupIndices[i], secondGroupIndices[j]);
       xyMean += similarityValue / (counter_xy + 1.0);
       ++counter_xy;
 
@@ -210,7 +210,7 @@ double stat_cq_impl(const Rcpp::NumericVector &similarityMatrix,
             continue;
 
           yyMean *= (counter_yy / (counter_yy + 1.0));
-          double similarityValue = getElement(similarityMatrix, secondGroupIndices[j] - 1, secondGroupIndices[k] - 1);
+          double similarityValue = getElement(similarityMatrix, secondGroupIndices[j], secondGroupIndices[k]);
           yyMean += similarityValue / (counter_yy + 1.0);
           ++counter_yy;
         }
@@ -223,7 +223,7 @@ double stat_cq_impl(const Rcpp::NumericVector &similarityMatrix,
         continue;
 
       xxMean *= (counter_xx / (counter_xx + 1.0));
-      double similarityValue = getElement(similarityMatrix, firstGroupIndices[i] - 1, firstGroupIndices[j] - 1);
+      double similarityValue = getElement(similarityMatrix, firstGroupIndices[i], firstGroupIndices[j]);
       xxMean += similarityValue / (counter_xx + 1.0);
       ++counter_xx;
     }

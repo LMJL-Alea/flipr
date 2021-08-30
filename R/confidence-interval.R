@@ -44,10 +44,10 @@ compute_confidence_interval <- function(pf,
 get_ci <- function(object,
                    pf,
                    conf_level = 0.95,
-                   point_estimate = NULL,
                    ...) {
   if (!inherits(object, "param"))
     abort("The first argument should be a `param` object.")
+  point_estimate <- object$point_estimate
   rngs <- dials::range_get(object, original = FALSE)
   if (!dials::is_unknown(rngs$lower) && !dials::is_unknown(rngs$upper))
     return(object)
@@ -71,5 +71,8 @@ get_ci <- function(object,
     rngs$lower <- ci[1]
     rngs$upper <- ci[2]
   }
-  dials::range_set(object, rngs)
+  res <- dials::range_set(object, rngs)
+  res$point_estimate <- point_estimate
+  class(res) <- c("inferred_param", class(res))
+  res
 }
