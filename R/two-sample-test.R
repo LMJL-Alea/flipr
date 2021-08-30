@@ -54,9 +54,9 @@
 #'   obtained during the non-parametric combination testing procedure. For now,
 #'   choices are either `"tippett"` or `"fisher"`. Default is `"tippett"`, which
 #'   picks Tippett's function.
-#' @param type A string specifying if performing an exact test through the use
-#'   of Phipson-Smyth estimate of the p-value or an approximate test through a
-#'   Monte-Carlo estimate of the p-value. Default is `"exact"`.
+#' @param type A string specifying which formula should be used to compute the
+#'   p-value. Choices are `exact` (default), `upper_bound` and `estimate`. See
+#'   Phipson & Smith (2010) for details.
 #' @param seed An integer specifying the seed of the random generator useful for
 #'   result reproducibility or method comparisons. Default is `NULL`.
 #'

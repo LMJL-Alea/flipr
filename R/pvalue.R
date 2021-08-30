@@ -1,24 +1,25 @@
 stats2pvalue <- function(i, Tp, M, type = "exact", alternative = "right_tail") {
-  available_types <- c("approximate", "exact")
-  type <- match.arg(type, available_types)
   available_alternatives <- c("left_tail", "right_tail", "two_tail")
   alternative <- match.arg(alternative, available_alternatives)
   T0 <- Tp[i]
-  Tp <- unique(Tp)
+  # Tp <- unique(Tp)
   B <- length(Tp) - 1
-  b <- switch (alternative,
-    right_tail = {
-      sum(Tp >= T0) - 1
-    },
-    left_tail = {
-      sum(Tp <= T0) - 1
-    },
-    two_tail = {
-      2 * (min(sum(Tp >= T0), sum(Tp <= T0)) - 1)
-    }
+  # print(B)
+  b <- switch(
+    alternative,
+    right_tail = sum(Tp > T0),
+    left_tail = sum(Tp < T0),
+    two_tail = 2 * min(sum(Tp <= T0), sum(Tp > T0)) - 1
   )
-  if (type == "approximate") return((b + 1) / (B + 1))
-  phipson_smyth_pvalue(b, B, M)
+  get_p(b, B, M, type)
+}
+
+get_p <- function(b, B, M, type) {
+  available_types <- c("exact", "upper_bound", "estimate")
+  type <- match.arg(type, available_types)
+  if (type == "estimate") b / B
+  else if (type == "upper_bound") (b + 1) / (B + 1)
+  else phipson_smyth_pvalue(b, B, M)
 }
 
 phipson_smyth_pvalue <- function(b, B, M) {
@@ -48,7 +49,7 @@ run_permutation_scheme <- function(type,
                                    stat_data,
                                    M,
                                    combine_with) {
-  type <- match.arg(type, c("approximate", "exact"))
+  type <- match.arg(type, c("exact", "upper_bound", "estimate"))
   alternative <- match.arg(alternative, c("left_tail", "right_tail", "two_tail"))
   nstats <- length(stats)
   npc <- nstats > 1
@@ -79,7 +80,7 @@ run_permutation_scheme <- function(type,
         FUN = stats2pvalue,
         Tp = .x,
         M = M,
-        type = "approximate",
+        type = "upper_bound",
         alternative = .y
       )) %>%
       purrr::transpose() %>%

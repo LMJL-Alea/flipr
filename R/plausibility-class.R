@@ -204,6 +204,45 @@ PlausibilityFunction <- R6::R6Class(
       self$aggregator <- val
     },
 
+    #' @field pvalue_formula A string specifying which formula to use for
+    #'   computing the permutation p-value. Choices are either `probability`
+    #'   (default) or `estimator`. The former provides p-values that lead to
+    #'   exact hypothesis tests while the latter provides an unbiased estimate
+    #'   of the traditional p-value.
+    pvalue_formula = "exact",
+
+    #' @description Change the value of the `pvalue_formula` field.
+    #'
+    #' @param val New value for the string specifying which formula should be
+    #'   used to compute the permutation p-value.
+    #'
+    #' @examples
+    #' x <- rnorm(10)
+    #' y <- rnorm(10, mean = 2)
+    #' null_spec <- function(y, parameters) {
+    #'   purrr::map(y, ~ .x - parameters[1])
+    #' }
+    #' stat_functions <- list(stat_t)
+    #' stat_assignments <- list(mean = 1)
+    #' pf <- PlausibilityFunction$new(
+    #'   null_spec = null_spec,
+    #'   stat_functions = stat_functions,
+    #'   stat_assignments = stat_assignments,
+    #'   x, y
+    #' )
+    #' pf$pvalue_formula
+    #' pf$set_pvalue_formula("estimate")
+    #' pf$pvalue_formula
+    set_pvalue_formula = function(val) {
+      if (!(val %in% private$pvalue_formula_choices))
+        abort(paste0(
+          "The `pvalue_formula` argument should be one of ",
+          private$pvalue_formula_choices,
+          "."
+        ))
+      self$pvalue_formula <- val
+    },
+
     #' @description Computes an indicator of the plausibility of specific values
     #'   for the parameters of interest in the form of a p-value of an
     #'   hypothesis test against these values.
@@ -244,6 +283,7 @@ PlausibilityFunction <- R6::R6Class(
           B = self$nperms,
           M = self$nperms_max,
           alternative = self$alternative,
+          type = self$pvalue_formula,
           combine_with = self$aggregator
         )$pvalue
       } else {
@@ -255,6 +295,7 @@ PlausibilityFunction <- R6::R6Class(
           B = self$nperms,
           M = self$nperms_max,
           alternative = self$alternative,
+          type = self$pvalue_formula,
           combine_with = self$aggregator
         )$pvalue
       }
@@ -440,7 +481,7 @@ PlausibilityFunction <- R6::R6Class(
           seed = private$seed
         )
         pvf_temp$set_nperms(self$nperms)
-        pvf_temp$set_alternative(self$alternative)
+        pvf_temp$set_alternative("two_tail")
 
         pe <- self$point_estimate[param_index]
         conf_level <- 1 - (1 - self$max_conf_level) / self$nparams
@@ -583,8 +624,12 @@ PlausibilityFunction <- R6::R6Class(
       }
 
       cl <- NULL
-      if (ncores > 1)
+      if (ncores > 1) {
         cl <- parallel::makeCluster(ncores)
+        parallel::clusterEvalQ(cl, {
+          library(purrr)
+        })
+      }
       self$grid$pvalue <- self$grid |>
         purrr::array_tree(margin = 1) |>
         pbapply::pbsapply(self$get_value, cl = cl)
@@ -620,6 +665,7 @@ PlausibilityFunction <- R6::R6Class(
 
     alternative_choices = c("two_tail", "left_tail", "right_tail"),
     aggregator_choices = c("tippett", "fisher"),
+    pvalue_formula_choices = c("exact", "upper_bound", "estimate"),
 
     univariate_nulls = NULL,
     set_univariate_nulls = function() {

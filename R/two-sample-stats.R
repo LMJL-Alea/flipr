@@ -124,7 +124,7 @@ stat_student <- function(data, indices1) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
-  as.numeric(stats::t.test(x1, x2, var.equal = TRUE)$statistic)
+  as.numeric(stats::t.test(x2, x1, var.equal = TRUE)$statistic)
 }
 
 #' @rdname two-sample-stats
@@ -137,7 +137,7 @@ stat_fisher <- function(data, indices1) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
-  as.numeric(stats::var.test(x1, x2)$statistic)
+  as.numeric(stats::var.test(x2, x1)$statistic)
 }
 
 #' @rdname two-sample-stats

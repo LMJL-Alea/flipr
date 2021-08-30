@@ -47,9 +47,9 @@ obtained during the non-parametric combination testing procedure. For now,
 choices are either \code{"tippett"} or \code{"fisher"}. Default is \code{"tippett"}, which
 picks Tippett's function.}
 
-\item{type}{A string specifying if performing an exact test through the use
-of Phipson-Smyth estimate of the p-value or an approximate test through a
-Monte-Carlo estimate of the p-value. Default is \code{"exact"}.}
+\item{type}{A string specifying which formula should be used to compute the
+p-value. Choices are \code{exact} (default), \code{upper_bound} and \code{estimate}. See
+Phipson & Smith (2010) for details.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}

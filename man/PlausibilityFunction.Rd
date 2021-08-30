@@ -85,6 +85,27 @@ pf$set_aggregator("fisher")
 pf$aggregator
 
 ## ------------------------------------------------
+## Method `PlausibilityFunction$set_pvalue_formula`
+## ------------------------------------------------
+
+x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$pvalue_formula
+pf$set_pvalue_formula("estimate")
+pf$pvalue_formula
+
+## ------------------------------------------------
 ## Method `PlausibilityFunction$get_value`
 ## ------------------------------------------------
 
@@ -244,6 +265,12 @@ aggregate test statistic values when non-parametric combination is used
 (i.e. when multiple test statistics are used). Choices are \code{"tippett"}
 and \verb{"fisher} for now. Defaults to \code{"tippett"}.}
 
+\item{\code{pvalue_formula}}{A string specifying which formula to use for
+computing the permutation p-value. Choices are either \code{probability}
+(default) or \code{estimator}. The former provides p-values that lead to
+exact hypothesis tests while the latter provides an unbiased estimate
+of the traditional p-value.}
+
 \item{\code{max_conf_level}}{A numeric value specifying the maximum confidence
 level that we aim to achieve for the confidence regions. This is used
 to compute bounds on each parameter of interest in order to fit a
@@ -271,6 +298,7 @@ a regular centered grid of the parameter space. Defaults to \code{NULL}.}
 \item \href{#method-set_nperms_max}{\code{PlausibilityFunction$set_nperms_max()}}
 \item \href{#method-set_alternative}{\code{PlausibilityFunction$set_alternative()}}
 \item \href{#method-set_aggregator}{\code{PlausibilityFunction$set_aggregator()}}
+\item \href{#method-set_pvalue_formula}{\code{PlausibilityFunction$set_pvalue_formula()}}
 \item \href{#method-get_value}{\code{PlausibilityFunction$get_value()}}
 \item \href{#method-set_max_conf_level}{\code{PlausibilityFunction$set_max_conf_level()}}
 \item \href{#method-set_point_estimate}{\code{PlausibilityFunction$set_point_estimate()}}
@@ -477,6 +505,47 @@ pf <- PlausibilityFunction$new(
 pf$aggregator
 pf$set_aggregator("fisher")
 pf$aggregator
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_pvalue_formula"></a>}}
+\if{latex}{\out{\hypertarget{method-set_pvalue_formula}{}}}
+\subsection{Method \code{set_pvalue_formula()}}{
+Change the value of the \code{pvalue_formula} field.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$set_pvalue_formula(val)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{val}}{New value for the string specifying which formula should be
+used to compute the permutation p-value.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- rnorm(10)
+y <- rnorm(10, mean = 2)
+null_spec <- function(y, parameters) {
+  purrr::map(y, ~ .x - parameters[1])
+}
+stat_functions <- list(stat_t)
+stat_assignments <- list(mean = 1)
+pf <- PlausibilityFunction$new(
+  null_spec = null_spec,
+  stat_functions = stat_functions,
+  stat_assignments = stat_assignments,
+  x, y
+)
+pf$pvalue_formula
+pf$set_pvalue_formula("estimate")
+pf$pvalue_formula
 }
 \if{html}{\out{</div>}}
 
