@@ -8,17 +8,14 @@ vignette: >
 bibliography: references.bib
 ---
 
-```{r, include = FALSE}
+```{r setup, message = FALSE, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# load("../R/sysdata.rda")
-```
-
-```{r setup, message = FALSE}
 library(tidyverse)
 library(flipr)
+load("../R/sysdata.rda")
 ```
 
 The permutation framework is perfectly suited for making inference as it allows
@@ -53,7 +50,7 @@ mu1 <- 1
 mu2 <- 4
 sd1 <- 1
 sd2 <- 1
-B <- 1000
+B <- 100000
 ```
 
 We will consider three different scenari:
@@ -174,7 +171,7 @@ By default, the number of sampled permutations is `1000L`. It is accessible thro
 ### Scenario A
 
 Let us instantiate the plausibility for the data simulated under scenario A:
-```{r}
+```{r, eval=FALSE}
 pfa <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -185,7 +182,7 @@ pfa$set_nperms(B)
 ```
 
 We can compute a point estimate of the mean difference and store it inside the plausibility function class via the `$set_point_estimate()` method:
-```{r}
+```{r, eval=FALSE}
 pfa$set_point_estimate(mean(a2) - mean(a1))
 ```
 
@@ -194,12 +191,19 @@ The computed value can then be accessed via the `$point_estimate` field:
 pfa$point_estimate
 ```
 or by displaying the list of parameters under investigation which is stored in the `$parameters` field.
-```{r}
+```{r, eval=FALSE}
 pfa$parameters
 ```
 
+```{r, echo=FALSE}
+p <- pfa$parameters
+p[[1]]$range$lower <- dials::unknown()
+p[[1]]$range$upper <- dials::unknown()
+p
+```
+
 In this list, one can see that parameters come with an unknown range by default. We can however compute their bounds by defining a maximum confidence level through the `$set_max_conf_level()` method of the `PlausibilityFunction` class. When a plausibility function is instantiated, the default value for the `$max_conf_level` field is $0.99$. To set parameter bounds automatically, use the `$set_parameter_bounds()` method:
-```{r}
+```{r, eval=FALSE}
 pfa$set_parameter_bounds(
   point_estimate = pfa$point_estimate, 
   conf_level = pfa$max_conf_level
@@ -212,7 +216,7 @@ pfa$parameters
 ```
 
 Once bounds are known for each parameter, it becomes possible to generate a grid for later evaluating the plausibility function. This is done through the `$set_grid()` method as follows:
-```{r}
+```{r, eval=FALSE}
 pfa$set_grid(
   parameters = pfa$parameters, 
   npoints = 50L
@@ -220,12 +224,16 @@ pfa$set_grid(
 ```
 
 We can then take a look at the newly created grid:
-```{r}
+```{r, eval=FALSE}
 pfa$grid
 ```
 
+```{r, echo=FALSE}
+select(pfa$grid, -pvalue)
+```
+
 We can go a step further and evaluate the plaubility function on that grid using the `$evaluate_grid()` method as follows:
-```{r}
+```{r, eval=FALSE}
 pfa$evaluate_grid(grid = pfa$grid)
 ```
 
@@ -290,7 +298,7 @@ samples) and sample sizes are low (here $10$ for each sample), we get
 the following $p$-value functions (cutting below $0.001$ since the usual
 range of useful $p$-values is from $0.01$ and above):
 
-```{r}
+```{r, eval=FALSE}
 pfb <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -308,6 +316,9 @@ pfb$set_grid(
   npoints = 50L
 )
 pfb$evaluate_grid(grid = pfb$grid)
+```
+
+```{r}
 dfb <- pfb$grid |> 
   mutate(
     pvalue_alt = delta %>%
@@ -362,7 +373,7 @@ for each sample), we get the following $p$-value functions (cutting
 below $0.001$ since the usual range of useful $p$-values is from $0.01$
 and above):
 
-```{r}
+```{r, eval=FALSE}
 pfc <- PlausibilityFunction$new(
   null_spec = null_spec,
   stat_functions = stat_functions,
@@ -380,6 +391,9 @@ pfc$set_grid(
   npoints = 50L
 )
 pfc$evaluate_grid(grid = pfc$grid)
+```
+
+```{r}
 dfc <- pfc$grid |> 
   mutate(
     pvalue_alt = delta %>%
@@ -445,7 +459,7 @@ by-product as we will show in the next sections.
 One can obtain a point estimate of the parameter under investigation by
 searching which value of the parameter reaches the maximum of the
 $p$-value function (which is $1$). One can use the `$set_point_estimate()` method to do that:
-```{r}
+```{r, eval=FALSE}
 pfa$set_point_estimate(overwrite = TRUE)
 ```
 
@@ -460,11 +474,14 @@ One can obtain a confidence interval for the parameter under
 investigation by searching for which values of the parameter the
 $p$-value function remains above a pre-specified significance level
 $\alpha$. This is achieved via the `$set_parameter_bounds()` method:
-```{r}
+```{r, eval=FALSE}
 pfa$set_parameter_bounds(
   point_estimate = pfa$point_estimate, 
   conf_level = 0.95
 )
+```
+
+```{r}
 pfa$parameters
 ```
 
@@ -476,6 +493,7 @@ function as it boils down to evaluating the $p$-value function in
 $\delta_0$. Hence we can for instance test $H_0: \delta = 3$ against the
 alternative $H_1: \delta \ne 3$ using the following piece of code:
 ```{r}
+pfa$set_nperms(1000)
 pfa$get_value(3)
 ```
 
