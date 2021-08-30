@@ -278,8 +278,8 @@ pf$nperms
 ```
 
 2.  We randomly sample *B* permutations out of the
-    $\\binom{n\_x+n\_y}{n\_x}$ possible permutations and therefore
-    introduce extra variability in the *p*-value.
+    $\binom{n_x+n_y}{n_x}$ possible permutations and therefore
+    introduce extra variability in the p-value.
 
 If we were to ask for more permutations, say *B* = 1, 000, 000, we would
 be much closer to the parametric *p*-value:
