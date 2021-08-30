@@ -50,7 +50,7 @@ Suggests:
     plotly,
     htmlwidgets,
     htmltools,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
     akima
 VignetteBuilder: knitr
 URL: https://astamm.github.io/flipr/, https://github.com/astamm/flipr/
