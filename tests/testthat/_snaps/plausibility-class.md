@@ -3,12 +3,12 @@
     Code
       actual
     Output
-      [1] 0.3606965
+      [1] 0.4925075
 
 # Snapshot test - Documentation example
 
     Code
       actual
     Output
-      [1] 0.1068931
+      [1] 0.1058941
 
