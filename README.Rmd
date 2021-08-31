@@ -21,7 +21,6 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/astamm/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/flipr?branch=master)
 [![pkgdown](https://github.com/astamm/flipr/workflows/pkgdown/badge.svg)](https://github.com/astamm/flipr/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/flipr)](https://CRAN.R-project.org/package=flipr)
-[![test-coverage](https://github.com/C-Juliette/flipr/workflows/test-coverage/badge.svg)](https://github.com/C-Juliette/flipr/actions)
 <!-- badges: end -->
 
 The goal of the [**flipr**](https://astamm.github.io/flipr/) package is to

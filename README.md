@@ -88,9 +88,9 @@ are *exchangeable* under *H*<sub>0</sub>. This means that we need to
 transform for example the second sample to *make* it exchangeable with
 the first sample under *H*<sub>0</sub>. In this simple example, this can
 be achieved as follows. Let
-*X*<sub>1</sub>, …, *X*<sub>*n*<sub>*x*</sub></sub> ∼ 𝒩(*μ*<sub>*x*</sub>, 1)
+*X*<sub>1</sub>, …, *X*<sub>*n*<sub>*x*</sub></sub> ∼ 𝒩(*μ*<sub>*x*</sub>,1)
 and
-*Y*<sub>1</sub>, …, *Y*<sub>*n*<sub>*y*</sub></sub> ∼ 𝒩(*μ*<sub>*y*</sub>, 1).
+*Y*<sub>1</sub>, …, *Y*<sub>*n*<sub>*y*</sub></sub> ∼ 𝒩(*μ*<sub>*y*</sub>,1).
 We can then transform the second sample as
 *Y*<sub>*i*</sub> ← *Y*<sub>*i*</sub> − *δ*.
 
@@ -128,7 +128,7 @@ mandatory input arguments:
 -   `data` which is either a concatenated list of size
     *n*<sub>*x*</sub> + *n*<sub>*y*</sub> regrouping the data points of
     both samples or a distance matrix of size
-    (*n*<sub>*x*</sub> + *n*<sub>*y*</sub>) × (*n*<sub>*x*</sub> + *n*<sub>*y*</sub>)
+    (*n*<sub>*x*</sub>+*n*<sub>*y*</sub>) × (*n*<sub>*x*</sub>+*n*<sub>*y*</sub>)
     stored as an object of class `dist`.
 -   `indices1` which is an integer vector of size *n*<sub>*x*</sub>
     storing the indices of the data points belonging to the first sample
@@ -254,7 +254,7 @@ evaluates the permutation *p*-value of a two-sided test by default:
 
 ``` r
 pf$get_value(0)
-#> [1] 0.1068931
+#> [1] 0.1078921
 ```
 
 We can compare the resulting *p*-value with the one obtained using the
@@ -269,7 +269,7 @@ The permutation *p*-value does not quite match the parametric one. This
 is because of two reasons:
 
 1.  The resolution of a permutation *p*-value is of the order of
-    1/(*B* + 1), where *B* is the number of sampled permutations. By
+    1/(*B*+1), where *B* is the number of sampled permutations. By
     default, the plausibility function is instantiated with *B* = 1000:
 
 ``` r
@@ -278,8 +278,8 @@ pf$nperms
 ```
 
 2.  We randomly sample *B* permutations out of the
-    $\binom{n_x+n_y}{n_x}$ possible permutations and therefore
-    introduce extra variability in the p-value.
+    $\\binom{n_x+n_y}{n_x}$ possible permutations and therefore
+    introduce extra variability in the *p*-value.
 
 If we were to ask for more permutations, say *B* = 1, 000, 000, we would
 be much closer to the parametric *p*-value:
@@ -287,5 +287,5 @@ be much closer to the parametric *p*-value:
 ``` r
 pf$set_nperms(1000000)
 pf$get_value(0)
-#> [1] 0.1029993
+#> [1] 0.1029879
 ```
