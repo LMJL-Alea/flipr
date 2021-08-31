@@ -1,10 +1,5 @@
-## Resubmission
-This is a resubmission. In this version I have:
-
-* Reduced the size of the tarball to fall below the 5Mb requirement by replacing a number of [**plotly**](https://plotly.com/r/) contour plots with their [**ggplot2**](https://ggplot2.tidyverse.org) counterparts.
-  
 ## Test environments
-* local macOS R installation, R 4.0.3
+* local macOS R installation, R 4.1.0
 * macOS latest release (via [R-CMD-check](https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml) github action)
 * windows latest release (via [R-CMD-check](https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml) github action)
 * ubuntu 20.04 latest both release and devel (via [R-CMD-check](https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml) github action)
@@ -21,8 +16,8 @@ There were no ERRORs or WARNINGs.
 There was 1 NOTE:
 
     * checking installed package size ... NOTE
-      installed size is  8.0Mb
+      installed size is  8.4Mb
       sub-directories of 1Mb or more:
-        doc   7.7Mb
+        doc   7.6Mb
 
 The size varies according to the system on which the package is installed.
