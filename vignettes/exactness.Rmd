@@ -190,11 +190,11 @@ observed number of test statistics larger than or equal to
 $t_\mathrm{obs}$ (using the observed sample of permutations that was
 drawn).
 
-Let $B_t$ be a random variable that counts the total number of possible
-distinct test statistic values exceeding tobs and recall that $m_t$ is
-the total number of possible distinct permutations. We denote by
-$$ p_t = \frac{B_t + 1}{m_t + 1}, $$the permutation p-value when the
-exhaustive list of all permutations is used.
+Let $B_t$ be a random variable that counts the total number of possible distinct
+test statistic values exceeding $t_\mathrm{obs}$ and recall that $m_t$ is the
+total number of possible distinct permutations. We denote by $$ p_t = \frac{B_t
++ 1}{m_t + 1}, $$the permutation p-value when the exhaustive list of all
+permutations is used.
 
 As we have seen before, it is straightforward to show that $B_t$ follows
 a discrete uniform distribution on the integers $0, \dots, m_t$ and

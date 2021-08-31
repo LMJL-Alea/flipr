@@ -20,14 +20,14 @@ load("../R/sysdata.rda")
 
 The permutation framework is perfectly suited for making inference as it allows
 one to perform point estimation, confidence regions and hypothesis tests under
-mild assumptions about the collected data and no distributional assmuption. In
+mild assumptions about the collected data and no distributional assumption. In
 this article, we briefly illustrate how each of these aspects can be treated
 from a permutation point of view using the
 [**flipr**](https://astamm.github.io/flipr/) package. This package has been
 written and is intended as a low-level implementation of the permutation
 framework in the context of statistical inference. The mathematical object
 behind the scene is the so-called plausibility function, sometimes called
-p-value function. This article explains what the plausbility function is and shows how it can be easily computed using the
+p-value function. This article explains what the plausibility function is and shows how it can be easily computed using the
 permutation framework with [**flipr**](https://astamm.github.io/flipr/). We
 illustrate the shape of the plausibility function using both Gaussian and Gamma
 distributions.
@@ -232,7 +232,7 @@ pfa$grid
 select(pfa$grid, -pvalue)
 ```
 
-We can go a step further and evaluate the plaubility function on that grid using the `$evaluate_grid()` method as follows:
+We can go a step further and evaluate the plausibility function on that grid using the `$evaluate_grid()` method as follows:
 ```{r, eval=FALSE}
 pfa$evaluate_grid(grid = pfa$grid)
 ```
