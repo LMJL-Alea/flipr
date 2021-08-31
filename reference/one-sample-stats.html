@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • flipr</title>
+<title>Test Statistics for the One-Sample Problem — one-sample-stats • flipr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,9 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Test Statistics for the One-Sample Problem — one-sample-stats" />
+<meta property="og:description" content="This is a collection of functions that provide test statistics to be used
+into the permutation scheme for performing one-sample testing." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -66,7 +68,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -139,85 +141,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/astamm/flipr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Test Statistics for the One-Sample Problem</h1>
+    <small class="dont-index">Source: <a href='https://github.com/astamm/flipr/blob/master/R/one-sample-stats.R'><code>R/one-sample-stats.R</code></a></small>
+    <div class="hidden name"><code>one-sample-stats.Rd</code></div>
     </div>
 
-    <div id="flipr-0219000" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.1.9000">
-<a href="#flipr-0219000" class="anchor"></a>flipr 0.2.1.9000<small> Unreleased </small>
-</h1>
-</div>
-    <div id="flipr-021" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.1">
-<a href="#flipr-021" class="anchor"></a>flipr 0.2.1<small> 2021-03-08 </small>
-</h1>
-<ul>
-<li>Fix warning when installing the package on Oracle Solaris 10, x86, 32 bit, R-release due to pandoc version not available preventing the <code>pvalue-function</code> vignette from knitting properly.</li>
-</ul>
-</div>
-    <div id="flipr-020" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.0">
-<a href="#flipr-020" class="anchor"></a>flipr 0.2.0<small> 2021-03-06 </small>
-</h1>
-<div id="new-features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
-<ul>
-<li>Compute p-value surfaces when inferring multiple parameters at once via <code>two_sample_pf()</code>;</li>
-<li>Compute a point estimation for a single parameter of interest via <code>two_sample_pe()</code>;</li>
-<li>Compute a confidence interval for a single parameter of interest via <code>two_sample_ci()</code>;</li>
-<li>Automatically draw the p-value function for a single parameter of interest via <code>two_sample_viz()</code>.</li>
-</ul>
-</div>
-<div id="full-list-of-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#full-list-of-changes" class="anchor"></a>Full list of changes</h2>
-<ul>
-<li>Change argument names <code>test</code> and <code>combining_function</code> to <code>type</code> and <code>combine_with</code> respectively. Add argument <code>alternative</code> to specify which kind of test is performed.</li>
-<li>Add a function to compute p-value functions for sets of null hypotheses.</li>
-<li>Draft of article illustrating the computation of p-value functions with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>.</li>
-<li>Add <span class="math inline"><em>t</em></span>, mean and Fisher test statistics.</li>
-<li>Correct two-tail p-value computation.</li>
-<li>Better API for pvalue function.</li>
-<li>Added a function for two sample confidence interval for a single parameter.</li>
-<li>Added an article about permutation inference overview.</li>
-<li>Added dependency to the <a href="https://ggplot2.tidyverse.org"><strong>ggplot2</strong></a> package for plotting features.</li>
-<li>Added dependency to the <a href="https://cli.r-lib.org"><strong>cli</strong></a> package for displaying important information to the user in an elegant fashion.</li>
-<li>Added function for point estimation of a single parameter.</li>
-<li>Added function for confidence interval of a single parameter.</li>
-<li>Added function for automatic plotting of the p-value function of a single parameter.</li>
-<li>Added dependency to the <a href="https://withr.r-lib.org"><strong>withr</strong></a> package for properly handle local random seed generator settings.</li>
-<li>Added dependency to the <a href="https://github.com/sjmgarnier/viridisLite"><strong>viridisLite</strong></a> package for using colors compatible with most common types of color blindness.</li>
-</ul>
-</div>
-</div>
-    <div id="flipr-011" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.1">
-<a href="#flipr-011" class="anchor"></a>flipr 0.1.1<small> 2021-02-17 </small>
-</h1>
-<ul>
-<li>Fix warning when installing the package on Oracle Solaris 10, x86, 32 bit, R-release due to pandoc version not available.</li>
-<li>Switch to GPL-3 license because <strong>purrr</strong> dependency is GPL-3 licensed.</li>
-</ul>
-</div>
-    <div id="flipr-010" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#flipr-010" class="anchor"></a>flipr 0.1.0<small> 2021-02-16 </small>
-</h1>
-<ul>
-<li>Initial release.</li>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>This is a collection of functions that provide test statistics to be used
+into the permutation scheme for performing one-sample testing.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>stat_max</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>flips</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>A list storing the sample from which the user wants to make
+inference.</p></td>
+    </tr>
+    <tr>
+      <th>flips</th>
+      <td><p>A numeric vectors of <code>-1</code>s and <code>1</code>s to be used to randomly flip
+some data points around the center of symmetric of the distribution of the
+sample.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A numeric value evaluating the desired test statistic.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>flips</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='va'>n</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>stat_max</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>flips</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.4436113</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

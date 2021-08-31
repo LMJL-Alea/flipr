@@ -70,7 +70,7 @@
       <a href="../articles/exactness.html">On the exactness of permutation tests</a>
     </li>
     <li>
-      <a href="../articles/pvalue-function.html">Calculating p-value functions</a>
+      <a href="../articles/plausibility.html">Computing plausibility functions</a>
     </li>
   </ul>
 </li>
@@ -108,28 +108,16 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/">flipr</a></span><span class="op">)</span>
-
-<span class="va">generate_grid</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">center_value</span>, <span class="va">min_value</span>, <span class="va">max_value</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="va">center_value</span> <span class="op">&gt;</span> <span class="va">min_value</span> <span class="op">&amp;&amp;</span> <span class="va">center_value</span> <span class="op">&lt;</span> <span class="va">max_value</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">min_value</span>, <span class="va">center_value</span>, len <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span>, 
-    <span class="va">center_value</span>, 
-    <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">center_value</span>, <span class="va">max_value</span>, len <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>
-  <span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>The permutation framework is perfectly suited for inferential purposes as it allows one to do point estimation, confidence regions and hypothesis tests. In this article, we briefly illustrate how each of these aspects can be treated from a permutation point of view using the <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package.</p>
-<div id="toy-example-difference-in-means" class="section level2">
+<p>The permutation framework is perfectly suited for making inference as it allows one to perform point estimation, confidence regions and hypothesis tests under mild assumptions about the collected data and no distributional assmuption. In this article, we briefly illustrate how each of these aspects can be treated from a permutation point of view using the <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package. This package has been written and is intended as a low-level implementation of the permutation framework in the context of statistical inference. The mathematical object behind the scene is the so-called plausibility function, sometimes called p-value function. This article explains what the plausbility function is and shows how it can be easily computed using the permutation framework with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>. We illustrate the shape of the plausibility function using both Gaussian and Gamma distributions.</p>
+<div id="generation-of-the-toy-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#toy-example-difference-in-means" class="anchor"></a>Toy example: difference in means</h2>
+<a href="#generation-of-the-toy-example" class="anchor"></a>Generation of the toy example</h2>
 <p>Let us work on a very classic toy example. Suppose that we are interested in studying the difference in means of two populations. We will generate:</p>
 <ul>
 <li>A first sample of size <span class="math inline">\(n_1 = 10\)</span> observations from a distribution with mean <span class="math inline">\(1\)</span> and unit variance;</li>
 <li>A second sample of size <span class="math inline">\(n_2 = 10\)</span> observations from a distribution with mean <span class="math inline">\(4\)</span> and unit variance.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n1</span> <span class="op">&lt;-</span> <span class="fl">10</span>
 <span class="va">n2</span> <span class="op">&lt;-</span> <span class="fl">10</span>
 <span class="va">mu1</span> <span class="op">&lt;-</span> <span class="fl">1</span>
@@ -144,7 +132,7 @@
 <p>Both populations follow Gaussian distributions.</p>
 </dd>
 </dl>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 <span class="va">a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n1</span>, mean <span class="op">=</span> <span class="va">mu1</span>, sd <span class="op">=</span> <span class="va">sd1</span><span class="op">)</span>
 <span class="va">a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n2</span>, mean <span class="op">=</span> <span class="va">mu2</span>, sd <span class="op">=</span> <span class="va">sd2</span><span class="op">)</span></code></pre></div>
@@ -154,7 +142,7 @@
 <p>Both populations follow Gamma distributions.</p>
 </dd>
 </dl>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 <span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html">rgamma</a></span><span class="op">(</span><span class="va">n1</span>, shape <span class="op">=</span> <span class="fl">1</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html">rgamma</a></span><span class="op">(</span><span class="va">n2</span>, shape <span class="op">=</span> <span class="fl">16</span>, rate <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
@@ -164,34 +152,170 @@
 <p>The first population follows a Gaussian distribution while the second population follows a Gamma distribution.</p>
 </dd>
 </dl>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 <span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n1</span>, mean <span class="op">=</span> <span class="va">mu1</span>, sd <span class="op">=</span> <span class="va">sd1</span><span class="op">)</span>
 <span class="va">c2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html">rgamma</a></span><span class="op">(</span><span class="va">n2</span>, shape <span class="op">=</span> <span class="fl">16</span>, rate <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <p>For each scenario, the goal is to make inference on the difference between the means of the two distributions. In other words, the parameter of interest is <span class="math inline">\(\delta = \mu_2 - \mu_1\)</span>.</p>
 </div>
-<div id="p-value-function" class="section level2">
+<div id="the-plausibility-function" class="section level2">
 <h2 class="hasAnchor">
-<a href="#p-value-function" class="anchor"></a>P-value function</h2>
-<p>The <span class="math inline">\(p\)</span>-value function for the mean difference is a curve that represents the variation of the <span class="math inline">\(p\)</span>-value of a test in which the null hypothesis is <span class="math inline">\(\delta = \delta_0\)</span> as a function of <span class="math inline">\(\delta_0\)</span> <span class="citation">(Martin 2017; Fraser 2019; Infanger and Schmidt-Trucksäss 2019)</span>.</p>
-<p>With <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>, it is easy to trace such a <span class="math inline">\(p\)</span>-value function:</p>
+<a href="#the-plausibility-function" class="anchor"></a>The plausibility function</h2>
+<p>The plausibility function for the mean difference is a curve that represents the variation of the <span class="math inline">\(p\)</span>-value of a test in which the null hypothesis is <span class="math inline">\(\delta = \delta_0\)</span> as a function of <span class="math inline">\(\delta_0\)</span> <span class="citation">(Martin 2017; Fraser 2019; Infanger and Schmidt-Trucksäss 2019)</span>.</p>
+<p>With <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>, it is easy to trace such a plausibility function. Three ingredients are required alongside the data to instantiate such a function:</p>
+<ul>
+<li>a null specification function that tells <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> how the second sample should be transformed in order to make it exchangeable with the first sample under the null hypothesis;</li>
+<li>a list of test statistics to use for detecting differences between the distributions that generated the two observed samples;</li>
+<li>a list of index assignments that tells <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> which test statistics to use for each parameter under investigation.</li>
+</ul>
+<div id="null-specification" class="section level3">
+<h3 class="hasAnchor">
+<a href="#null-specification" class="anchor"></a>Null specification</h3>
+<p>In the context of null hypothesis testing, we consider the null hypothesis <span class="math inline">\(H_0: \mu_y - \mu_x = \delta\)</span>. We can use a permutation scheme to approach the <span class="math inline">\(p\)</span>-value if the two samples are <em>exchangeable</em> under <span class="math inline">\(H_0\)</span>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <span class="math inline">\(H_0\)</span>. In this simple example, this can be achieved as follows. Let <span class="math inline">\(X_1, \dots, X_{n_x} \sim \mathcal{N}(\mu_x, 1)\)</span> and <span class="math inline">\(Y_1, \dots, Y_{n_y} \sim \mathcal{N}(\mu_y, 1)\)</span>. We can then transform the second sample as <span class="math inline">\(Y_i \longleftarrow Y_i - \delta\)</span>.</p>
+<p>We can define a proper function to do this, termed the <em>null specification</em> function, which takes two input arguments:</p>
+<ul>
+<li>
+<code>y</code> which is a list storing the data points in the second sample;</li>
+<li>
+<code>parameters</code> which is a numeric vector of values for the parameters under investigation (here only <span class="math inline">\(\delta\)</span> and thus <code>parameters</code> is of length <span class="math inline">\(1\)</span> with <code>parameters[1] = delta</code>).</li>
+</ul>
+<p>In our simple example, it boils down to:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="test-statistics" class="section level3">
+<h3 class="hasAnchor">
+<a href="#test-statistics" class="anchor"></a>Test statistics</h3>
+<p>Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference <span class="math inline">\(\delta\)</span>. Since the two samples share the same variance, we can use for example the <span class="math inline">\(t\)</span>-statistic with a pooled estimate of the common variance.</p>
+<p>This statistic can be easily computed using <code>stats::t.test(x, y, var.equal = TRUE)$statistic</code>. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> should have at least two mandatory input arguments:</p>
+<ul>
+<li>
+<code>data</code> which is either a concatenated list of size <span class="math inline">\(n_x + n_y\)</span> regrouping the data points of both samples or a distance matrix of size <span class="math inline">\((n_x + n_y) \times (n_x + n_y)\)</span> stored as an object of class <code>dist</code>.</li>
+<li>
+<code>indices1</code> which is an integer vector of size <span class="math inline">\(n_x\)</span> storing the indices of the data points belonging to the first sample in the current permuted version of the data.</li>
+</ul>
+<p>A <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>-compatible version of the t-statistic is already implemented in <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> and ready to use as <code>stat_student</code> or its alias <code>stat_t</code>. Here, we are only going to use the <span class="math inline">\(t\)</span>-statistic for this example, but we might be willing to use more than one statistic for a parameter or we might have several parameters under investigation, each one of them requiring a different test statistic. We therefore group all the test statistics that we need into a single list:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="va">y</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="statistic-assignments" class="section level3">
+<h3 class="hasAnchor">
+<a href="#statistic-assignments" class="anchor"></a>Statistic assignments</h3>
+<p>Finally we need to define a named list that tells <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> which test statistics among the ones declared in the <code>stat_functions</code> list should be used for each parameter under investigation. This is used to determine bounds on each parameter for the plausibility function. This list, often termed <code>stat_assignments</code>, should therefore have as many elements as there are parameters under investigation. Each element should be named after a parameter under investigation and should list the indices corresponding to the test statistics that should be used for that parameter in <code>stat_functions</code>. In our example, it boils down to:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">delta_pe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span>
-<span class="va">dfa</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
-  delta <span class="op">=</span> <span class="fu">generate_grid</span><span class="op">(</span><span class="va">delta_pe</span>, <span class="va">delta_pe</span> <span class="op">-</span> <span class="fl">2</span>, <span class="va">delta_pe</span> <span class="op">+</span> <span class="fl">2</span>, <span class="fl">20</span><span class="op">)</span>, 
-  pvalue <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/two_sample_pf.html">two_sample_pf</a></span><span class="op">(</span>
-      null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-      x <span class="op">=</span> <span class="va">a1</span>, 
-      y <span class="op">=</span> <span class="va">a2</span>, 
-      statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-      B <span class="op">=</span> <span class="va">B</span>, 
-      seed <span class="op">=</span> <span class="fl">1234</span>, 
-      alternative <span class="op">=</span> <span class="st">"two_tail"</span>
-    <span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="instantiation-of-the-plausibility-function" class="section level3">
+<h3 class="hasAnchor">
+<a href="#instantiation-of-the-plausibility-function" class="anchor"></a>Instantiation of the plausibility function</h3>
+<p>In <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>, the plausibility function is implemented as an <a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a> object. Assume we observed two samples stored in lists <code>x</code> and <code>y</code>, we therefore instantiate a plausibility function for this data as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
+  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
+  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
+  <span class="va">x</span>, <span class="va">y</span>
+<span class="op">)</span></code></pre></div>
+<p>Now, assume we want to test the following hypotheses:</p>
+<p><span class="math display">\[ H_0: \delta = 0 \quad \mbox{v.s.} \quad H_1: \delta \ne 0. \]</span></p>
+<p>We use the <code>$get_value()</code> method for this purpose, which essentially evaluates the permutation <span class="math inline">\(p\)</span>-value of a two-sided test by default:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<p>It is possible to evaluate one-sided p-values as well by changing the <code>$alternative</code> field through the <code>$set_alternative()</code> method, which accepts <code>two_tail</code>, <code>left_tail</code> and <code>right_tail</code> values.`</p>
+<p>By default, the number of sampled permutations is <code>1000L</code>. It is accessible through the <code>$nperms</code> field and can be changed via the <code>$set_nperms()</code> method.</p>
+</div>
+</div>
+<div id="application-to-the-toy-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#application-to-the-toy-example" class="anchor"></a>Application to the toy example</h2>
+<div id="scenario-a" class="section level3">
+<h3 class="hasAnchor">
+<a href="#scenario-a" class="anchor"></a>Scenario A</h3>
+<p>Let us instantiate the plausibility for the data simulated under scenario A:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
+  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
+  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
+  <span class="va">a1</span>, <span class="va">a2</span>
+<span class="op">)</span>
+<span class="va">pfa</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
+<p>We can compute a point estimate of the mean difference and store it inside the plausibility function class via the <code>$set_point_estimate()</code> method:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>The computed value can then be accessed via the <code>$point_estimate</code> field:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">point_estimate</span>
+<span class="co">#&gt;    delta </span>
+<span class="co">#&gt; 3.264987</span></code></pre></div>
+<p>or by displaying the list of parameters under investigation which is stored in the <code>$parameters</code> field.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">parameters</span></code></pre></div>
+<pre><code>#&gt; $delta
+#&gt; Delta (quantitative)
+#&gt; Range: [?, ?]
+#&gt; Point estimate: 3.26</code></pre>
+<p>In this list, one can see that parameters come with an unknown range by default. We can however compute their bounds by defining a maximum confidence level through the <code>$set_max_conf_level()</code> method of the <code>PlausibilityFunction</code> class. When a plausibility function is instantiated, the default value for the <code>$max_conf_level</code> field is <span class="math inline">\(0.99\)</span>. To set parameter bounds automatically, use the <code>$set_parameter_bounds()</code> method:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
+  point_estimate <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">point_estimate</span>, 
+  conf_level <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">max_conf_level</span>
+<span class="op">)</span></code></pre></div>
+<p>We can now inspect again the list of parameters under investigation to see the updated bounds:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">parameters</span>
+<span class="co">#&gt; $delta</span>
+<span class="co">#&gt; Delta (quantitative)</span>
+<span class="co">#&gt; Range: [2.02, 4.7]</span>
+<span class="co">#&gt; Point estimate: 3.26</span></code></pre></div>
+<p>Once bounds are known for each parameter, it becomes possible to generate a grid for later evaluating the plausibility function. This is done through the <code>$set_grid()</code> method as follows:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span>
+  parameters <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">parameters</span>, 
+  npoints <span class="op">=</span> <span class="fl">50L</span>
+<span class="op">)</span></code></pre></div>
+<p>We can then take a look at the newly created grid:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">grid</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 51 × 1
+#&gt;    delta
+#&gt;    &lt;dbl&gt;
+#&gt;  1  2.02
+#&gt;  2  2.07
+#&gt;  3  2.12
+#&gt;  4  2.17
+#&gt;  5  2.22
+#&gt;  6  2.27
+#&gt;  7  2.32
+#&gt;  8  2.37
+#&gt;  9  2.42
+#&gt; 10  2.47
+#&gt; # … with 41 more rows</code></pre>
+<p>We can go a step further and evaluate the plaubility function on that grid using the <code>$evaluate_grid()</code> method as follows:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
+<p>Again, we can then take a look at the updated grid:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">grid</span>
+<span class="co">#&gt; # A tibble: 51 × 2</span>
+<span class="co">#&gt;    delta pvalue</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1  2.02 0.0102</span>
+<span class="co">#&gt;  2  2.07 0.0137</span>
+<span class="co">#&gt;  3  2.12 0.0185</span>
+<span class="co">#&gt;  4  2.17 0.0240</span>
+<span class="co">#&gt;  5  2.22 0.0317</span>
+<span class="co">#&gt;  6  2.27 0.0405</span>
+<span class="co">#&gt;  7  2.32 0.0520</span>
+<span class="co">#&gt;  8  2.37 0.0659</span>
+<span class="co">#&gt;  9  2.42 0.0834</span>
+<span class="co">#&gt; 10  2.47 0.104 </span>
+<span class="co">#&gt; # … with 41 more rows</span></code></pre></div>
+<p>We can add to this grid the p-value computed from the t-test assuming normality of the data:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dfa</span> <span class="op">&lt;-</span> <span class="va">pfa</span><span class="op">$</span><span class="va">grid</span> |&gt; 
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
@@ -206,66 +330,56 @@
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span>
     <span class="va">delta</span>, 
-    `Parametric Approach` <span class="op">=</span> <span class="va">pvalue_alt</span>, 
+    `Parametric Approach`  <span class="op">=</span> <span class="va">pvalue_alt</span>, 
     `Permutation Approach` <span class="op">=</span> <span class="va">pvalue</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">delta</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dfa</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"Permutation Approach"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>
-    title <span class="op">=</span> <span class="st">"P-value function for the mean difference"</span>, 
-    subtitle <span class="op">=</span> <span class="st">"Using Student's t-statistic and two-tailed p-values"</span>, 
-    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, 
-    y <span class="op">=</span> <span class="st">"p-value"</span>
-  <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="flipr_files/figure-html/unnamed-chunk-8-1.png" width="97%"></p>
-<p>In the example above, we chose to compute two-tailed <span class="math inline">\(p\)</span>-values (<code>alternative = "two_tail"</code>) using Student’s <span class="math inline">\(t\)</span>-statistic to perform the individual tests (<code>statistic = stat_t</code>) and <span class="math inline">\(100,000\)</span> permutations sampled with replacement (<code>B=100000</code>). We fixed the seed for the generation of the permutations in order to use the same set of sampled permutations for each point of the <span class="math inline">\(p\)</span>-value function.</p>
-<p>The first two arguments of the <code><a href="../reference/two_sample_pf.html">flipr::two_sample_pf()</a></code> function are the most important to properly compute the <span class="math inline">\(p\)</span>-value function:</p>
-<ul>
-<li>
-<p>The first argument is <code>parameters</code> and should be a vector or a list of parameters that define the set of null hypotheses of which we want to evaluate the <span class="math inline">\(p\)</span>-value from.</p>
-<ul>
-<li><p>When one makes inference on a single parameter then <code>parameters</code> is a numerical vector of potential candidates for that parameter.</p></li>
-<li><p>When one aims at making inference on multiple parameters at once, then <code>parameters</code> is a list. Each component of that list is in turn a numerical vector whose length matches the number of parameters under investigation.</p></li>
-</ul>
-</li>
-<li><p>The second argument <code>null_specification</code> takes a function of two arguments, namely <code>y</code> and <code>parameters</code> and defines how the second sample <code>y</code> should be transformed given the assumed parameters under the null hypothesis (defined in <code>parameters</code>) in order for samples <code>x</code> and <code>y</code> to be exchangeable under the null hypothesis. This function transforms <code>y</code> for a given null hypothesis. Therefore, <code>parameters</code> should always be a numerical vector whose length matches the number of parameters under investigation.</p></li>
-</ul>
-<p>The whole setup might seem a bit overwhelming given that one could generate the same <span class="math inline">\(p\)</span>-value function using Student’s parametric <span class="math inline">\(t\)</span>-test as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dfa</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">1e-3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_hline</span><span class="op">(</span>
+    yintercept <span class="op">=</span> <span class="fl">0.05</span>, 
+    color <span class="op">=</span> <span class="st">"black"</span>, 
+    linetype <span class="op">=</span> <span class="st">"dashed"</span>
+  <span class="op">)</span> <span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>
     title <span class="op">=</span> <span class="st">"Scenario A: P-value function for the mean difference"</span>, 
     subtitle <span class="op">=</span> <span class="st">"Using Student's t-statistic and two-tailed p-values"</span>, 
     x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, 
-    y <span class="op">=</span> <span class="st">"p-value"</span>
+    y <span class="op">=</span> <span class="st">"p-value"</span>, 
+    color <span class="op">=</span> <span class="st">"Type of test"</span>
   <span class="op">)</span> <span class="op">+</span> 
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">name</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<p><img src="flipr_files/figure-html/unnamed-chunk-9-1.png" width="97%"></p>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="flipr_files/figure-html/unnamed-chunk-23-1.png" width="97%"></p>
+</div>
+<div id="scenario-b" class="section level3">
+<h3 class="hasAnchor">
+<a href="#scenario-b" class="anchor"></a>Scenario B</h3>
 <p>However, keep in mind that the parametric Student’s <span class="math inline">\(t\)</span>-test is only valid for Gaussian data or for large samples invoking the central limit theorem. When sample sizes are low and samples are not drawn from Gaussian distributions, only the permutation approach is valid. When both samples come from non-Gaussian data (here Gamma-distributed samples) and sample sizes are low (here <span class="math inline">\(10\)</span> for each sample), we get the following <span class="math inline">\(p\)</span>-value functions (cutting below <span class="math inline">\(0.001\)</span> since the usual range of useful <span class="math inline">\(p\)</span>-values is from <span class="math inline">\(0.01\)</span> and above):</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">deltb_pe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b1</span><span class="op">)</span>
-<span class="va">dfb</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
-  delta <span class="op">=</span> <span class="fu">generate_grid</span><span class="op">(</span><span class="va">deltb_pe</span>, <span class="va">deltb_pe</span> <span class="op">-</span> <span class="fl">2</span>, <span class="va">deltb_pe</span> <span class="op">+</span> <span class="fl">2</span>, <span class="fl">20</span><span class="op">)</span>, 
-  pvalue <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/two_sample_pf.html">two_sample_pf</a></span><span class="op">(</span>
-      null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-      x <span class="op">=</span> <span class="va">b1</span>, 
-      y <span class="op">=</span> <span class="va">b2</span>, 
-      statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-      B <span class="op">=</span> <span class="va">B</span>, 
-      seed <span class="op">=</span> <span class="fl">1234</span>, 
-      alternative <span class="op">=</span> <span class="st">"two_tail"</span>
-    <span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
+  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
+  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
+  <span class="va">b1</span>, <span class="va">b2</span>
+<span class="op">)</span>
+<span class="va">pfb</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
+<span class="va">pfb</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pfb</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
+  point_estimate <span class="op">=</span> <span class="va">pfb</span><span class="op">$</span><span class="va">point_estimate</span>, 
+  conf_level <span class="op">=</span> <span class="va">pfb</span><span class="op">$</span><span class="va">max_conf_level</span>
+<span class="op">)</span>
+<span class="va">pfb</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span>
+  parameters <span class="op">=</span> <span class="va">pfb</span><span class="op">$</span><span class="va">parameters</span>, 
+  npoints <span class="op">=</span> <span class="fl">50L</span>
+<span class="op">)</span>
+<span class="va">pfb</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfb</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dfb</span> <span class="op">&lt;-</span> <span class="va">pfb</span><span class="op">$</span><span class="va">grid</span> |&gt; 
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
@@ -280,11 +394,11 @@
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span>
     <span class="va">delta</span>, 
-    Parametric <span class="op">=</span> <span class="va">pvalue_alt</span>, 
-    Permutation <span class="op">=</span> <span class="va">pvalue</span>
+    `Parametric Approach`  <span class="op">=</span> <span class="va">pvalue_alt</span>, 
+    `Permutation Approach` <span class="op">=</span> <span class="va">pvalue</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">delta</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dfb</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">1e-3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -304,24 +418,33 @@
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="flipr_files/figure-html/unnamed-chunk-11-1.png" width="97%"></p>
+<p><img src="flipr_files/figure-html/unnamed-chunk-26-1.png" width="97%"></p>
 <p>The parametric <span class="math inline">\(p\)</span>-value function is clearly shifted in the decreasing part on the right of the plot.</p>
+</div>
+<div id="scenario-c" class="section level3">
+<h3 class="hasAnchor">
+<a href="#scenario-c" class="anchor"></a>Scenario C</h3>
 <p>When only one of the samples come from non-Gaussian data (here the second sample is Gamma-distributed and sample sizes are low (here <span class="math inline">\(10\)</span> for each sample), we get the following <span class="math inline">\(p\)</span>-value functions (cutting below <span class="math inline">\(0.001\)</span> since the usual range of useful <span class="math inline">\(p\)</span>-values is from <span class="math inline">\(0.01\)</span> and above):</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">deltc_pe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">c2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">c1</span><span class="op">)</span>
-<span class="va">dfc</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
-  delta <span class="op">=</span> <span class="fu">generate_grid</span><span class="op">(</span><span class="va">deltc_pe</span>, <span class="va">deltc_pe</span> <span class="op">-</span> <span class="fl">2</span>, <span class="va">deltc_pe</span> <span class="op">+</span> <span class="fl">2</span>, <span class="fl">20</span><span class="op">)</span>, 
-  pvalue <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/two_sample_pf.html">two_sample_pf</a></span><span class="op">(</span>
-      null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-      x <span class="op">=</span> <span class="va">c1</span>, 
-      y <span class="op">=</span> <span class="va">c2</span>, 
-      statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-      B <span class="op">=</span> <span class="va">B</span>, 
-      seed <span class="op">=</span> <span class="fl">1234</span>, 
-      alternative <span class="op">=</span> <span class="st">"two_tail"</span>
-    <span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
+  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
+  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
+  <span class="va">c1</span>, <span class="va">c2</span>
+<span class="op">)</span>
+<span class="va">pfc</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
+<span class="va">pfc</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">c2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">c1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pfc</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
+  point_estimate <span class="op">=</span> <span class="va">pfc</span><span class="op">$</span><span class="va">point_estimate</span>, 
+  conf_level <span class="op">=</span> <span class="va">pfc</span><span class="op">$</span><span class="va">max_conf_level</span>
+<span class="op">)</span>
+<span class="va">pfc</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span>
+  parameters <span class="op">=</span> <span class="va">pfc</span><span class="op">$</span><span class="va">parameters</span>, 
+  npoints <span class="op">=</span> <span class="fl">50L</span>
+<span class="op">)</span>
+<span class="va">pfc</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfc</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dfc</span> <span class="op">&lt;-</span> <span class="va">pfc</span><span class="op">$</span><span class="va">grid</span> |&gt; 
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
@@ -336,11 +459,11 @@
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span>
     <span class="va">delta</span>, 
-    Parametric <span class="op">=</span> <span class="va">pvalue_alt</span>, 
-    Permutation <span class="op">=</span> <span class="va">pvalue</span>
+    `Parametric Approach`  <span class="op">=</span> <span class="va">pvalue_alt</span>, 
+    `Permutation Approach` <span class="op">=</span> <span class="va">pvalue</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">delta</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dfc</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">1e-3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">delta</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -360,68 +483,52 @@
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="flipr_files/figure-html/unnamed-chunk-13-1.png" width="97%"></p>
+<p><img src="flipr_files/figure-html/unnamed-chunk-29-1.png" width="97%"></p>
 <p>The situation seems less critical here when only one sample is non-Gaussian but this is only one simulation using a Gamma-distributed second sample. The bias could be more important for other distributions.</p>
 <p>Another issue with the parametric approach is that it is very limited in the type of data that one can use. The parametric <span class="math inline">\(t\)</span>-test for instance is only meant for real-valued data. It will not be applicable to multivariate data or functional data or topological data or network-valued data or any other type of data that is not representable as real-valued data. This further motivates inference via permutation.</p>
 <p>Getting access to the <span class="math inline">\(p\)</span>-value function is key to making inference as point estimation, confidence regions and hypothesis tests all come as a by-product as we will show in the next sections.</p>
 </div>
-<div id="point-estimation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#point-estimation" class="anchor"></a>Point estimation</h2>
-<p>One can obtain a point estimate of the parameter under investigation by searching which value of the parameter reaches the maximum of the <span class="math inline">\(p\)</span>-value function (which is <span class="math inline">\(1\)</span>). One can use the <code><a href="https://rdrr.io/r/stats/optimize.html">optimise()</a></code> function to solve the one-dimensional optimization problem:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span>
-  f <span class="op">=</span> <span class="va">two_sample_pf</span>, 
-  interval <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">)</span>, 
-  null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-  x <span class="op">=</span> <span class="va">a1</span>, 
-  y <span class="op">=</span> <span class="va">a2</span>, 
-  statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-  B <span class="op">=</span> <span class="fl">10000</span>, 
-  seed <span class="op">=</span> <span class="fl">1234</span>, 
-  alternative <span class="op">=</span> <span class="st">"two_tail"</span>, 
-  maximum <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-<span class="co">#&gt; $maximum</span>
-<span class="co">#&gt; [1] 3.269156</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $objective</span>
-<span class="co">#&gt; [1] 0.9999946</span></code></pre></div>
 </div>
-<div id="confidence-intervals" class="section level2">
+<div id="inferential-tasks-via-the-plausibility-function" class="section level2">
 <h2 class="hasAnchor">
-<a href="#confidence-intervals" class="anchor"></a>Confidence intervals</h2>
-<p>One can obtain a confidence interval for the parameter under investigation by searching for which values of the parameter the <span class="math inline">\(p\)</span>-value function remains above a pre-specified significance level <span class="math inline">\(\alpha\)</span>. The <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package has a built-in generic function to do just that:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/two_sample_ci.html">two_sample_ci</a></span><span class="op">(</span>
-  point_estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span>, 
-  alpha <span class="op">=</span> <span class="fl">0.05</span>, 
-  null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-  x <span class="op">=</span> <span class="va">a1</span>, 
-  y <span class="op">=</span> <span class="va">a2</span>, 
-  statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-  B <span class="op">=</span> <span class="fl">10000</span>, 
-  alternative <span class="op">=</span> <span class="st">"two_tail"</span>
-<span class="op">)</span>
-<span class="co">#&gt; ℹ Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="co">#&gt; [1] 2.324629 4.253882</span></code></pre></div>
+<a href="#inferential-tasks-via-the-plausibility-function" class="anchor"></a>Inferential tasks via the plausibility function</h2>
+<div id="point-estimation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#point-estimation" class="anchor"></a>Point estimation</h3>
+<p>One can obtain a point estimate of the parameter under investigation by searching which value of the parameter reaches the maximum of the <span class="math inline">\(p\)</span>-value function (which is <span class="math inline">\(1\)</span>). One can use the <code>$set_point_estimate()</code> method to do that:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>The computed point estimate is then stored in the <code>$point_estimate</code> field and can be retrieved as:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">point_estimate</span>
+<span class="co">#&gt;    delta </span>
+<span class="co">#&gt; 3.264987</span></code></pre></div>
 </div>
-<div id="hypothesis-tests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hypothesis-tests" class="anchor"></a>Hypothesis tests</h2>
+<div id="confidence-intervals" class="section level3">
+<h3 class="hasAnchor">
+<a href="#confidence-intervals" class="anchor"></a>Confidence intervals</h3>
+<p>One can obtain a confidence interval for the parameter under investigation by searching for which values of the parameter the <span class="math inline">\(p\)</span>-value function remains above a pre-specified significance level <span class="math inline">\(\alpha\)</span>. This is achieved via the <code>$set_parameter_bounds()</code> method:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
+  point_estimate <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">point_estimate</span>, 
+  conf_level <span class="op">=</span> <span class="fl">0.95</span>
+<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="va">parameters</span>
+<span class="co">#&gt; $delta</span>
+<span class="co">#&gt; Delta (quantitative)</span>
+<span class="co">#&gt; Range: [2.02, 4.7]</span>
+<span class="co">#&gt; Point estimate: 3.26</span></code></pre></div>
+</div>
+<div id="hypothesis-tests" class="section level3">
+<h3 class="hasAnchor">
+<a href="#hypothesis-tests" class="anchor"></a>Hypothesis tests</h3>
 <p>Extracting the <span class="math inline">\(p\)</span>-value for a single hypothesis test in which the null hypothesis is <span class="math inline">\(H_0: \delta = \delta_0\)</span> is immediate from the <span class="math inline">\(p\)</span>-value function as it boils down to evaluating the <span class="math inline">\(p\)</span>-value function in <span class="math inline">\(\delta_0\)</span>. Hence we can for instance test <span class="math inline">\(H_0: \delta = 3\)</span> against the alternative <span class="math inline">\(H_1: \delta \ne 3\)</span> using the following piece of code:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/two_sample_pf.html">two_sample_pf</a></span><span class="op">(</span>
-  parameters <span class="op">=</span> <span class="fl">3</span>, 
-  null_specification <span class="op">=</span> <span class="va">null_spec</span>, 
-  x <span class="op">=</span> <span class="va">a1</span>, 
-  y <span class="op">=</span> <span class="va">a2</span>, 
-  statistic <span class="op">=</span> <span class="va">stat_t</span>, 
-  B <span class="op">=</span> <span class="fl">10000</span>, 
-  seed <span class="op">=</span> <span class="fl">1234</span>, 
-  alternative <span class="op">=</span> <span class="st">"two_tail"</span>
-  <span class="op">)</span>
-<span class="co">#&gt; [1] 0.5826363</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>
+<span class="va">pfa</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.5714259</span></code></pre></div>
+</div>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">

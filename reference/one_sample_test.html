@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Two-Sample Permutation Test — two_sample_test • flipr</title>
+<title>One-Sample Permutation Test — one_sample_test • flipr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,12 @@
 
 
 
-<meta property="og:title" content="Two-Sample Permutation Test — two_sample_test" />
-<meta property="og:description" content="This function carries out an hypothesis test in which the null hypothesis is
-that the two samples are governed by the same underlying generative
-probability distribution against the alternative hypothesis that they are
-governed by two different generative probability distributions." />
+<meta property="og:title" content="One-Sample Permutation Test — one_sample_test" />
+<meta property="og:description" content="This function carries out an hypothesis test where the null hypothesis is
+that the sample is governed by a generative probability distribution which is
+centered and symmetric against the alternative hypothesis that they are
+governed by a probability distribution that is either not centered or not
+symmetric." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -143,22 +144,22 @@ governed by two different generative probability distributions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Two-Sample Permutation Test</h1>
-    <small class="dont-index">Source: <a href='https://github.com/astamm/flipr/blob/master/R/two-sample-test.R'><code>R/two-sample-test.R</code></a></small>
-    <div class="hidden name"><code>two_sample_test.Rd</code></div>
+    <h1>One-Sample Permutation Test</h1>
+    <small class="dont-index">Source: <a href='https://github.com/astamm/flipr/blob/master/R/one-sample-test.R'><code>R/one-sample-test.R</code></a></small>
+    <div class="hidden name"><code>one_sample_test.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function carries out an hypothesis test in which the null hypothesis is
-that the two samples are governed by the same underlying generative
-probability distribution against the alternative hypothesis that they are
-governed by two different generative probability distributions.</p>
+    <p>This function carries out an hypothesis test where the null hypothesis is
+that the sample is governed by a generative probability distribution which is
+centered and symmetric against the alternative hypothesis that they are
+governed by a probability distribution that is either not centered or not
+symmetric.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>two_sample_test</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>one_sample_test</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  <span class='va'>y</span>,
-  stats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>stat_t</span><span class='op'>)</span>,
+  stats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>stat_max</span><span class='op'>)</span>,
   B <span class='op'>=</span> <span class='fl'>1000L</span>,
   M <span class='op'>=</span> <span class='cn'>NULL</span>,
   alternative <span class='op'>=</span> <span class='st'>"two_tail"</span>,
@@ -172,18 +173,8 @@ governed by two different generative probability distributions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric vector or a numeric matrix or a list representing the 1st
-sample. Alternatively, it can be a distance matrix stored as an object of
-class <code><a href='https://rdrr.io/r/stats/dist.html'>dist</a></code>, in which case test statistics based on
-inter-point distances (marked with the <code>_ip</code> suffix) should be used.</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>A numeric vector if <code>x</code> is a numeric vector, or a numeric matrix if
-<code>x</code> is a numeric matrix, or a list if <code>x</code> is a list, representing the second
-sample. Alternatively, if <code>x</code> is an object of class
-<code><a href='https://rdrr.io/r/stats/dist.html'>dist</a></code>, it should be a numeric scalar specifying the
-size of the first sample.</p></td>
+      <td><p>A numeric vector or a numeric matrix or a list representing the
+sample from which the user wants to make inference.</p></td>
     </tr>
     <tr>
       <th>stats</th>
@@ -247,41 +238,33 @@ statistics.</p>
     
 
 <p>A user-specified function should have at least two arguments:</p><ul>
-<li><p>the first argument is <code>data</code> which should be a list of the <code>n1 + n2</code>
-concatenated observations with the original <code>n1</code> observations from the first
-sample on top and the original <code>n2</code> observations from the second sample
-below;</p></li>
-<li><p>the second argument is <code>perm_data</code> which should be an integer vector giving
-the indices in <code>data</code> that are considered to belong to the first sample.</p></li>
+<li><p>the first argument is <code>data</code> which should be a list of the <code>n</code>
+observations from the sample;</p></li>
+<li><p>the second argument is <code>flips</code> which should be an integer vector giving
+the signs by which each observation in <code>data</code> should be multiplied.</p></li>
 </ul>
 
-<p>It is possible to use the <code><a href='use_stat.html'>use_stat</a></code> function with <code>nsamples = 2</code>
+<p>It is possible to use the <code><a href='use_stat.html'>use_stat</a></code> function with <code>nsamples = 1</code>
 to have <strong>flipr</strong> automatically generate a template file for writing down
 your own test statistics in a way that makes it compatible with the <strong>flipr</strong>
 framework.</p>
-<p>See the <code><a href='two-sample-stats.html'>stat_t</a></code> function for an example.</p>
+<p>See the <code><a href='one-sample-stats.html'>stat_max</a></code> function for an example.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>10L</span>
-<span class='va'>mx</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>mu</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>
 <span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
 
-<span class='co'># Two different models for the two populations</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>mx</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>delta</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='va'>my</span> <span class='op'>&lt;-</span> <span class='va'>mx</span> <span class='op'>+</span> <span class='va'>delta</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>t1</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
+<span class='co'># Sample under the null distribution</span>
+<span class='va'>x1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
+<span class='va'>t1</span> <span class='op'>&lt;-</span> <span class='fu'>one_sample_test</span><span class='op'>(</span><span class='va'>x1</span><span class='op'>)</span>
 <span class='va'>t1</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
-<span class='co'># Same model for the two populations</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>mx</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>delta</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-<span class='va'>my</span> <span class='op'>&lt;-</span> <span class='va'>mx</span> <span class='op'>+</span> <span class='va'>delta</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>my</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
-<span class='va'>t2</span> <span class='op'>&lt;-</span> <span class='fu'>two_sample_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.01749374</div><div class='input'>
+<span class='co'># Sample under some alternative distribution</span>
+<span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span>, mean <span class='op'>=</span> <span class='va'>mu</span>, sd <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
+<span class='va'>t2</span> <span class='op'>&lt;-</span> <span class='fu'>one_sample_test</span><span class='op'>(</span><span class='va'>x2</span><span class='op'>)</span>
 <span class='va'>t2</span><span class='op'>$</span><span class='va'>pvalue</span>
-</div><div class='output co'>#&gt; [1] 0.4974998</div></pre>
+</div><div class='output co'>#&gt; [1] 0.003507622</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

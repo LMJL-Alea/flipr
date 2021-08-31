@@ -70,7 +70,7 @@
       <a href="../articles/exactness.html">On the exactness of permutation tests</a>
     </li>
     <li>
-      <a href="../articles/pvalue-function.html">Calculating p-value functions</a>
+      <a href="../articles/plausibility.html">Computing plausibility functions</a>
     </li>
   </ul>
 </li>
@@ -108,7 +108,7 @@
 
     
     
-<p>In this article, we discuss the exactness property of permutation tests, which is closely related to how <span class="math inline">\(p\)</span>-values are retrieved from the permutations. This article is a summary of the paper by <span class="citation">Phipson and Smyth (2010)</span>.</p>
+<p>In this article, we discuss the exactness property of permutation tests, which is closely related to how <span class="math inline">\(p\)</span>-values are computed from the permutations. This article is a summary of the paper by <span class="citation">Phipson and Smyth (2010)</span>.</p>
 <div id="traditional-formulation-of-a-statistical-test" class="section level2">
 <h2 class="hasAnchor">
 <a href="#traditional-formulation-of-a-statistical-test" class="anchor"></a>Traditional formulation of a statistical test</h2>
@@ -187,51 +187,79 @@
 <a href="#permutation-p-value-as-the-tail-probability-of-a-resampling-distribution" class="anchor"></a>Permutation p-value as the tail probability of a resampling distribution</h2>
 <p>An alternative strategy is to define the p-value by looking at the random variable <span class="math inline">\(B\)</span> instead of the test statistic <span class="math inline">\(T\)</span>. While the p-value is the tail probability of the null distribution, in the context of randomization tests, we can define it as the tail probability of the distribution of <span class="math inline">\(B\)</span>. Given a fixed number <span class="math inline">\(m\)</span> of sampled permutations, recall that the random variable <span class="math inline">\(B\)</span> counts the number of test statistic values larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span>. Hence, an alternative equivalent definition of the p-value is given by the so-called <strong>exact permutation p-value</strong>: <span class="math display">\[ p_e = \mathbb{P}_{H_0} \left( B \le b \right), \]</span>where <span class="math inline">\(b\)</span> is the observed number of test statistics larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span> (using the observed sample of permutations that was drawn).</p>
 <p>Let <span class="math inline">\(B_t\)</span> be a random variable that counts the total number of possible distinct test statistic values exceeding tobs and recall that <span class="math inline">\(m_t\)</span> is the total number of possible distinct permutations. We denote by <span class="math display">\[ p_t = \frac{B_t + 1}{m_t + 1}, \]</span>the permutation p-value when the exhaustive list of all permutations is used.</p>
-<p>As we have seen before, it is straightforward to show that <span class="math inline">\(B_t\)</span> follows a discrete uniform distribution on the integers <span class="math inline">\(0, \dots, m_t\)</span> and that, conditional on <span class="math inline">\(B_t = b_t\)</span>, the random variable <span class="math inline">\(B\)</span> follows a binomial distribution of size <span class="math inline">\(m\)</span> and rate of success <span class="math inline">\(p_t\)</span>. We can thus write: <span class="math display">\[ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), \]</span>where <span class="math inline">\(F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)\)</span> is the cumulative probability function of the binomial distribution of size <span class="math inline">\(m\)</span> and probability of success <span class="math inline">\(\frac{b_t + 1}{m_t + 1}\)</span>.</p>
-<p>This estimator can be computationally intense to compute for large values of <span class="math inline">\(m_t\)</span>, in which case one might use the following integral approximation: <span class="math display">\[ p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t. \]</span></p>
+<p>As we have seen before, it is straightforward to show that <span class="math inline">\(B_t\)</span> follows a discrete uniform distribution on the integers <span class="math inline">\(0, \dots, m_t\)</span> and that, conditional on <span class="math inline">\(B_t = b_t\)</span>, the random variable <span class="math inline">\(B\)</span> follows a binomial distribution of size <span class="math inline">\(m\)</span> and rate of success <span class="math inline">\(p_t\)</span>. We can thus write: <span class="math display">\[ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), \]</span> where <span class="math inline">\(F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)\)</span> is the cumulative probability function of the binomial distribution of size <span class="math inline">\(m\)</span> and probability of success <span class="math inline">\(\frac{b_t + 1}{m_t + 1}\)</span>.</p>
+<p>This can be computationally intense to compute for large values of <span class="math inline">\(m_t\)</span>, in which case one might use the following integral approximation: <span class="math display">\[ p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t. \]</span></p>
+<p>This approximation shows that the exact p-value <span class="math inline">\(p_e\)</span> is upper bounded by <span class="math display">\[
+p_u = \frac{b+1}{m+1},
+\]</span> which happens to be the exact p-value in the case of sampling permutations without replacement.</p>
 </div>
 <div id="comparison-by-empirical-evidence" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparison-by-empirical-evidence" class="anchor"></a>Comparison by empirical evidence</h2>
-<p>In <strong>flipr</strong>, you perform a permutation test using the estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the p-value <span class="math inline">\(p_\infty\)</span> by setting <code>type == "approximate"</code>. This provides a non-exact test but an unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting <code>type == "exact"</code>. This provides an exact test.</p>
-<p>The following R code runs simulations to empirically estimate the probability of wrongly rejecting the null hypothesis. The generative model for both samples is the standard normal distribution. Sample sizes are set to <span class="math inline">\(n_1 = n_2 = 10\)</span>. We draw <span class="math inline">\(100\)</span> permutations for each test.</p>
+<p>In <strong>flipr</strong>, you perform a permutation test using the estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the p-value <span class="math inline">\(p_\infty\)</span> by setting <code>type == "estimate"</code>. This provides a non-exact test but an unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting <code>type == "exact"</code>. This provides an exact test. You also have the possibility of using the upper bound p-value <span class="math inline">\(p_u\)</span> using <code>type == "upper_bound"</code>.</p>
+<p>The following R code runs simulations to empirically estimate the probability of wrongly rejecting the null hypothesis. The generative model for both samples is the standard normal distribution. Sample sizes are set to <span class="math inline">\(n_1 = n_2 = 5\)</span>. We draw <span class="math inline">\(20\)</span> permutations for each test. We used a significance level of <span class="math inline">\(5\%\)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
-<span class="va">R</span> <span class="op">&lt;-</span> <span class="fl">1000</span>
+<code class="sourceCode R"><span class="co"># General setup</span>
+<span class="va">nreps</span> <span class="op">&lt;-</span> <span class="fl">1e4</span>
+<span class="va">n1</span> <span class="op">&lt;-</span> <span class="fl">5</span>
+<span class="va">n2</span> <span class="op">&lt;-</span> <span class="fl">5</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
-<span class="fl">1</span><span class="op">:</span><span class="va">R</span> <span class="op">%&gt;%</span> 
-  <span class="fu">map</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
-    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-    <span class="va">test_exact</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/two_sample_test.html">two_sample_test</a></span><span class="op">(</span>
-      x <span class="op">=</span> <span class="va">x</span>, 
-      y <span class="op">=</span> <span class="va">y</span>, 
-      statistic <span class="op">=</span> <span class="va">stat_hotelling</span>, 
-      type <span class="op">=</span> <span class="st">"exact"</span>, 
-      B <span class="op">=</span> <span class="fl">100</span>
+<span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span>, <span class="va">nreps</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n2</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+      s <span class="op">=</span> <span class="va">.x</span>
     <span class="op">)</span>
-    <span class="va">test_approx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/two_sample_test.html">two_sample_test</a></span><span class="op">(</span>
-      x <span class="op">=</span> <span class="va">x</span>, 
-      y <span class="op">=</span> <span class="va">y</span>, 
-      statistic <span class="op">=</span> <span class="va">stat_hotelling</span>, 
-      type <span class="op">=</span> <span class="st">"approximate"</span>, 
-      B <span class="op">=</span> <span class="fl">100</span>
+  <span class="op">}</span><span class="op">)</span>
+
+<span class="co"># Cluster setup</span>
+<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">makeCluster</span><span class="op">(</span><span class="fu">detectCores</span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">clusterEvalQ</span><span class="op">(</span><span class="va">cl</span>, <span class="op">{</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/">flipr</a></span><span class="op">)</span>
+  <span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu">map</span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
+  <span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">nperms</span> <span class="op">&lt;-</span> <span class="fl">20</span>
+  <span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
+<span class="op">}</span><span class="op">)</span>
+
+<span class="va">alpha_estimates</span> <span class="op">&lt;-</span> <span class="fu">pbapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbapply/man/pbapply.html">pblapply</a></span><span class="op">(</span><span class="va">sim</span>, <span class="kw">function</span><span class="op">(</span><span class="va">.l</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+      null_spec <span class="op">=</span> <span class="va">null_spec</span>,
+      stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
+      stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
+      <span class="va">.l</span><span class="op">$</span><span class="va">x</span>, <span class="va">.l</span><span class="op">$</span><span class="va">y</span>,
+      seed <span class="op">=</span> <span class="va">.l</span><span class="op">$</span><span class="va">s</span>
     <span class="op">)</span>
+    <span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">nperms</span><span class="op">)</span>
+    <span class="va">pf</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="st">"left_tail"</span><span class="op">)</span>
+    <span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"exact"</span><span class="op">)</span>
+    <span class="va">pv_exact</span> <span class="op">&lt;-</span> <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+    <span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"upper_bound"</span><span class="op">)</span>
+    <span class="va">pv_upper_bound</span> <span class="op">&lt;-</span> <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+    <span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span>
+    <span class="va">pv_estimate</span> <span class="op">&lt;-</span> <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
     <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-      approx <span class="op">=</span> <span class="op">(</span><span class="va">test_approx</span><span class="op">$</span><span class="va">pvalue</span> <span class="op">&lt;=</span> <span class="va">alpha</span><span class="op">)</span>, 
-      exact <span class="op">=</span> <span class="op">(</span><span class="va">test_exact</span><span class="op">$</span><span class="va">pvalue</span> <span class="op">&lt;=</span> <span class="va">alpha</span><span class="op">)</span>
+      exact       <span class="op">=</span> <span class="va">pv_exact</span>       <span class="op">&lt;=</span> <span class="va">alpha</span>,
+      upper_bound <span class="op">=</span> <span class="va">pv_upper_bound</span> <span class="op">&lt;=</span> <span class="va">alpha</span>,
+      estimate    <span class="op">=</span> <span class="va">pv_estimate</span>    <span class="op">&lt;=</span> <span class="va">alpha</span>
     <span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">simplify_all</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="op">}</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">simplify_all</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">map</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
-<span class="co">#&gt; $approx</span>
-<span class="co">#&gt; [1] 0.064</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $exact</span>
-<span class="co">#&gt; [1] 0.047</span></code></pre></div>
-<p>Note that we only ran <span class="math inline">\(R=1000\)</span> simulations to estimate the probability of wrongly rejecting <span class="math inline">\(H_0\)</span>. Hence, we encourage readers to download the <code>Rmd</code> file for this article and try increasing the <code>R</code> argument in the <code>params</code> list of the YAML header.</p>
-<p>This simulation confirms the theoretical value of the probability of wrongly rejecting the null hypothesis for the <em>approximate</em> case. It also provides numerical evidence that using the permutation p-value <span class="math inline">\(p_e\)</span> provides an exact test. This is by design since <span class="math inline">\(p_e\)</span> is a genuine probability hence it is uniformly distributed on <span class="math inline">\((0,1)\)</span> under the null hypothesis.</p>
+<span class="fu">stopCluster</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">alpha_estimates</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
+<span class="co">#&gt;    exact upper_bound estimate</span>
+<span class="co">#&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.0507      0.0507   0.0978</span></code></pre></div>
+<p>This simulation provides numerical evidence that using the permutation p-value <span class="math inline">\(p_e\)</span> yields an exact test. This is by design since <span class="math inline">\(p_e\)</span> is a genuine probability hence it is uniformly distributed on <span class="math inline">\((0,1)\)</span> under the null hypothesis. We also observe that the upper bound <span class="math inline">\(p_u\)</span> is very close to the exact p-value <span class="math inline">\(p_e\)</span>.</p>
+<p>Of course, one might criticize this simulation in which the number of permutations <span class="math inline">\(m\)</span> has been chosen small on purpose to prove our point. In effect, when <span class="math inline">\(m\)</span> is larger, all formulae to compute the p-value yield an asymptotically exact test. Quoting <span class="citation">Phipson and Smyth (2010)</span>, <em>while this is true, the urgent need to avoid small <span class="math inline">\(m\)</span> disappears when the exact p-value <span class="math inline">\(p_e\)</span> is used in place of <span class="math inline">\(\widehat{p_\infty}\)</span>, because <span class="math inline">\(p_e\)</span> ensures a valid statistical test regardless of the sample sizes or the number of permutations. When exact p-values are used, the only penalty for choosing <span class="math inline">\(m\)</span> small is a loss of statistical power to reject the null hypothesis. This is as it should be: more permutations should generally provide greater power</em>.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
