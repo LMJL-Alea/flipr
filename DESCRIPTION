@@ -1,6 +1,6 @@
 Package: flipr
 Title: Flexible Inference via Permutations in R
-Version: 0.2.1.9000
+Version: 0.3
 Authors@R: c(
     person(given = "Alessia", 
            family = "Pini", 
@@ -14,7 +14,10 @@ Authors@R: c(
     person(given = "Simone", 
            family = "Vantini", 
            role = "aut", 
-           email = "simone.vantini@polimi.it"))
+           email = "simone.vantini@polimi.it"),
+    person(given = "Juliette",
+           family = "Chiapello",
+           role = "ctb"))
 Description: A flexible permutation framework for making 
     inference such as point estimation, confidence 
     intervals or hypothesis testing, on any kind of data, 
