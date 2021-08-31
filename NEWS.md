@@ -1,4 +1,18 @@
-# flipr 0.2.1.9000
+# flipr 0.3.0
+
+## Breaking changes
+
+The API has been changed:
+
+* An [R6](https://r6.r-lib.org) class is now used to define the plausibility function, with methods that implement point estimation, confidence intervals and evaluation on grid for later plotting.
+* The plotting capability is still outside the class but might move into the class methods as well in the future.
+
+## Minor changes
+
+* Test statistics based on Inter-point distances have been added and implemented in C++ through the [**Rcpp**](http://dirk.eddelbuettel.com/code/rcpp.html) package.
+* Test coverage is set and achieves 20% coverage for now (#3, @C-Juliette).
+* @C-Juliette has been added as contributor to the package.
+* The p-value function has been consistently renamed plausibility function to better reflects what it stands for and avoid confusion with other definitions of the p-value function in the area of functional data analysis.
 
 # flipr 0.2.1
 
