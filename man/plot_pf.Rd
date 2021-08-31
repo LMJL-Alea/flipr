@@ -42,10 +42,11 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$set_grid(
   parameters = pf$parameters,

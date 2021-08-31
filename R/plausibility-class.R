@@ -127,7 +127,7 @@ PlausibilityFunction <- R6::R6Class(
     #'   x, y
     #' )
     #' pf$nperms_max
-    #' pf$set_nperms(10000)
+    #' pf$set_nperms_max(10000)
     #' pf$nperms_max
     set_nperms_max = function(val) {
       self$nperms_max <- val
@@ -264,6 +264,7 @@ PlausibilityFunction <- R6::R6Class(
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
+    #' pf$set_nperms(50)
     #' pf$get_value(2)
     get_value = function(parameters) {
       if (length(parameters) != self$nparams)
@@ -445,11 +446,12 @@ PlausibilityFunction <- R6::R6Class(
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
+    #' pf$set_nperms(50)
     #' pf$set_point_estimate(point_estimate = mean(y) - mean(x))
     #' pf$parameters
     #' pf$set_parameter_bounds(
     #'   point_estimate = pf$point_estimate,
-    #'   conf_level = pf$max_conf_level
+    #'   conf_level = 0.8
     #' )
     #' pf$parameters
     set_parameter_bounds = function(point_estimate, conf_level) {
@@ -529,10 +531,11 @@ PlausibilityFunction <- R6::R6Class(
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
+    #' pf$set_nperms(50)
     #' pf$set_point_estimate(mean(y) - mean(x))
     #' pf$set_parameter_bounds(
     #'   point_estimate = pf$point_estimate,
-    #'   conf_level = pf$max_conf_level
+    #'   conf_level = 0.8
     #' )
     #' pf$set_grid(
     #'   parameters = pf$parameters,
@@ -603,10 +606,11 @@ PlausibilityFunction <- R6::R6Class(
     #'   stat_assignments = stat_assignments,
     #'   x, y
     #' )
+    #' pf$set_nperms(50)
     #' pf$set_point_estimate(mean(y) - mean(x))
     #' pf$set_parameter_bounds(
     #'   point_estimate = pf$point_estimate,
-    #'   conf_level = pf$max_conf_level
+    #'   conf_level = 0.8
     #' )
     #' pf$set_grid(
     #'   parameters = pf$parameters,

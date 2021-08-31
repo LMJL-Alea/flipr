@@ -43,7 +43,7 @@ pf <- PlausibilityFunction$new(
   x, y
 )
 pf$nperms_max
-pf$set_nperms(10000)
+pf$set_nperms_max(10000)
 pf$nperms_max
 
 ## ------------------------------------------------
@@ -120,6 +120,7 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$get_value(2)
 
 ## ------------------------------------------------
@@ -181,11 +182,12 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(point_estimate = mean(y) - mean(x))
 pf$parameters
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$parameters
 
@@ -206,10 +208,11 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$set_grid(
   parameters = pf$parameters,
@@ -233,10 +236,11 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$set_grid(
   parameters = pf$parameters,
@@ -425,7 +429,7 @@ pf <- PlausibilityFunction$new(
   x, y
 )
 pf$nperms_max
-pf$set_nperms(10000)
+pf$set_nperms_max(10000)
 pf$nperms_max
 }
 \if{html}{\out{</div>}}
@@ -586,6 +590,7 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$get_value(2)
 }
 \if{html}{\out{</div>}}
@@ -741,11 +746,12 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(point_estimate = mean(y) - mean(x))
 pf$parameters
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$parameters
 }
@@ -791,10 +797,11 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$set_grid(
   parameters = pf$parameters,
@@ -843,10 +850,11 @@ pf <- PlausibilityFunction$new(
   stat_assignments = stat_assignments,
   x, y
 )
+pf$set_nperms(50)
 pf$set_point_estimate(mean(y) - mean(x))
 pf$set_parameter_bounds(
   point_estimate = pf$point_estimate,
-  conf_level = pf$max_conf_level
+  conf_level = 0.8
 )
 pf$set_grid(
   parameters = pf$parameters,
