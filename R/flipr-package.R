@@ -8,7 +8,9 @@
 #'
 #' @docType package
 #' @name flipr
+#' @useDynLib flipr, .registration = TRUE
 #' @import ggplot2
+#' @import rlang
+#' @importFrom Rcpp sourceCpp
 #' @importFrom tibble tibble
-#' @importFrom rlang .data
 NULL
