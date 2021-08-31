@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3</span>
       </span>
     </div>
 
@@ -307,7 +307,7 @@ permutations.</p></dd>
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='va'>nperms_max</span>
-<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms_max</span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='va'>nperms_max</span>
 </pre><p></div></p>
 
@@ -424,6 +424,7 @@ hypothesis test.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
 </pre><p></div></p>
 
@@ -545,11 +546,12 @@ used for setting parameter bounds. It should be in (0,1).</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span>point_estimate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>
 </pre><p></div></p>
@@ -584,10 +586,11 @@ each dimension. Defaults to <code>20L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
   parameters <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>,
@@ -625,10 +628,11 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
   parameters <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>,
@@ -687,9 +691,9 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='va'>nperms_max</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms_max</span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>
 <span class='va'>pf</span><span class='op'>$</span><span class='va'>nperms_max</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'>
+</div><div class='output co'>#&gt; [1] 10000</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `PlausibilityFunction$set_alternative`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -764,8 +768,9 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.1778195</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.2352914</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `PlausibilityFunction$set_max_conf_level`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -827,7 +832,8 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span>point_estimate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span>point_estimate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>
 </div><div class='output co'>#&gt; $mean
 #&gt; Mean (quantitative)
@@ -835,12 +841,12 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
 #&gt; Point estimate: 2.72
 #&gt; </div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.99 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>
 </div><div class='output co'>#&gt; $mean
 #&gt; Mean (quantitative)
-#&gt; Range: [1.34, 4.15]
+#&gt; Range: [1.92, 3.23]
 #&gt; Point estimate: 2.72
 #&gt; </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
@@ -860,12 +866,13 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.99 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
   parameters <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>,
   npoints <span class='op'>=</span> <span class='fl'>2L</span>
 <span class='op'>)</span>
@@ -887,12 +894,13 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
   stat_assignments <span class='op'>=</span> <span class='va'>stat_assignments</span>,
   <span class='va'>x</span>, <span class='va'>y</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_nperms</span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
+<span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_point_estimate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_parameter_bounds</span><span class='op'>(</span>
   point_estimate <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>point_estimate</span>,
-  conf_level <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>max_conf_level</span>
+  conf_level <span class='op'>=</span> <span class='fl'>0.8</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.99 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span></div><div class='input'><span class='va'>pf</span><span class='op'>$</span><span class='fu'>set_grid</span><span class='op'>(</span>
   parameters <span class='op'>=</span> <span class='va'>pf</span><span class='op'>$</span><span class='va'>parameters</span>,
   npoints <span class='op'>=</span> <span class='fl'>2L</span>
 <span class='op'>)</span>
