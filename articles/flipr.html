@@ -108,7 +108,7 @@
 
     
     
-<p>The permutation framework is perfectly suited for making inference as it allows one to perform point estimation, confidence regions and hypothesis tests under mild assumptions about the collected data and no distributional assmuption. In this article, we briefly illustrate how each of these aspects can be treated from a permutation point of view using the <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package. This package has been written and is intended as a low-level implementation of the permutation framework in the context of statistical inference. The mathematical object behind the scene is the so-called plausibility function, sometimes called p-value function. This article explains what the plausbility function is and shows how it can be easily computed using the permutation framework with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>. We illustrate the shape of the plausibility function using both Gaussian and Gamma distributions.</p>
+<p>The permutation framework is perfectly suited for making inference as it allows one to perform point estimation, confidence regions and hypothesis tests under mild assumptions about the collected data and no distributional assumption. In this article, we briefly illustrate how each of these aspects can be treated from a permutation point of view using the <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package. This package has been written and is intended as a low-level implementation of the permutation framework in the context of statistical inference. The mathematical object behind the scene is the so-called plausibility function, sometimes called p-value function. This article explains what the plausibility function is and shows how it can be easily computed using the permutation framework with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>. We illustrate the shape of the plausibility function using both Gaussian and Gamma distributions.</p>
 <div id="generation-of-the-toy-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#generation-of-the-toy-example" class="anchor"></a>Generation of the toy example</h2>
@@ -293,7 +293,7 @@
 #&gt;  9  2.42
 #&gt; 10  2.47
 #&gt; # … with 41 more rows</code></pre>
-<p>We can go a step further and evaluate the plaubility function on that grid using the <code>$evaluate_grid()</code> method as follows:</p>
+<p>We can go a step further and evaluate the plausibility function on that grid using the <code>$evaluate_grid()</code> method as follows:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pfa</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfa</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
 <p>Again, we can then take a look at the updated grid:</p>
