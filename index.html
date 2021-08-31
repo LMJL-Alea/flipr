@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
 <h3 class="hasAnchor">
 <a href="#make-the-two-samples-exchangeable-under-h0" class="anchor"></a>Make the two samples exchangeable under <em>H</em><sub>0</sub>
 </h3>
-<p>In the context of null hypothesis testing, we consider the null hypothesis <em>H</em><sub>0</sub> : <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub> = <em>δ</em>. We can use a permutation scheme to approach the <em>p</em>-value if the two samples are <em>exchangeable</em> under <em>H</em><sub>0</sub>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <em>H</em><sub>0</sub>. In this simple example, this can be achieved as follows. Let <em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em><sub><em>x</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>x</em></sub>, 1) and <em>Y</em><sub>1</sub>, …, <em>Y</em><sub><em>n</em><sub><em>y</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>y</em></sub>, 1). We can then transform the second sample as <em>Y</em><sub><em>i</em></sub> ← <em>Y</em><sub><em>i</em></sub> − <em>δ</em>.</p>
+<p>In the context of null hypothesis testing, we consider the null hypothesis <em>H</em><sub>0</sub> : <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub> = <em>δ</em>. We can use a permutation scheme to approach the <em>p</em>-value if the two samples are <em>exchangeable</em> under <em>H</em><sub>0</sub>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <em>H</em><sub>0</sub>. In this simple example, this can be achieved as follows. Let <em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em><sub><em>x</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>x</em></sub>,1) and <em>Y</em><sub>1</sub>, …, <em>Y</em><sub><em>n</em><sub><em>y</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>y</em></sub>,1). We can then transform the second sample as <em>Y</em><sub><em>i</em></sub> ← <em>Y</em><sub><em>i</em></sub> − <em>δ</em>.</p>
 <p>We can define a proper function to do this, termed the <em>null specification</em> function, which takes two input arguments:</p>
 <ul>
 <li>
@@ -162,7 +162,7 @@
 <p>This statistic can be easily computed using <code>stats::t.test(x, y, var.equal = TRUE)$statistic</code>. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> should have at least two mandatory input arguments:</p>
 <ul>
 <li>
-<code>data</code> which is either a concatenated list of size <em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub> regrouping the data points of both samples or a distance matrix of size (<em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub>) × (<em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub>) stored as an object of class <code>dist</code>.</li>
+<code>data</code> which is either a concatenated list of size <em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub> regrouping the data points of both samples or a distance matrix of size (<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>) × (<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>) stored as an object of class <code>dist</code>.</li>
 <li>
 <code>indices1</code> which is an integer vector of size <em>n</em><sub><em>x</em></sub> storing the indices of the data points belonging to the first sample in the current permuted version of the data.</li>
 </ul>
@@ -251,26 +251,26 @@
 <p>We use the <code>$get_value()</code> method for this purpose, which essentially evaluates the permutation <em>p</em>-value of a two-sided test by default:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.1068931</span></code></pre></div>
+<span class="co">#&gt; [1] 0.1078921</span></code></pre></div>
 <p>We can compare the resulting <em>p</em>-value with the one obtained using the more classic parametric test:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span>
 <span class="co">#&gt; [1] 0.1030946</span></code></pre></div>
 <p>The permutation <em>p</em>-value does not quite match the parametric one. This is because of two reasons:</p>
 <ol>
-<li>The resolution of a permutation <em>p</em>-value is of the order of 1/(<em>B</em> + 1), where <em>B</em> is the number of sampled permutations. By default, the plausibility function is instantiated with <em>B</em> = 1000:</li>
+<li>The resolution of a permutation <em>p</em>-value is of the order of 1/(<em>B</em>+1), where <em>B</em> is the number of sampled permutations. By default, the plausibility function is instantiated with <em>B</em> = 1000:</li>
 </ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span>
 <span class="co">#&gt; [1] 1000</span></code></pre></div>
 <ol>
-<li>We randomly sample <em>B</em> permutations out of the <span class="math inline">$\binom{n_x+n_y}{n_x}$</span> possible permutations and therefore introduce extra variability in the p-value.</li>
+<li>We randomly sample <em>B</em> permutations out of the <span class="math inline">$\\binom{n_x+n_y}{n_x}$</span> possible permutations and therefore introduce extra variability in the <em>p</em>-value.</li>
 </ol>
 <p>If we were to ask for more permutations, say <em>B</em> = 1, 000, 000, we would be much closer to the parametric <em>p</em>-value:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">1000000</span><span class="op">)</span>
 <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.1029993</span></code></pre></div>
+<span class="co">#&gt; [1] 0.1029879</span></code></pre></div>
 </div>
 </div>
 </div>

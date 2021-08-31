@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -143,10 +143,29 @@
       <small>Source: <a href='https://github.com/astamm/flipr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="flipr-0219000" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.1.9000">
-<a href="#flipr-0219000" class="anchor"></a>flipr 0.2.1.9000<small> Unreleased </small>
+    <div id="flipr-030" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.0">
+<a href="#flipr-030" class="anchor"></a>flipr 0.3.0<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<p>The API has been changed:</p>
+<ul>
+<li>An <a href="https://r6.r-lib.org">R6</a> class is now used to define the plausibility function, with methods that implement point estimation, confidence intervals and evaluation on grid for later plotting.</li>
+<li>The plotting capability is still outside the class but might move into the class methods as well in the future.</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Test statistics based on Inter-point distances have been added and implemented in C++ through the <a href="http://dirk.eddelbuettel.com/code/rcpp.html"><strong>Rcpp</strong></a> package.</li>
+<li>Test coverage is set and achieves 20% coverage for now (<a href='https://github.com/astamm/flipr/issues/3'>#3</a>, <a href='https://github.com/C-Juliette'>@C-Juliette</a>).</li>
+<li>@C-Juliette has been added as contributor to the package.</li>
+<li>The p-value function has been consistently renamed plausibility function to better reflects what it stands for and avoid confusion with other definitions of the p-value function in the area of functional data analysis.</li>
+</ul>
+</div>
 </div>
     <div id="flipr-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
