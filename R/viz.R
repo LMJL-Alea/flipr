@@ -103,7 +103,7 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
       )
   } else {
     nm <- names(pf$parameters)
-    pf$grid |>
+    pf$grid %>%
       ggplot(aes_string(nm[1], nm[2], z = "pvalue")) +
       geom_contour_filled(binwidth = 0.05) +
       labs(

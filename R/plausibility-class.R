@@ -634,8 +634,8 @@ PlausibilityFunction <- R6::R6Class(
           library(purrr)
         })
       }
-      self$grid$pvalue <- self$grid |>
-        purrr::array_tree(margin = 1) |>
+      self$grid$pvalue <- self$grid %>%
+        purrr::array_tree(margin = 1) %>%
         pbapply::pbsapply(self$get_value, cl = cl)
       if (ncores > 1L)
         parallel::stopCluster(cl)

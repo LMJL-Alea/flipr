@@ -244,7 +244,7 @@ pfa$grid
 
 We can add to this grid the p-value computed from the t-test assuming normality of the data:
 ```{r}
-dfa <- pfa$grid |> 
+dfa <- pfa$grid %>%
   mutate(
     pvalue_alt = delta %>%
       map_dbl(~ {
@@ -319,7 +319,7 @@ pfb$evaluate_grid(grid = pfb$grid)
 ```
 
 ```{r}
-dfb <- pfb$grid |> 
+dfb <- pfb$grid %>%
   mutate(
     pvalue_alt = delta %>%
       map_dbl(~ {
@@ -394,7 +394,7 @@ pfc$evaluate_grid(grid = pfc$grid)
 ```
 
 ```{r}
-dfc <- pfc$grid |> 
+dfc <- pfc$grid %>%
   mutate(
     pvalue_alt = delta %>%
       map_dbl(~ {
