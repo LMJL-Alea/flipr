@@ -95,12 +95,26 @@ convert_to_list <- function(...) {
   # Case "No input samples"
   if (n == 0) return(NULL)
 
+  # Case of distance matrix
+  if (inherits(l[[1]], "dist")) {
+    if (n == 1) return(l)
+    coherent_inputs <- TRUE
+    for (i in 2:n) {
+      if (!is.integer(l[[i]])) {
+        coherent_inputs <- FALSE
+        break
+      }
+    }
+    stopifnot(coherent_inputs)
+    return(l)
+  }
+
   # Case of univariate data
-  if (is.numeric(l[[1]])) {
+  if (rlang::is_bare_numeric(l[[1]])) {
     if (n > 1) {
       coherent_inputs <- TRUE
       for (i in 2:n) {
-        if (!is.numeric(l[[i]])) {
+        if (!rlang::is_bare_numeric(l[[i]])) {
           coherent_inputs <- FALSE
           break
         }
@@ -115,7 +129,7 @@ convert_to_list <- function(...) {
     if (n > 1) {
       coherent_inputs <- TRUE
       for (i in 2:n) {
-        if (!is.numeric(l[[i]]) || (ncol(l[[i]]) != ncol(l[[1]]))) {
+        if (!is.matrix(l[[i]]) || (ncol(l[[i]]) != ncol(l[[1]]))) {
           coherent_inputs <- FALSE
           break
         }

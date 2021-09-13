@@ -53,7 +53,7 @@ one_sample_test <- function(x,
                             combine_with = "tippett",
                             type = "exact",
                             seed = NULL) {
-  if (!is.numeric(x) && !is.matrix(x) && !is.list(x))
+  if (!rlang::is_bare_numeric(x) && !is.matrix(x) && !is.list(x))
     abort("The input data should be of class numeric, matrix or list.")
 
   if (!is.null(seed)) withr::local_seed(seed)
