@@ -315,7 +315,7 @@
 <span class="co">#&gt; # … with 41 more rows</span></code></pre></div>
 <p>We can add to this grid the p-value computed from the t-test assuming normality of the data:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dfa</span> <span class="op">&lt;-</span> <span class="va">pfa</span><span class="op">$</span><span class="va">grid</span> |&gt; 
+<code class="sourceCode R"><span class="va">dfa</span> <span class="op">&lt;-</span> <span class="va">pfa</span><span class="op">$</span><span class="va">grid</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
@@ -379,7 +379,7 @@
 <span class="op">)</span>
 <span class="va">pfb</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfb</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dfb</span> <span class="op">&lt;-</span> <span class="va">pfb</span><span class="op">$</span><span class="va">grid</span> |&gt; 
+<code class="sourceCode R"><span class="va">dfb</span> <span class="op">&lt;-</span> <span class="va">pfb</span><span class="op">$</span><span class="va">grid</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
@@ -444,7 +444,7 @@
 <span class="op">)</span>
 <span class="va">pfc</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pfc</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dfc</span> <span class="op">&lt;-</span> <span class="va">pfc</span><span class="op">$</span><span class="va">grid</span> |&gt; 
+<code class="sourceCode R"><span class="va">dfc</span> <span class="op">&lt;-</span> <span class="va">pfc</span><span class="op">$</span><span class="va">grid</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>
     pvalue_alt <span class="op">=</span> <span class="va">delta</span> <span class="op">%&gt;%</span>
       <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span>
