@@ -402,7 +402,11 @@ used to compute the permutation p-value.</p></dd>
 <p>Computes an indicator of the plausibility of specific values
 for the parameters of interest in the form of a p-value of an
 hypothesis test against these values.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PlausibilityFunction</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span><span class='va'>parameters</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>PlausibilityFunction</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span>
+  <span class='va'>parameters</span>,
+  keep_null_distribution <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep_permutations <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -410,6 +414,14 @@ hypothesis test against these values.</p><h4 class='hasAnchor' id='arguments'><a
 providing specific values of the parameters of interest for assessment
 of their plausibility in the form of a p-value of the corresponding
 hypothesis test.</p></dd>
+
+<dt><code>keep_null_distribution</code></dt><dd><p>A boolean specifying whether the empirical
+permutation null distribution should be returned as well. Defaults to
+<code>FALSE</code>.</p></dd>
+
+<dt><code>keep_permutations</code></dt><dd><p>A boolean specifying whether the list of sampled
+permutations used to compute the empirical permutation null
+distribution should be returned as well. Defaults to <code>FALSE</code>.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
