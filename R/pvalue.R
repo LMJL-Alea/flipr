@@ -89,8 +89,22 @@ run_permutation_scheme <- function(type,
   }
 
   list(
-    statistic = Tp[1],
+    observed = Tp[1],
     pvalue = stats2pvalue(1, Tp, M, type = type, alternative = altern),
-    permuted_statistics = Tp[-1]
+    null_distribution = Tp[-1],
+    permutations = perm_data
   )
+}
+
+flipn <- function(n) {
+  signs <- c(-1, 1)
+  l <- replicate(n, signs, simplify = FALSE)
+  expand.grid(rlang::dots_splice(l)) %>%
+    as.matrix() %>%
+    `colnames<-`(NULL) %>%
+    t()
+}
+
+get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun) {
+  stat_fun(stat_data, perm_data[, i + 1])
 }
