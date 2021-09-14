@@ -564,7 +564,11 @@ Computes an indicator of the plausibility of specific values
 for the parameters of interest in the form of a p-value of an
 hypothesis test against these values.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$get_value(parameters)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$get_value(
+  parameters,
+  keep_null_distribution = FALSE,
+  keep_permutations = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -574,6 +578,14 @@ hypothesis test against these values.
 providing specific values of the parameters of interest for assessment
 of their plausibility in the form of a p-value of the corresponding
 hypothesis test.}
+
+\item{\code{keep_null_distribution}}{A boolean specifying whether the empirical
+permutation null distribution should be returned as well. Defaults to
+\code{FALSE}.}
+
+\item{\code{keep_permutations}}{A boolean specifying whether the list of sampled
+permutations used to compute the empirical permutation null
+distribution should be returned as well. Defaults to \code{FALSE}.}
 }
 \if{html}{\out{</div>}}
 }
