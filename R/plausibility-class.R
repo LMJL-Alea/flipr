@@ -257,6 +257,7 @@ PlausibilityFunction <- R6::R6Class(
     #' @param keep_permutations A boolean specifying whether the list of sampled
     #'   permutations used to compute the empirical permutation null
     #'   distribution should be returned as well. Defaults to `FALSE`.
+    #' @param ... Extra parameters specific to some statistics.
     #'
     #' @examples
     #' x <- rnorm(10)
@@ -274,7 +275,8 @@ PlausibilityFunction <- R6::R6Class(
     #' pf$get_value(2)
     get_value = function(parameters,
                          keep_null_distribution = FALSE,
-                         keep_permutations = FALSE) {
+                         keep_permutations = FALSE,
+                         ...) {
       if (length(parameters) != self$nparams)
         abort(paste0(
           "The plausibility function has been defined to infer ",
@@ -293,7 +295,8 @@ PlausibilityFunction <- R6::R6Class(
           M = self$nperms_max,
           alternative = self$alternative,
           type = self$pvalue_formula,
-          combine_with = self$aggregator
+          combine_with = self$aggregator,
+          ...
         )
       } else {
         y <- private$null_spec(private$data[[2]], parameters)
@@ -305,7 +308,8 @@ PlausibilityFunction <- R6::R6Class(
           M = self$nperms_max,
           alternative = self$alternative,
           type = self$pvalue_formula,
-          combine_with = self$aggregator
+          combine_with = self$aggregator,
+          ...
         )
       }
       if (keep_null_distribution && keep_permutations)

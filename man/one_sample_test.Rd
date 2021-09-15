@@ -12,7 +12,8 @@ one_sample_test(
   alternative = "two_tail",
   combine_with = "tippett",
   type = "exact",
-  seed = NULL
+  seed = NULL,
+  ...
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ Phipson & Smith (2010) for details.}
 
 \item{seed}{An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is \code{NULL}.}
+
+\item{...}{Extra parameters specific to some statistics.}
 }
 \value{
 A \code{\link[base]{list}} with three components: the value of the

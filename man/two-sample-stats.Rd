@@ -21,39 +21,39 @@
 \alias{stat_dom_ip}
 \title{Test Statistics for the Two-Sample Problem}
 \usage{
-stat_welch(data, indices1)
+stat_welch(data, indices1, ...)
 
-stat_student(data, indices1)
+stat_student(data, indices1, ...)
 
-stat_t(data, indices1)
+stat_t(data, indices1, ...)
 
-stat_fisher(data, indices1)
+stat_fisher(data, indices1, ...)
 
-stat_f(data, indices1)
+stat_f(data, indices1, ...)
 
-stat_mean(data, indices1)
+stat_mean(data, indices1, ...)
 
-stat_hotelling(data, indices1)
+stat_hotelling(data, indices1, ...)
 
-stat_bs(data, indices1)
+stat_bs(data, indices1, ...)
 
-stat_student_ip(data, indices1)
+stat_student_ip(data, indices1, ...)
 
-stat_t_ip(data, indices1)
+stat_t_ip(data, indices1, ...)
 
-stat_fisher_ip(data, indices1)
+stat_fisher_ip(data, indices1, ...)
 
-stat_f_ip(data, indices1)
+stat_f_ip(data, indices1, ...)
 
-stat_bg_ip(data, indices1)
+stat_bg_ip(data, indices1, ...)
 
-stat_energy_ip(data, indices1, alpha = 1L)
+stat_energy_ip(data, indices1, alpha = 1L, ...)
 
-stat_cq_ip(data, indices1)
+stat_cq_ip(data, indices1, ...)
 
-stat_mod_ip(data, indices1)
+stat_mod_ip(data, indices1, ...)
 
-stat_dom_ip(data, indices1, standardize = TRUE)
+stat_dom_ip(data, indices1, standardize = TRUE, ...)
 }
 \arguments{
 \item{data}{Either a list of the \code{n1 + n2} concatenated observations with the
@@ -64,6 +64,8 @@ whose function name should end with \verb{_ip()}.}
 
 \item{indices1}{An integer vector specifying the indices in \code{data} that are
 considered to belong to the first sample.}
+
+\item{...}{Extra parameters specific to some statistics.}
 
 \item{alpha}{A scalar value specifying the power to which the dissimilarities
 should be elevated in the computation of the inter-point energy statistic.

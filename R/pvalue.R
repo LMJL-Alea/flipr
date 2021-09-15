@@ -48,7 +48,8 @@ run_permutation_scheme <- function(type,
                                    perm_data,
                                    stat_data,
                                    M,
-                                   combine_with) {
+                                   combine_with,
+                                   ...) {
   type <- match.arg(type, c("exact", "upper_bound", "estimate"))
   alternative <- match.arg(alternative, c("left_tail", "right_tail", "two_tail"))
   nstats <- length(stats)
@@ -63,18 +64,22 @@ run_permutation_scheme <- function(type,
       FUN = get_permuted_statistic,
       perm_data = perm_data,
       stat_data = stat_data,
-      stat_fun = stats[[1]]
+      stat_fun = stats[[1]],
+      ...
     )
   }
   else {
     Tp <- stats %>%
-      purrr::map(~ sapply(
-        X = 0:B,
-        FUN = get_permuted_statistic,
-        perm_data = perm_data,
-        stat_data = stat_data,
-        stat_fun = .
-      )) %>%
+      purrr::map(function(.x, ...) {
+        sapply(
+          X = 0:B,
+          FUN = get_permuted_statistic,
+          perm_data = perm_data,
+          stat_data = stat_data,
+          stat_fun = .x,
+          ...
+        )
+      }, ...) %>%
       purrr::map2(alternative, ~ sapply(
         X = 1:(B+1),
         FUN = stats2pvalue,
@@ -105,6 +110,6 @@ flipn <- function(n) {
     t()
 }
 
-get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun) {
-  stat_fun(stat_data, perm_data[, i + 1])
+get_permuted_statistic <- function(i, perm_data, stat_data, stat_fun, ...) {
+  stat_fun(stat_data, perm_data[, i + 1], ...)
 }

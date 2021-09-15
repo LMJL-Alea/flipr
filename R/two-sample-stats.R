@@ -75,6 +75,7 @@
 #' @param standardize A boolean specifying whether the distance between medoids
 #'   in the \code{\link{stat_dom_ip}} function should be normalized by the
 #'   pooled corresponding variances. Default is `TRUE`.
+#' @param ... Extra parameters specific to some statistics.
 #'
 #' @return A real scalar giving the value of test statistic for the permutation
 #'   specified by the integer vector `indices`.
@@ -111,7 +112,7 @@ NULL
 
 #' @rdname two-sample-stats
 #' @export
-stat_welch <- function(data, indices1) {
+stat_welch <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
@@ -120,7 +121,7 @@ stat_welch <- function(data, indices1) {
 
 #' @rdname two-sample-stats
 #' @export
-stat_student <- function(data, indices1) {
+stat_student <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
@@ -133,7 +134,7 @@ stat_t <- stat_student
 
 #' @rdname two-sample-stats
 #' @export
-stat_fisher <- function(data, indices1) {
+stat_fisher <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
@@ -146,7 +147,7 @@ stat_f <- stat_fisher
 
 #' @rdname two-sample-stats
 #' @export
-stat_mean <- function(data, indices1) {
+stat_mean <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   x1 <- unlist(data[l$idx1])
   x2 <- unlist(data[l$idx2])
@@ -155,7 +156,7 @@ stat_mean <- function(data, indices1) {
 
 #' @rdname two-sample-stats
 #' @export
-stat_hotelling <- function(data, indices1) {
+stat_hotelling <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   X <- purrr::reduce(data[l$idx1], rbind)
   Y <- purrr::reduce(data[l$idx2], rbind)
@@ -173,7 +174,7 @@ stat_hotelling <- function(data, indices1) {
 
 #' @rdname two-sample-stats
 #' @export
-stat_bs <- function(data, indices1) {
+stat_bs <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   X <- purrr::reduce(data[l$idx1], rbind)
   Y <- purrr::reduce(data[l$idx2], rbind)
@@ -190,7 +191,7 @@ stat_bs <- function(data, indices1) {
 
 #' @rdname two-sample-stats
 #' @export
-stat_student_ip <- function(data, indices1) {
+stat_student_ip <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   stat_student_impl(data, l$idx1, l$idx2)
 }
@@ -201,7 +202,7 @@ stat_t_ip <- stat_student_ip
 
 #' @rdname two-sample-stats
 #' @export
-stat_fisher_ip <- function(data, indices1) {
+stat_fisher_ip <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   stat_fisher_impl(data, l$idx1, l$idx2)
 }
@@ -212,28 +213,28 @@ stat_f_ip <- stat_fisher_ip
 
 #' @rdname two-sample-stats
 #' @export
-stat_bg_ip <- function(data, indices1) {
+stat_bg_ip <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   stat_bg_impl(data, l$idx1, l$idx2)
 }
 
 #' @rdname two-sample-stats
 #' @export
-stat_energy_ip <- function(data, indices1, alpha = 1L) {
+stat_energy_ip <- function(data, indices1, alpha = 1L, ...) {
   l <- two_sample_prep(data, indices1)
   stat_energy_impl(data, l$idx1, l$idx2, alpha)
 }
 
 #' @rdname two-sample-stats
 #' @export
-stat_cq_ip <- function(data, indices1) {
+stat_cq_ip <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   stat_cq_impl(data, l$idx1, l$idx2)
 }
 
 #' @rdname two-sample-stats
 #' @export
-stat_mod_ip <- function(data, indices1) {
+stat_mod_ip <- function(data, indices1, ...) {
   l <- two_sample_prep(data, indices1)
   l <- purrr::cross(l)
   dist_values <- purrr::map_dbl(l, ~ getElement(
@@ -246,7 +247,7 @@ stat_mod_ip <- function(data, indices1) {
 
 #' @rdname two-sample-stats
 #' @export
-stat_dom_ip <- function(data, indices1, standardize = TRUE) {
+stat_dom_ip <- function(data, indices1, standardize = TRUE, ...) {
   l <- two_sample_prep(data, indices1)
   n1 <- length(l$idx1)
   n2 <- length(l$idx2)

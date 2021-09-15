@@ -59,6 +59,7 @@
 #'   Phipson & Smith (2010) for details.
 #' @param seed An integer specifying the seed of the random generator useful for
 #'   result reproducibility or method comparisons. Default is `NULL`.
+#' @param ... Extra parameters specific to some statistics.
 #'
 #' @return A \code{\link[base]{list}} with three components: the value of the
 #'   statistic for the original two samples, the p-value of the resulting
@@ -93,7 +94,8 @@ two_sample_test <- function(x, y,
                             alternative = "two_tail",
                             combine_with = "tippett",
                             type = "exact",
-                            seed = NULL) {
+                            seed = NULL,
+                            ...) {
 
   if (rlang::is_bare_numeric(x)) {
     if (!rlang::is_bare_numeric(y) || length(y) == 1)
@@ -153,6 +155,7 @@ two_sample_test <- function(x, y,
     perm_data = perm_data,
     stat_data = stat_data,
     M = M,
-    combine_with = combine_with
+    combine_with = combine_with,
+    ...
   )
 }

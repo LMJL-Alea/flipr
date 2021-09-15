@@ -8,6 +8,7 @@
 #' @param flips A numeric vectors of `-1`s and `1`s to be used to randomly flip
 #'   some data points around the center of symmetric of the distribution of the
 #'   sample.
+#' @param ... Extra parameters specific to some statistics.
 #'
 #' @return A numeric value evaluating the desired test statistic.
 #' @name one-sample-stats
@@ -21,7 +22,7 @@ NULL
 
 #' @rdname one-sample-stats
 #' @export
-stat_max <- function(data, flips) {
+stat_max <- function(data, flips, ...) {
   stopifnot(inherits(data, "list"))
   n <- length(data)
 

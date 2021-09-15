@@ -567,7 +567,8 @@ hypothesis test against these values.
 \if{html}{\out{<div class="r">}}\preformatted{PlausibilityFunction$get_value(
   parameters,
   keep_null_distribution = FALSE,
-  keep_permutations = FALSE
+  keep_permutations = FALSE,
+  ...
 )}\if{html}{\out{</div>}}
 }
 
@@ -586,6 +587,8 @@ permutation null distribution should be returned as well. Defaults to
 \item{\code{keep_permutations}}{A boolean specifying whether the list of sampled
 permutations used to compute the empirical permutation null
 distribution should be returned as well. Defaults to \code{FALSE}.}
+
+\item{\code{...}}{Extra parameters specific to some statistics.}
 }
 \if{html}{\out{</div>}}
 }
