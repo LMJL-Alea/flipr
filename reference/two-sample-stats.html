@@ -157,39 +157,39 @@ use empirical moments and inter-point statistics that only rely on pairwise
 dissimilarities between data points.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stat_welch</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>stat_welch</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_student</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_student</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_t</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_t</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_fisher</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_fisher</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_f</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_f</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_mean</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_mean</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_hotelling</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_hotelling</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_bs</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_bs</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_student_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_student_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_t_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_t_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_fisher_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_fisher_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_f_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_f_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_bg_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_bg_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_energy_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, alpha <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span>
+<span class='fu'>stat_energy_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, alpha <span class='op'>=</span> <span class='fl'>1L</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_cq_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_cq_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_mod_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span><span class='op'>)</span>
+<span class='fu'>stat_mod_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>stat_dom_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+<span class='fu'>stat_dom_ip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>indices1</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,6 +206,10 @@ whose function name should end with <code>_ip()</code>.</p></td>
       <th>indices1</th>
       <td><p>An integer vector specifying the indices in <code>data</code> that are
 considered to belong to the first sample.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Extra parameters specific to some statistics.</p></td>
     </tr>
     <tr>
       <th>alpha</th>

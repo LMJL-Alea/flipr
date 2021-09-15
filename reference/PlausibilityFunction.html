@@ -405,7 +405,8 @@ hypothesis test against these values.</p><h4 class='hasAnchor' id='arguments'><a
 <p><div class="r"></p><pre><span class='va'>PlausibilityFunction</span><span class='op'>$</span><span class='fu'>get_value</span><span class='op'>(</span>
   <span class='va'>parameters</span>,
   keep_null_distribution <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  keep_permutations <span class='op'>=</span> <span class='cn'>FALSE</span>
+  keep_permutations <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -422,6 +423,8 @@ permutation null distribution should be returned as well. Defaults to
 <dt><code>keep_permutations</code></dt><dd><p>A boolean specifying whether the list of sampled
 permutations used to compute the empirical permutation null
 distribution should be returned as well. Defaults to <code>FALSE</code>.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Extra parameters specific to some statistics.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
