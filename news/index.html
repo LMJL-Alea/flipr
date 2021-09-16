@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -143,6 +143,17 @@
       <small>Source: <a href='https://github.com/astamm/flipr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="flipr-031" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.1">
+<a href="#flipr-031" class="anchor"></a>flipr 0.3.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Remove any occurrence of base-R pipe operator in favor of <a href="https://magrittr.tidyverse.org"><strong>magrittr</strong></a> pipe operator for now for backward compatibility with older versions of R.</li>
+<li>Improved way of handling statistics that rely on inter-point distances.</li>
+<li>Method <code>$get_value()</code> gains optional arguments <code>keep_null_distribution</code> and <code>keep_permutations</code> in case the user would like to keep track of either the permutation null distribution or the sampled permutations that have been used to produce it.</li>
+<li>Method <code>$get_value()</code> now handles extra parameters to be passed to the test statistics.</li>
+</ul>
+</div>
     <div id="flipr-030" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#flipr-030" class="anchor"></a>flipr 0.3.0<small> 2021-09-01 </small>
