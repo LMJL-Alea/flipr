@@ -1,6 +1,6 @@
 Package: flipr
 Title: Flexible Inference via Permutations in R
-Version: 0.3.1
+Version: 0.3.1.9000
 Authors@R: c(
     person(given = "Alessia", 
            family = "Pini", 

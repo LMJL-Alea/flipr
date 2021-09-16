@@ -1,3 +1,5 @@
+# flipr 0.3.1.9000
+
 # flipr 0.3.1
 
 - Remove any occurrence of base-R pipe operator in favor of [**magrittr**](https://magrittr.tidyverse.org) pipe operator for now for backward compatibility with older versions of R.
