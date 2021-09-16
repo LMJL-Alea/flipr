@@ -1,3 +1,10 @@
+# flipr 0.3.1
+
+- Remove any occurrence of base-R pipe operator in favor of [**magrittr**](https://magrittr.tidyverse.org) pipe operator for now for backward compatibility with older versions of R.
+- Improved way of handling statistics that rely on inter-point distances.
+- Method `$get_value()` gains optional arguments `keep_null_distribution` and `keep_permutations` in case the user would like to keep track of either the permutation null distribution or the sampled permutations that have been used to produce it.
+- Method `$get_value()` now handles extra parameters to be passed to the test statistics.
+
 # flipr 0.3.0
 
 ## Breaking changes
