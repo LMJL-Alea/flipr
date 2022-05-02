@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/flipr.html">Get started</a>
 </li>
@@ -57,7 +53,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -80,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/astamm/flipr/">
+  <a href="https://github.com/astamm/flipr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -95,13 +91,13 @@
 
       
 
-      </header><script src="exactness_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>On the exactness of permutation tests</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/astamm/flipr/blob/master/vignettes/exactness.Rmd"><code>vignettes/exactness.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/astamm/flipr/blob/HEAD/vignettes/exactness.Rmd" class="external-link"><code>vignettes/exactness.Rmd</code></a></small>
       <div class="hidden name"><code>exactness.Rmd</code></div>
 
     </div>
@@ -109,9 +105,9 @@
     
     
 <p>In this article, we discuss the exactness property of permutation tests, which is closely related to how <span class="math inline">\(p\)</span>-values are computed from the permutations. This article is a summary of the paper by <span class="citation">Phipson and Smyth (2010)</span>.</p>
-<div id="traditional-formulation-of-a-statistical-test" class="section level2">
-<h2 class="hasAnchor">
-<a href="#traditional-formulation-of-a-statistical-test" class="anchor"></a>Traditional formulation of a statistical test</h2>
+<div class="section level2">
+<h2 id="traditional-formulation-of-a-statistical-test">Traditional formulation of a statistical test<a class="anchor" aria-label="anchor" href="#traditional-formulation-of-a-statistical-test"></a>
+</h2>
 <p>A statistical test aims at determining whether some observed data can be considered to be strong evidence in favor of a so-called <em>alternative</em> hypothesis <span class="math inline">\(H_a\)</span> compared to a so-called <em>null</em> hypothesis <span class="math inline">\(H_0\)</span>. To do that, a test statistic <span class="math inline">\(T\)</span> is defined such that:</p>
 <ul>
 <li>its observed value under <span class="math inline">\(H_0\)</span> can be computed once you observed some data;</li>
@@ -121,9 +117,9 @@
 <p>Once such a test statistic is available and we observe some data, we can denote by <span class="math inline">\(t_\mathrm{obs}\)</span> the value of the test statistic computed from the observed data and define the so-called <strong>p-value</strong> as the null hypothesis tail probability: <span class="math display">\[ p_\infty = \mathbb{P}_{H_0} \left( T \ge t_\mathrm{obs} \right). \]</span>The p-value <span class="math inline">\(p_\infty\)</span> is by definition uniformly distributed on <span class="math inline">\((0,1)\)</span> under the null hypothesis. Hence, we can define the so-called <strong>significance level</strong> <span class="math inline">\(\alpha \in (0,1)\)</span> and decide to reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_1\)</span> when <span class="math inline">\(p_\infty \le \alpha\)</span>. By doing this, the probability of wrongly rejecting <span class="math inline">\(H_0\)</span>, also known as the probability of type I errors, is simply: <span class="math display">\[ \mathbb{P}_{H_0} \left( p_\infty \le \alpha \right) = \alpha. \]</span>The significance level <span class="math inline">\(\alpha\)</span> therefore matches by design the probability of type I errors, which means that choosing <span class="math inline">\(\alpha\)</span> allows to control the probability of type I errors. We say that the test is <strong>exact</strong>.</p>
 <p>When the null distribution of <span class="math inline">\(T\)</span> is not known, you do not have access to <span class="math inline">\(p_\infty\)</span>. A possible solution is then to resort to resampling techniques to approach the null hypothesis. Once you get an approximate null distribution, the question is how do you compute a p-value that provides an exact statistical test. There are two approaches to this problem: the first estimates the true p-value <span class="math inline">\(p_\infty\)</span> from the approximate null distribution while the second proposes an alternative definition of the p-value that can be straightforwardly computed. Let us expand on both approaches.</p>
 </div>
-<div id="the-two-sample-problem-in-a-permutational-framework" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-two-sample-problem-in-a-permutational-framework" class="anchor"></a>The two-sample problem in a permutational framework</h2>
+<div class="section level2">
+<h2 id="the-two-sample-problem-in-a-permutational-framework">The two-sample problem in a permutational framework<a class="anchor" aria-label="anchor" href="#the-two-sample-problem-in-a-permutational-framework"></a>
+</h2>
 <p>We start with two samples <span class="math inline">\(X_1, \dots, X_{n_x} \stackrel{iid}{\sim} \mathcal{D}(\theta_x)\)</span> and <span class="math inline">\(Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim} \mathcal{D}(\theta_y)\)</span>. We want to know whether the two distributions are the same or not on the basis of the two samples we collected. In this parametric setting, it boils down to testing the following hypotheses: <span class="math display">\[ H_0: \theta_x = \theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. \]</span>Let <span class="math inline">\(T\)</span> be a statistic that depends on the two samples which is suited for elucidating this test, i.e.:</p>
 <ul>
 <li>you can compute its observed value under the null hypothesis once you observed some data;</li>
@@ -133,9 +129,8 @@
 <p>If one knows the exact null distribution, then there is no need to resort to permutations. However, if the null distribution is not known, permutations come in handy for approaching it.</p>
 <p>The idea is that, under the null hypothesis, the two samples come from the same distribution. Hence, we can pull them together as one big sample of size <span class="math inline">\(n = n_x + n_y\)</span> generated by that common distribution. At this point, we can split the pooled sample into two random subsets of size <span class="math inline">\(n_x\)</span> and <span class="math inline">\(n_y\)</span> respectively, and use them to compute a value of the statistic <span class="math inline">\(T\)</span>. If we repeat many times this splitting strategy, say <span class="math inline">\(m\)</span> times, we end up with <span class="math inline">\(m\)</span> values of the statistic from which we can compute the empirical distribution, known as the <strong>permutation distribution</strong>, which approaches the null distribution.</p>
 </div>
-<div id="permutation-p-value-as-an-unbiased-estimator-of-p_infty" class="section level2">
-<h2 class="hasAnchor">
-<a href="#permutation-p-value-as-an-unbiased-estimator-of-p_infty" class="anchor"></a>Permutation p-value as an unbiased estimator of <span class="math inline">\(p_\infty\)</span>
+<div class="section level2">
+<h2 id="permutation-p-value-as-an-unbiased-estimator-of-p_infty">Permutation p-value as an unbiased estimator of <span class="math inline">\(p_\infty\)</span><a class="anchor" aria-label="anchor" href="#permutation-p-value-as-an-unbiased-estimator-of-p_infty"></a>
 </h2>
 <p>Let <span class="math inline">\(t_\mathrm{obs}\)</span> be the value of the statistic computed from the original two samples, <span class="math inline">\(m\)</span> be the number of permutations used to approach the null distribution and <span class="math inline">\(B\)</span> be a random variable that counts the number of test statistic values greater than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span>.</p>
 <p>By definition, the random variable <span class="math inline">\(B\)</span> follows a binomial distribution of size <span class="math inline">\(m\)</span> and rate of success <span class="math inline">\(p_\infty\)</span>. Hence, we can define the following <strong>unbiased estimator</strong> of <span class="math inline">\(p_\infty\)</span>: <span class="math display">\[ \widehat{p_\infty} = \frac{B}{m}. \]</span></p>
@@ -145,13 +140,13 @@
 <p>We can therefore deduce that: <span class="math display">\[ \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \frac{\lfloor m \alpha \rfloor + 1}{m + 1} \neq \alpha. \]</span></p>
 <p>The following R code shows graphically that using <span class="math inline">\(\widehat{p_\infty}\)</span> as p-value does not provide an exact test:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
-<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span>
-<span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span><span class="va">alpha</span>, <span class="va">m</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
+<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span>
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span><span class="va">alpha</span>, <span class="va">m</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">mutate</span><span class="op">(</span>
-    p <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">m</span> <span class="op">*</span> <span class="va">alpha</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">m</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, 
-    mf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"m ="</span>, <span class="va">m</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
+    p <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="va">m</span> <span class="op">*</span> <span class="va">alpha</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">m</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, 
+    mf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"m ="</span>, <span class="va">m</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">alpha</span>, <span class="va">p</span>, color <span class="op">=</span> <span class="va">mf</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_abline</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -161,18 +156,22 @@
   <span class="op">)</span> <span class="op">+</span> 
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">mf</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">scale_color_viridis_d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/hide_legend.html">hide_legend</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html">saveWidget</a></span><span class="op">(</span>
+<span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">ggplotly</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/hide_legend.html" class="external-link">hide_legend</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: `gather_()` was deprecated in tidyr 1.2.0.</span>
+<span class="co">#&gt; Please use `gather()` instead.</span>
+<span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span>
+<span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
+<span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html" class="external-link">saveWidget</a></span><span class="op">(</span>
   widget <span class="op">=</span> <span class="va">fig</span>, 
   file <span class="op">=</span> <span class="st">"exactness-fig1.html"</span>, 
-  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
+  selfcontained <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html" class="external-link">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
+<span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">tags</a></span><span class="op">$</span><span class="fu">iframe</span><span class="op">(</span>
   src <span class="op">=</span> <span class="st">"exactness-fig1.html"</span>,
   scrolling <span class="op">=</span> <span class="st">"no"</span>, 
   seamless <span class="op">=</span> <span class="st">"seamless"</span>,
@@ -182,9 +181,9 @@
 <span class="op">)</span></code></pre></div>
 <p><iframe src="exactness-fig1.html" scrolling="no" seamless="seamless" frameborder="0" width="100%" height="400"></iframe></p>
 </div>
-<div id="permutation-p-value-as-the-tail-probability-of-a-resampling-distribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#permutation-p-value-as-the-tail-probability-of-a-resampling-distribution" class="anchor"></a>Permutation p-value as the tail probability of a resampling distribution</h2>
+<div class="section level2">
+<h2 id="permutation-p-value-as-the-tail-probability-of-a-resampling-distribution">Permutation p-value as the tail probability of a resampling distribution<a class="anchor" aria-label="anchor" href="#permutation-p-value-as-the-tail-probability-of-a-resampling-distribution"></a>
+</h2>
 <p>An alternative strategy is to define the p-value by looking at the random variable <span class="math inline">\(B\)</span> instead of the test statistic <span class="math inline">\(T\)</span>. While the p-value is the tail probability of the null distribution, in the context of randomization tests, we can define it as the tail probability of the distribution of <span class="math inline">\(B\)</span>. Given a fixed number <span class="math inline">\(m\)</span> of sampled permutations, recall that the random variable <span class="math inline">\(B\)</span> counts the number of test statistic values larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span>. Hence, an alternative equivalent definition of the p-value is given by the so-called <strong>exact permutation p-value</strong>: <span class="math display">\[ p_e = \mathbb{P}_{H_0} \left( B \le b \right), \]</span>where <span class="math inline">\(b\)</span> is the observed number of test statistics larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span> (using the observed sample of permutations that was drawn).</p>
 <p>Let <span class="math inline">\(B_t\)</span> be a random variable that counts the total number of possible distinct test statistic values exceeding <span class="math inline">\(t_\mathrm{obs}\)</span> and recall that <span class="math inline">\(m_t\)</span> is the total number of possible distinct permutations. We denote by <span class="math display">\[ p_t = \frac{B_t
 + 1}{m_t + 1}, \]</span>the permutation p-value when the exhaustive list of all permutations is used.</p>
@@ -194,9 +193,9 @@
 p_u = \frac{b+1}{m+1},
 \]</span> which happens to be the exact p-value in the case of sampling permutations without replacement.</p>
 </div>
-<div id="comparison-by-empirical-evidence" class="section level2">
-<h2 class="hasAnchor">
-<a href="#comparison-by-empirical-evidence" class="anchor"></a>Comparison by empirical evidence</h2>
+<div class="section level2">
+<h2 id="comparison-by-empirical-evidence">Comparison by empirical evidence<a class="anchor" aria-label="anchor" href="#comparison-by-empirical-evidence"></a>
+</h2>
 <p>In <strong>flipr</strong>, you perform a permutation test using the estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the p-value <span class="math inline">\(p_\infty\)</span> by setting <code>type == "estimate"</code>. This provides a non-exact test but an unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting <code>type == "exact"</code>. This provides an exact test. You also have the possibility of using the upper bound p-value <span class="math inline">\(p_u\)</span> using <code>type == "upper_bound"</code>.</p>
 <p>The following R code runs simulations to empirically estimate the probability of wrongly rejecting the null hypothesis. The generative model for both samples is the standard normal distribution. Sample sizes are set to <span class="math inline">\(n_1 = n_2 = 5\)</span>. We draw <span class="math inline">\(20\)</span> permutations for each test. We used a significance level of <span class="math inline">\(5\%\)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -204,11 +203,11 @@ p_u = \frac{b+1}{m+1},
 <span class="va">nreps</span> <span class="op">&lt;-</span> <span class="fl">1e4</span>
 <span class="va">n1</span> <span class="op">&lt;-</span> <span class="fl">5</span>
 <span class="va">n2</span> <span class="op">&lt;-</span> <span class="fl">5</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
-<span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span>, <span class="va">nreps</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n2</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
+<span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span>, <span class="va">nreps</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n2</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
       s <span class="op">=</span> <span class="va">.x</span>
     <span class="op">)</span>
   <span class="op">}</span><span class="op">)</span>
@@ -216,18 +215,18 @@ p_u = \frac{b+1}{m+1},
 <span class="co"># Cluster setup</span>
 <span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">makeCluster</span><span class="op">(</span><span class="fu">detectCores</span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">clusterEvalQ</span><span class="op">(</span><span class="va">cl</span>, <span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/">flipr</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/" class="external-link">flipr</a></span><span class="op">)</span>
   <span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu">map</span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">)</span>
+    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">)</span>
   <span class="op">}</span>
-  <span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-  <span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
+  <span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
   <span class="va">nperms</span> <span class="op">&lt;-</span> <span class="fl">20</span>
   <span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
 <span class="op">}</span><span class="op">)</span>
 
-<span class="va">alpha_estimates</span> <span class="op">&lt;-</span> <span class="fu">pbapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbapply/man/pbapply.html">pblapply</a></span><span class="op">(</span><span class="va">sim</span>, <span class="kw">function</span><span class="op">(</span><span class="va">.l</span><span class="op">)</span> <span class="op">{</span>
+<span class="va">alpha_estimates</span> <span class="op">&lt;-</span> <span class="fu">pbapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbapply/man/pbapply.html" class="external-link">pblapply</a></span><span class="op">(</span><span class="va">sim</span>, <span class="kw">function</span><span class="op">(</span><span class="va">.l</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
       null_spec <span class="op">=</span> <span class="va">null_spec</span>,
       stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
@@ -243,31 +242,31 @@ p_u = \frac{b+1}{m+1},
     <span class="va">pv_upper_bound</span> <span class="op">&lt;-</span> <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
     <span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span>
     <span class="va">pv_estimate</span> <span class="op">&lt;-</span> <span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
       exact       <span class="op">=</span> <span class="va">pv_exact</span>       <span class="op">&lt;=</span> <span class="va">alpha</span>,
       upper_bound <span class="op">=</span> <span class="va">pv_upper_bound</span> <span class="op">&lt;=</span> <span class="va">alpha</span>,
       estimate    <span class="op">=</span> <span class="va">pv_estimate</span>    <span class="op">&lt;=</span> <span class="va">alpha</span>
     <span class="op">)</span>
-  <span class="op">}</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">simplify_all</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">map</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
+  <span class="op">}</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html" class="external-link">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_vector.html" class="external-link">simplify_all</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
 <span class="fu">stopCluster</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">alpha_estimates</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 3</span>
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">alpha_estimates</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="co">#&gt;    exact upper_bound estimate</span>
-<span class="co">#&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0507      0.0507   0.0978</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.050<span style="text-decoration: underline;">7</span>      0.050<span style="text-decoration: underline;">7</span>   0.097<span style="text-decoration: underline;">8</span></span></code></pre></div>
 <p>This simulation provides numerical evidence that using the permutation p-value <span class="math inline">\(p_e\)</span> yields an exact test. This is by design since <span class="math inline">\(p_e\)</span> is a genuine probability hence it is uniformly distributed on <span class="math inline">\((0,1)\)</span> under the null hypothesis. We also observe that the upper bound <span class="math inline">\(p_u\)</span> is very close to the exact p-value <span class="math inline">\(p_e\)</span>.</p>
 <p>Of course, one might criticize this simulation in which the number of permutations <span class="math inline">\(m\)</span> has been chosen small on purpose to prove our point. In effect, when <span class="math inline">\(m\)</span> is larger, all formulae to compute the p-value yield an asymptotically exact test. Quoting <span class="citation">Phipson and Smyth (2010)</span>, <em>while this is true, the urgent need to avoid small <span class="math inline">\(m\)</span> disappears when the exact p-value <span class="math inline">\(p_e\)</span> is used in place of <span class="math inline">\(\widehat{p_\infty}\)</span>, because <span class="math inline">\(p_e\)</span> ensures a valid statistical test regardless of the sample sizes or the number of permutations. When exact p-values are used, the only penalty for choosing <span class="math inline">\(m\)</span> small is a loss of statistical power to reject the null hypothesis. This is as it should be: more permutations should generally provide greater power</em>.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references">
-<div id="ref-phipson2010">
-<p>Phipson, Belinda, and Gordon K Smyth. 2010. “Permutation P-Values Should Never Be Zero: Calculating Exact P-Values When Permutations Are Randomly Drawn.” <em>Statistical Applications in Genetics and Molecular Biology</em> 9 (1). <a href="https://doi.org/10.2202/1544-6115.1585">https://doi.org/10.2202/1544-6115.1585</a>.</p>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-phipson2010" class="csl-entry">
+Phipson, Belinda, and Gordon K Smyth. 2010. <span>“Permutation p-Values Should Never Be Zero: Calculating Exact p-Values When Permutations Are Randomly Drawn.”</span> <em>Statistical Applications in Genetics and Molecular Biology</em> 9 (1). <a href="https://doi.org/10.2202/1544-6115.1585" class="external-link">https://doi.org/10.2202/1544-6115.1585</a>.
 </div>
 </div>
 </div>
@@ -284,11 +283,13 @@ p_u = \frac{b+1}{m+1},
 
 
       <footer><div class="copyright">
-  <p>Developed by Alessia Pini, Aymeric Stamm, Simone Vantini.</p>
+  <p></p>
+<p>Developed by Alessia Pini, Aymeric Stamm, Simone Vantini.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -296,6 +297,8 @@ p_u = \frac{b+1}{m+1},
 
   
 
+
+  
 
   </body>
 </html>

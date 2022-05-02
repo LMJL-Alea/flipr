@@ -1,10 +1,10 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 2.14.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   alternative: alternative.html
   exactness: exactness.html
   flipr: flipr.html
   plausibility: plausibility.html
-last_built: 2021-09-16T14:44Z
+last_built: 2022-05-02T14:05Z
 

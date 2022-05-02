@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,18 +45,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">flipr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/flipr.html">Get started</a>
 </li>
@@ -62,7 +58,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -85,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/astamm/flipr/">
+  <a href="https://github.com/astamm/flipr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,44 +98,42 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="overview-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#overview-" class="anchor"></a>Overview <a href="https://astamm.github.io/flipr/"><img src="reference/figures/logo.png" align="right" height="139"></a>
+<div class="section level1">
+<div class="page-header"><h1 id="overview-">Overview <a href="https://astamm.github.io/flipr/" class="external-link"><img src="reference/figures/logo.png" align="right" height="139"></a>
+<a class="anchor" aria-label="anchor" href="#overview-"></a>
 </h1></div>
 <!-- badges: start -->
-
-<p>The goal of the <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for inference on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> takes care of the permutation magic and provides you with either point estimates or confidence regions or <em>p</em>-value of hypothesis tests. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called <em>non-parametric combination</em> approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. The <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> package provides a flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the latest stable version of <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> on CRAN with:</p>
+<p>The goal of the <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for inference on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> takes care of the permutation magic and provides you with either point estimates or confidence regions or <em>p</em>-value of hypothesis tests. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called <em>non-parametric combination</em> approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. The <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package provides a flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the latest stable version of <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> on CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"flipr"</span><span class="op">)</span></code></pre></div>
-<p>Or you can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"flipr"</span><span class="op">)</span></code></pre></div>
+<p>Or you can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"astamm/flipr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/">flipr</a></span><span class="op">)</span></code></pre></div>
-<p>We hereby use the very simple t-test for comparing the means of two univariate samples to show how easy it is to carry out a permutation test with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>.</p>
-<div id="data-generation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-generation" class="anchor"></a>Data generation</h3>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/" class="external-link">flipr</a></span><span class="op">)</span></code></pre></div>
+<p>We hereby use the very simple t-test for comparing the means of two univariate samples to show how easy it is to carry out a permutation test with <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a>.</p>
+<div class="section level3">
+<h3 id="data-generation">Data generation<a class="anchor" aria-label="anchor" href="#data-generation"></a>
+</h3>
 <p>Let us first generate two samples of size 15 governed by Gaussian distributions with equal variance but different means:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">15</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>Given the data we simulated, the parameter of interest here is the difference between the means of the distributions, say <em>δ</em> = <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub>.</p>
 </div>
-<div id="make-the-two-samples-exchangeable-under-h0" class="section level3">
-<h3 class="hasAnchor">
-<a href="#make-the-two-samples-exchangeable-under-h0" class="anchor"></a>Make the two samples exchangeable under <em>H</em><sub>0</sub>
+<div class="section level3">
+<h3 id="make-the-two-samples-exchangeable-under-h0">Make the two samples exchangeable under <em>H</em><sub>0</sub><a class="anchor" aria-label="anchor" href="#make-the-two-samples-exchangeable-under-h0"></a>
 </h3>
 <p>In the context of null hypothesis testing, we consider the null hypothesis <em>H</em><sub>0</sub> : <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub> = <em>δ</em>. We can use a permutation scheme to approach the <em>p</em>-value if the two samples are <em>exchangeable</em> under <em>H</em><sub>0</sub>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <em>H</em><sub>0</sub>. In this simple example, this can be achieved as follows. Let <em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em><sub><em>x</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>x</em></sub>,1) and <em>Y</em><sub>1</sub>, …, <em>Y</em><sub><em>n</em><sub><em>y</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>y</em></sub>,1). We can then transform the second sample as <em>Y</em><sub><em>i</em></sub> ← <em>Y</em><sub><em>i</em></sub> − <em>δ</em>.</p>
 <p>We can define a proper function to do this, termed the <em>null specification</em> function, which takes two input arguments:</p>
@@ -152,91 +146,91 @@
 <p>In our simple example, it boils down to:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="choose-suitable-test-statistics" class="section level3">
-<h3 class="hasAnchor">
-<a href="#choose-suitable-test-statistics" class="anchor"></a>Choose suitable test statistics</h3>
+<div class="section level3">
+<h3 id="choose-suitable-test-statistics">Choose suitable test statistics<a class="anchor" aria-label="anchor" href="#choose-suitable-test-statistics"></a>
+</h3>
 <p>Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference <em>δ</em>. Since the two samples share the same variance, we can use for example the <em>t</em>-statistic with a pooled estimate of the common variance.</p>
-<p>This statistic can be easily computed using <code>stats::t.test(x, y, var.equal = TRUE)$statistic</code>. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> should have at least two mandatory input arguments:</p>
+<p>This statistic can be easily computed using <code>stats::t.test(x, y, var.equal = TRUE)$statistic</code>. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> should have at least two mandatory input arguments:</p>
 <ul>
 <li>
 <code>data</code> which is either a concatenated list of size <em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub> regrouping the data points of both samples or a distance matrix of size (<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>) × (<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>) stored as an object of class <code>dist</code>.</li>
 <li>
 <code>indices1</code> which is an integer vector of size <em>n</em><sub><em>x</em></sub> storing the indices of the data points belonging to the first sample in the current permuted version of the data.</li>
 </ul>
-<p>Some test statistics are already implemented in <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> and ready to use. User-defined test statistics can be used as well, with the use of the helper function <code><a href="reference/use_stat.html">use_stat(nsamples = 2, stat_name = )</a></code>. This function creates and saves an <code>.R</code> file in the <code>R/</code> folder of the current working directory and populates it with the following template:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#' Test Statistic for the Two-Sample Problem</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#'</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#' This function computes the test statistic...</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#'</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#' @param data A list storing the concatenation of the two samples from which</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#'   the user wants to make inference. Alternatively, a distance matrix stored</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#'   in an object of class \code{\link[stats]{dist}} of pairwise distances</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#'   between data points.</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#' @param indices1 An integer vector that contains the indices of the data</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#'   points belong to the first sample in the current permuted version of the</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#'   data.</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#'</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#' @return A numeric value evaluating the desired test statistic.</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#' @export</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#'</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#' @examples</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#' # TO BE DONE BY THE DEVELOPER OF THE PACKAGE</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a>stat_{{{name}}} &lt;-<span class="st"> </span><span class="cf">function</span>(data, indices1) {</span>
-<span id="cb6-19"><a href="#cb6-19"></a>  n &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">inherits</span>(data, <span class="st">"dist"</span>))</span>
-<span id="cb6-20"><a href="#cb6-20"></a>    <span class="kw">attr</span>(data, <span class="st">"Size"</span>)</span>
-<span id="cb6-21"><a href="#cb6-21"></a>  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">inherits</span>(data, <span class="st">"list"</span>))</span>
-<span id="cb6-22"><a href="#cb6-22"></a>    <span class="kw">length</span>(data)</span>
-<span id="cb6-23"><a href="#cb6-23"></a>  <span class="cf">else</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a>    <span class="kw">stop</span>(<span class="st">"The `data` input should be of class either list or dist."</span>)</span>
-<span id="cb6-25"><a href="#cb6-25"></a></span>
-<span id="cb6-26"><a href="#cb6-26"></a>  indices2 &lt;-<span class="st"> </span><span class="kw">seq_len</span>(n)[<span class="op">-</span>indices1]</span>
-<span id="cb6-27"><a href="#cb6-27"></a></span>
-<span id="cb6-28"><a href="#cb6-28"></a>  x &lt;-<span class="st"> </span>data[indices1]</span>
-<span id="cb6-29"><a href="#cb6-29"></a>  y &lt;-<span class="st"> </span>data[indices2]</span>
-<span id="cb6-30"><a href="#cb6-30"></a></span>
-<span id="cb6-31"><a href="#cb6-31"></a>  <span class="co"># Here comes the code that computes the desired test</span></span>
-<span id="cb6-32"><a href="#cb6-32"></a>  <span class="co"># statistic from input samples stored in lists x and y</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a></span>
-<span id="cb6-34"><a href="#cb6-34"></a>}</span></code></pre></div>
-<p>For instance, a <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a>-compatible version of the <em>t</em>-statistic with pooled variance will look like:</p>
+<p>Some test statistics are already implemented in <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> and ready to use. User-defined test statistics can be used as well, with the use of the helper function <code>use_stat(nsamples = 2, stat_name = )</code>. This function creates and saves an <code>.R</code> file in the <code>R/</code> folder of the current working directory and populates it with the following template:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Test Statistic for the Two-Sample Problem</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' This function computes the test statistic...</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data A list storing the concatenation of the two samples from which</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'   the user wants to make inference. Alternatively, a distance matrix stored</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'   in an object of class \code{\link[stats]{dist}} of pairwise distances</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   between data points.</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param indices1 An integer vector that contains the indices of the data</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'   points belong to the first sample in the current permuted version of the</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'   data.</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A numeric value evaluating the desired test statistic.</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#' # TO BE DONE BY THE DEVELOPER OF THE PACKAGE</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>stat_{{{name}}} <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices1) {</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"dist"</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">attr</span>(data, <span class="st">"Size"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"list"</span>))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(data)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"The `data` input should be of class either list or dist."</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  indices2 <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(n)[<span class="sc">-</span>indices1]</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> data[indices1]</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> data[indices2]</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here comes the code that computes the desired test</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># statistic from input samples stored in lists x and y</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>For instance, a <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a>-compatible version of the <em>t</em>-statistic with pooled variance will look like:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_t_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">indices1</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">n</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">inherits</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"dist"</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"Size"</span><span class="op">)</span>
-  <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">inherits</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"list"</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"dist"</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"Size"</span><span class="op">)</span>
+  <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"list"</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
   <span class="kw">else</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"The `data` input should be of class either list or dist."</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"The `data` input should be of class either list or dist."</span><span class="op">)</span>
 
-  <span class="va">indices2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="va">indices1</span><span class="op">]</span>
+  <span class="va">indices2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="va">indices1</span><span class="op">]</span>
 
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">indices1</span><span class="op">]</span>
   <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">indices2</span><span class="op">]</span>
   
   <span class="co"># Here comes the code that computes the desired test</span>
   <span class="co"># statistic from input samples stored in lists x and y</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
   
-  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span>
+  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span>
 <span class="op">}</span></code></pre></div>
 <p>Here, we are only going to use the <em>t</em>-statistic for this example, but we might be willing to use more than one statistic for a parameter or we might have several parameters under investigation, each one of them requiring a different test statistic. We therefore group all the test statistics that we need into a single list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">my_t_stat</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">my_t_stat</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="assign-test-statistics-to-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#assign-test-statistics-to-parameters" class="anchor"></a>Assign test statistics to parameters</h3>
-<p>Finally we need to define a named list that tells <a href="https://astamm.github.io/flipr/"><strong>flipr</strong></a> which test statistics among the ones declared in the <code>stat_functions</code> list should be used for each parameter under investigation. This is used to determine bounds on each parameter for the plausibility function. This list, often termed <code>stat_assignments</code>, should therefore have as many elements as there are parameters under investigation. Each element should be named after a parameter under investigation and should list the indices corresponding to the test statistics that should be used for that parameter in <code>stat_functions</code>. In our example, it boils down to:</p>
+<div class="section level3">
+<h3 id="assign-test-statistics-to-parameters">Assign test statistics to parameters<a class="anchor" aria-label="anchor" href="#assign-test-statistics-to-parameters"></a>
+</h3>
+<p>Finally we need to define a named list that tells <a href="https://astamm.github.io/flipr/" class="external-link"><strong>flipr</strong></a> which test statistics among the ones declared in the <code>stat_functions</code> list should be used for each parameter under investigation. This is used to determine bounds on each parameter for the plausibility function. This list, often termed <code>stat_assignments</code>, should therefore have as many elements as there are parameters under investigation. Each element should be named after a parameter under investigation and should list the indices corresponding to the test statistics that should be used for that parameter in <code>stat_functions</code>. In our example, it boils down to:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="use-the-plausibility-function" class="section level3">
-<h3 class="hasAnchor">
-<a href="#use-the-plausibility-function" class="anchor"></a>Use the plausibility function</h3>
+<div class="section level3">
+<h3 id="use-the-plausibility-function">Use the plausibility function<a class="anchor" aria-label="anchor" href="#use-the-plausibility-function"></a>
+</h3>
 <p>Now we can instantiate a plausibility function as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
@@ -254,18 +248,14 @@
 <span class="co">#&gt; [1] 0.1078921</span></code></pre></div>
 <p>We can compare the resulting <em>p</em>-value with the one obtained using the more classic parametric test:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span>
 <span class="co">#&gt; [1] 0.1030946</span></code></pre></div>
 <p>The permutation <em>p</em>-value does not quite match the parametric one. This is because of two reasons:</p>
-<ol>
-<li>The resolution of a permutation <em>p</em>-value is of the order of 1/(<em>B</em>+1), where <em>B</em> is the number of sampled permutations. By default, the plausibility function is instantiated with <em>B</em> = 1000:</li>
-</ol>
+<ol style="list-style-type: decimal"><li>The resolution of a permutation <em>p</em>-value is of the order of 1/(<em>B</em>+1), where <em>B</em> is the number of sampled permutations. By default, the plausibility function is instantiated with <em>B</em> = 1000:</li></ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span>
 <span class="co">#&gt; [1] 1000</span></code></pre></div>
-<ol>
-<li>We randomly sample <em>B</em> permutations out of the <span class="math inline">$\\binom{n_x+n_y}{n_x}$</span> possible permutations and therefore introduce extra variability in the <em>p</em>-value.</li>
-</ol>
+<ol start="2" style="list-style-type: decimal"><li>We randomly sample <em>B</em> permutations out of the <span class="math inline">$\\binom{n_x+n_y}{n_x}$</span> possible permutations and therefore introduce extra variability in the <em>p</em>-value.</li></ol>
 <p>If we were to ask for more permutations, say <em>B</em> = 1, 000, 000, we would be much closer to the parametric <em>p</em>-value:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">1000000</span><span class="op">)</span>
@@ -278,53 +268,63 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=flipr">https://​cloud.r-project.org/​package=flipr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/astamm/flipr/">https://​github.com/​astamm/​flipr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/astamm/flipr/issues/">https://​github.com/​astamm/​flipr/​issues/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=flipr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/astamm/flipr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/astamm/flipr/issues/" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Alessia Pini <br><small class="roles"> Author </small>  </li>
-<li>Aymeric Stamm <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8725-3654" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Simone Vantini <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing flipr</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/astamm/flipr/actions"><img src="https://github.com/astamm/flipr/workflows/R-CMD-check/badge.svg" alt="check-standard"></a></li>
-<li><a href="https://github.com/astamm/flipr/actions"><img src="https://github.com/astamm/flipr/workflows/test-coverage/badge.svg" alt="test-coverage"></a></li>
-<li><a href="https://codecov.io/gh/astamm/flipr?branch=master"><img src="https://codecov.io/gh/astamm/flipr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/astamm/flipr/actions"><img src="https://github.com/astamm/flipr/workflows/pkgdown/badge.svg" alt="pkgdown"></a></li>
-<li><a href="https://CRAN.R-project.org/package=flipr"><img src="https://www.r-pkg.org/badges/version/flipr" alt="CRAN status"></a></li>
+<li>Alessia Pini <br><small class="roles"> Author </small>  </li>
+<li>Aymeric Stamm <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8725-3654" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Simone Vantini <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/astamm/flipr/actions" class="external-link"><img src="https://github.com/astamm/flipr/workflows/R-CMD-check/badge.svg" alt="check-standard"></a></li>
+<li><a href="https://github.com/astamm/flipr/actions" class="external-link"><img src="https://github.com/astamm/flipr/workflows/test-coverage/badge.svg" alt="test-coverage"></a></li>
+<li><a href="https://codecov.io/gh/astamm/flipr?branch=master" class="external-link"><img src="https://codecov.io/gh/astamm/flipr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/astamm/flipr/actions" class="external-link"><img src="https://github.com/astamm/flipr/workflows/pkgdown/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://CRAN.R-project.org/package=flipr" class="external-link"><img src="https://www.r-pkg.org/badges/version/flipr" alt="CRAN status"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alessia Pini, Aymeric Stamm, Simone Vantini.</p>
+  <p></p>
+<p>Developed by Alessia Pini, Aymeric Stamm, Simone Vantini.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -332,6 +332,8 @@
 
   
 
+
+  
 
   </body>
 </html>
