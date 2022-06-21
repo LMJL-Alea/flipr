@@ -297,24 +297,24 @@ a regular centered grid of the parameter space. Defaults to \code{NULL}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PlausibilityFunction$new()}}
-\item \href{#method-set_nperms}{\code{PlausibilityFunction$set_nperms()}}
-\item \href{#method-set_nperms_max}{\code{PlausibilityFunction$set_nperms_max()}}
-\item \href{#method-set_alternative}{\code{PlausibilityFunction$set_alternative()}}
-\item \href{#method-set_aggregator}{\code{PlausibilityFunction$set_aggregator()}}
-\item \href{#method-set_pvalue_formula}{\code{PlausibilityFunction$set_pvalue_formula()}}
-\item \href{#method-get_value}{\code{PlausibilityFunction$get_value()}}
-\item \href{#method-set_max_conf_level}{\code{PlausibilityFunction$set_max_conf_level()}}
-\item \href{#method-set_point_estimate}{\code{PlausibilityFunction$set_point_estimate()}}
-\item \href{#method-set_parameter_bounds}{\code{PlausibilityFunction$set_parameter_bounds()}}
-\item \href{#method-set_grid}{\code{PlausibilityFunction$set_grid()}}
-\item \href{#method-evaluate_grid}{\code{PlausibilityFunction$evaluate_grid()}}
-\item \href{#method-clone}{\code{PlausibilityFunction$clone()}}
+\item \href{#method-PlausibilityFunction-new}{\code{PlausibilityFunction$new()}}
+\item \href{#method-PlausibilityFunction-set_nperms}{\code{PlausibilityFunction$set_nperms()}}
+\item \href{#method-PlausibilityFunction-set_nperms_max}{\code{PlausibilityFunction$set_nperms_max()}}
+\item \href{#method-PlausibilityFunction-set_alternative}{\code{PlausibilityFunction$set_alternative()}}
+\item \href{#method-PlausibilityFunction-set_aggregator}{\code{PlausibilityFunction$set_aggregator()}}
+\item \href{#method-PlausibilityFunction-set_pvalue_formula}{\code{PlausibilityFunction$set_pvalue_formula()}}
+\item \href{#method-PlausibilityFunction-get_value}{\code{PlausibilityFunction$get_value()}}
+\item \href{#method-PlausibilityFunction-set_max_conf_level}{\code{PlausibilityFunction$set_max_conf_level()}}
+\item \href{#method-PlausibilityFunction-set_point_estimate}{\code{PlausibilityFunction$set_point_estimate()}}
+\item \href{#method-PlausibilityFunction-set_parameter_bounds}{\code{PlausibilityFunction$set_parameter_bounds()}}
+\item \href{#method-PlausibilityFunction-set_grid}{\code{PlausibilityFunction$set_grid()}}
+\item \href{#method-PlausibilityFunction-evaluate_grid}{\code{PlausibilityFunction$evaluate_grid()}}
+\item \href{#method-PlausibilityFunction-clone}{\code{PlausibilityFunction$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new plausibility function object.
 \subsection{Usage}{
@@ -361,8 +361,8 @@ A new \code{PlausibilityFunction} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_nperms"></a>}}
-\if{latex}{\out{\hypertarget{method-set_nperms}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_nperms"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_nperms}{}}}
 \subsection{Method \code{set_nperms()}}{
 Change the value of the \code{nperms} field.
 \subsection{Usage}{
@@ -399,8 +399,8 @@ pf$nperms
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_nperms_max"></a>}}
-\if{latex}{\out{\hypertarget{method-set_nperms_max}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_nperms_max"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_nperms_max}{}}}
 \subsection{Method \code{set_nperms_max()}}{
 Change the value of the \code{nperms_max} field.
 \subsection{Usage}{
@@ -438,8 +438,8 @@ pf$nperms_max
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_alternative"></a>}}
-\if{latex}{\out{\hypertarget{method-set_alternative}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_alternative"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_alternative}{}}}
 \subsection{Method \code{set_alternative()}}{
 Change the value of the \code{alternative} field.
 \subsection{Usage}{
@@ -476,8 +476,8 @@ pf$alternative
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_aggregator"></a>}}
-\if{latex}{\out{\hypertarget{method-set_aggregator}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_aggregator"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_aggregator}{}}}
 \subsection{Method \code{set_aggregator()}}{
 Change the value of the \code{aggregator} field.
 \subsection{Usage}{
@@ -516,8 +516,8 @@ pf$aggregator
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_pvalue_formula"></a>}}
-\if{latex}{\out{\hypertarget{method-set_pvalue_formula}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_pvalue_formula"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_pvalue_formula}{}}}
 \subsection{Method \code{set_pvalue_formula()}}{
 Change the value of the \code{pvalue_formula} field.
 \subsection{Usage}{
@@ -557,8 +557,8 @@ pf$pvalue_formula
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_value"></a>}}
-\if{latex}{\out{\hypertarget{method-get_value}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-get_value"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-get_value}{}}}
 \subsection{Method \code{get_value()}}{
 Computes an indicator of the plausibility of specific values
 for the parameters of interest in the form of a p-value of an
@@ -614,8 +614,8 @@ pf$get_value(2)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_max_conf_level"></a>}}
-\if{latex}{\out{\hypertarget{method-set_max_conf_level}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_max_conf_level"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_max_conf_level}{}}}
 \subsection{Method \code{set_max_conf_level()}}{
 Change the value of the \code{max_conf_level} field.
 \subsection{Usage}{
@@ -655,8 +655,8 @@ pf$max_conf_level
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_point_estimate"></a>}}
-\if{latex}{\out{\hypertarget{method-set_point_estimate}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_point_estimate"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_point_estimate}{}}}
 \subsection{Method \code{set_point_estimate()}}{
 Change the value of the \code{point_estimate} field.
 \subsection{Usage}{
@@ -723,8 +723,8 @@ pf$point_estimate
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_parameter_bounds"></a>}}
-\if{latex}{\out{\hypertarget{method-set_parameter_bounds}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_parameter_bounds"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_parameter_bounds}{}}}
 \subsection{Method \code{set_parameter_bounds()}}{
 Change the value of the \code{parameters} field.
 
@@ -776,8 +776,8 @@ pf$parameters
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_grid"></a>}}
-\if{latex}{\out{\hypertarget{method-set_grid}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-set_grid"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-set_grid}{}}}
 \subsection{Method \code{set_grid()}}{
 Computes a tibble storing a regular centered grid of the
 parameter space.
@@ -829,8 +829,8 @@ pf$set_grid(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-evaluate_grid"></a>}}
-\if{latex}{\out{\hypertarget{method-evaluate_grid}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-evaluate_grid"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-evaluate_grid}{}}}
 \subsection{Method \code{evaluate_grid()}}{
 Updates the \code{grid} field with a \code{pvalue} column storing
 evaluations of the plausibility function on the regular centered grid
@@ -883,8 +883,8 @@ pf$evaluate_grid(grid = pf$grid)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PlausibilityFunction-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PlausibilityFunction-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
