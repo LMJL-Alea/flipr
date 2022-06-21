@@ -123,23 +123,34 @@ original <code>n1</code> observations from the first sample on top and the origi
 <code>n2</code> observations from the second sample below. Or a dissimilarity matrix
 stored as a <code><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></code> object for all inter-point statistics
 whose function name should end with <code>_ip()</code>.</p></dd>
+
+
 <dt>indices1</dt>
 <dd><p>An integer vector specifying the indices in <code>data</code> that are
 considered to belong to the first sample.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Extra parameters specific to some statistics.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>A scalar value specifying the power to which the dissimilarities
 should be elevated in the computation of the inter-point energy statistic.
 Default is <code>1L</code>.</p></dd>
+
+
 <dt>standardize</dt>
 <dd><p>A boolean specifying whether the distance between medoids
 in the <code>stat_dom_ip</code> function should be normalized by the
 pooled corresponding variances. Default is <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A real scalar giving the value of test statistic for the permutation
+    
+
+<p>A real scalar giving the value of test statistic for the permutation
 specified by the integer vector <code>indices</code>.</p>
     </div>
     <div id="traditional-test-statistics">
@@ -215,32 +226,32 @@ with applications to gene-set testing. The Annals of Statistics, 38(2),
 <span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">stat_welch</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -27.63667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -22.46921</span>
 <span class="r-in"><span class="fu">stat_t</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 27.63667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 22.46921</span>
 <span class="r-in"><span class="fu">stat_f</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.236661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.062369</span>
 <span class="r-in"><span class="fu">stat_mean</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -10.71768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -9.296444</span>
 <span class="r-in"><span class="fu">stat_hotelling</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 152.7571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 100.9731</span>
 <span class="r-in"><span class="fu">stat_bs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 114.7334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 86.26982</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">stat_t_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 762.7853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 503.8653</span>
 <span class="r-in"><span class="fu">stat_f_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.236661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.062369</span>
 <span class="r-in"><span class="fu">stat_bg_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 189.7861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 136.1254</span>
 <span class="r-in"><span class="fu">stat_energy_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.834983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8.354632</span>
 <span class="r-in"><span class="fu">stat_cq_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -19.47381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -16.49997</span>
 <span class="r-in"><span class="fu">stat_mod_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10.71768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.296444</span>
 <span class="r-in"><span class="fu">stat_dom_ip</span><span class="op">(</span><span class="va">D</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12.45591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10.17624</span>
 </code></pre></div>
     </div>
   </div>
@@ -255,7 +266,7 @@ with applications to gene-set testing. The Annals of Statistics, 38(2),
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

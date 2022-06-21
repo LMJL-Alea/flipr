@@ -98,6 +98,8 @@ symmetric.</p>
     <dl><dt>x</dt>
 <dd><p>A numeric vector or a numeric matrix or a list representing the
 sample from which the user wants to make inference.</p></dd>
+
+
 <dt>stats</dt>
 <dd><p>A list of functions produced by <code><a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">as_function</a></code>
 specifying the chosen test statistic(s). A number of test statistic
@@ -107,11 +109,17 @@ that (s)he deems relevant for the problem at hand. See the section
 <em>User-supplied statistic function</em> for more information on how these
 user-supplied functions should be structured for compatibility with the
 <strong>flipr</strong> framework. Default is <code>list(<a href="two-sample-stats.html">stat_t</a>)</code>.</p></dd>
+
+
 <dt>B</dt>
 <dd><p>The number of sampled permutations. Default is <code>1000L</code>.</p></dd>
+
+
 <dt>M</dt>
 <dd><p>The total number of possible permutations. Defaults to <code>NULL</code>, which
 means that it is automatically computed from the given sample size(s).</p></dd>
+
+
 <dt>alternative</dt>
 <dd><p>A single string or a character vector specifying whether
 the p-value is right-tailed, left-tailed or two-tailed. Choices are
@@ -120,25 +128,36 @@ a single string is provided, it is assumed that it should be applied to all
 test statistics provided by the user. Alternative, the length of
 <code>alternative</code> should match the length of the <code>stats</code> parameter and it is
 assumed that there is a one-to-one correspondence.</p></dd>
+
+
 <dt>combine_with</dt>
 <dd><p>A string specifying the combining function to be used to
 compute the single test statistic value from the set of p-value estimates
 obtained during the non-parametric combination testing procedure. For now,
 choices are either <code>"tippett"</code> or <code>"fisher"</code>. Default is <code>"tippett"</code>, which
 picks Tippett's function.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>A string specifying which formula should be used to compute the
 p-value. Choices are <code>exact</code> (default), <code>upper_bound</code> and <code>estimate</code>. See
 Phipson &amp; Smith (2010) for details.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>An integer specifying the seed of the random generator useful for
 result reproducibility or method comparisons. Default is <code>NULL</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Extra parameters specific to some statistics.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> with three components: the value of the
+    
+
+<p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> with three components: the value of the
 statistic for the original two samples, the p-value of the resulting
 permutation test and a numeric vector storing the values of the permuted
 statistics.</p>
@@ -168,7 +187,7 @@ framework.</p>
 <span class="r-in"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">one_sample_test</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">t1</span><span class="op">$</span><span class="va">pvalue</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1054058</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.247264</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Sample under some alternative distribution</span></span>
 <span class="r-in"><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">mu</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
@@ -189,7 +208,7 @@ framework.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

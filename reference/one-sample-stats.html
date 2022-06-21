@@ -82,16 +82,23 @@ into the permutation scheme for performing one-sample testing.</p>
     <dl><dt>data</dt>
 <dd><p>A list storing the sample from which the user wants to make
 inference.</p></dd>
+
+
 <dt>flips</dt>
 <dd><p>A numeric vectors of <code>-1</code>s and <code>1</code>s to be used to randomly flip
 some data points around the center of symmetric of the distribution of the
 sample.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Extra parameters specific to some statistics.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric value evaluating the desired test statistic.</p>
+    
+
+<p>A numeric value evaluating the desired test statistic.</p>
     </div>
 
     <div id="ref-examples">
@@ -100,7 +107,7 @@ sample.</p></dd>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">flips</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">stat_max</span><span class="op">(</span><span class="va">x</span>, <span class="va">flips</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.04864908</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2488956</span>
 </code></pre></div>
     </div>
   </div>
@@ -115,7 +122,7 @@ sample.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
