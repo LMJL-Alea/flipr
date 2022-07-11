@@ -78,18 +78,18 @@ governed by two different generative probability distributions.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">two_sample_test</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>,
-  B <span class="op">=</span> <span class="fl">1000L</span>,
-  M <span class="op">=</span> <span class="cn">NULL</span>,
-  alternative <span class="op">=</span> <span class="st">"two_tail"</span>,
-  combine_with <span class="op">=</span> <span class="st">"tippett"</span>,
-  type <span class="op">=</span> <span class="st">"exact"</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">two_sample_test</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>,</span>
+<span>  B <span class="op">=</span> <span class="fl">1000L</span>,</span>
+<span>  M <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">"two_tail"</span>,</span>
+<span>  combine_with <span class="op">=</span> <span class="st">"tippett"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"exact"</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -190,27 +190,27 @@ framework.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10L</span></span>
-<span class="r-in"><span class="va">mx</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span class="r-in"><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Two different models for the two populations</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">mx</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="va">my</span> <span class="op">&lt;-</span> <span class="va">mx</span> <span class="op">+</span> <span class="va">delta</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">my</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">two_sample_test</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">t1</span><span class="op">$</span><span class="va">pvalue</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10L</span></span></span>
+<span class="r-in"><span><span class="va">mx</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Two different models for the two populations</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">mx</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">my</span> <span class="op">&lt;-</span> <span class="va">mx</span> <span class="op">+</span> <span class="va">delta</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">my</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">two_sample_test</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">t1</span><span class="op">$</span><span class="va">pvalue</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Same model for the two populations</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">mx</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span class="r-in"><span class="va">my</span> <span class="op">&lt;-</span> <span class="va">mx</span> <span class="op">+</span> <span class="va">delta</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">my</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">t2</span> <span class="op">&lt;-</span> <span class="fu">two_sample_test</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">t2</span><span class="op">$</span><span class="va">pvalue</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01797931</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Same model for the two populations</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">mx</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="va">my</span> <span class="op">&lt;-</span> <span class="va">mx</span> <span class="op">+</span> <span class="va">delta</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="va">my</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">t2</span> <span class="op">&lt;-</span> <span class="fu">two_sample_test</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">t2</span><span class="op">$</span><span class="va">pvalue</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2817156</span>
 </code></pre></div>
     </div>
   </div>
@@ -225,7 +225,7 @@ framework.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -160,13 +160,13 @@ a regular centered grid of the parameter space. Defaults to <code>NULL</code>.</
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new plausibility function object.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  <span class="va">null_spec</span>,
-  <span class="va">stat_functions</span>,
-  <span class="va">stat_assignments</span>,
-  <span class="va">...</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  <span class="va">null_spec</span>,</span>
+<span>  <span class="va">stat_functions</span>,</span>
+<span>  <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -216,7 +216,7 @@ this setting.</p></dd>
 <h3 id="method-set-nperms-">Method <code>set_nperms()</code><a class="anchor" aria-label="anchor" href="#method-set-nperms-"></a></h3>
 <p>Change the value of the <code>nperms</code> field.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -229,20 +229,20 @@ this setting.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">nperms</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -250,7 +250,7 @@ this setting.</p></dd>
 <h3 id="method-set-nperms-max-">Method <code>set_nperms_max()</code><a class="anchor" aria-label="anchor" href="#method-set-nperms-max-"></a></h3>
 <p>Change the value of the <code>nperms_max</code> field.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -264,20 +264,20 @@ permutations.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -285,7 +285,7 @@ permutations.</p></dd>
 <h3 id="method-set-alternative-">Method <code>set_alternative()</code><a class="anchor" aria-label="anchor" href="#method-set-alternative-"></a></h3>
 <p>Change the value of the <code>alternative</code> field.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -298,20 +298,20 @@ permutations.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">alternative</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="st">"right_tail"</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="st">"right_tail"</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -319,7 +319,7 @@ permutations.</p></dd>
 <h3 id="method-set-aggregator-">Method <code>set_aggregator()</code><a class="anchor" aria-label="anchor" href="#method-set-aggregator-"></a></h3>
 <p>Change the value of the <code>aggregator</code> field.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -334,20 +334,20 @@ is used (i.e. when multiple test statistics are used).</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="st">"fisher"</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="st">"fisher"</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -355,7 +355,7 @@ is used (i.e. when multiple test statistics are used).</p></dd>
 <h3 id="method-set-pvalue-formula-">Method <code>set_pvalue_formula()</code><a class="anchor" aria-label="anchor" href="#method-set-pvalue-formula-"></a></h3>
 <p>Change the value of the <code>pvalue_formula</code> field.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -369,22 +369,22 @@ used to compute the permutation p-value.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -394,12 +394,12 @@ used to compute the permutation p-value.</p></dd>
 for the parameters of interest in the form of a p-value of an
 hypothesis test against these values.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span>
-  <span class="va">parameters</span>,
-  keep_null_distribution <span class="op">=</span> <span class="cn">FALSE</span>,
-  keep_permutations <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span></span>
+<span>  <span class="va">parameters</span>,</span>
+<span>  keep_null_distribution <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  keep_permutations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -431,19 +431,19 @@ distribution should be returned as well. Defaults to <code>FALSE</code>.</p></dd
 </div>
 <div class="section">
 <h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -451,7 +451,7 @@ distribution should be returned as well. Defaults to <code>FALSE</code>.</p></dd
 <h3 id="method-set-max-conf-level-">Method <code>set_max_conf_level()</code><a class="anchor" aria-label="anchor" href="#method-set-max-conf-level-"></a></h3>
 <p>Change the value of the <code>max_conf_level</code> field.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -465,22 +465,22 @@ achieve for the confidence regions.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="fl">0.999</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="fl">0.999</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -488,14 +488,14 @@ achieve for the confidence regions.</p></dd>
 <h3 id="method-set-point-estimate-">Method <code>set_point_estimate()</code><a class="anchor" aria-label="anchor" href="#method-set-point-estimate-"></a></h3>
 <p>Change the value of the <code>point_estimate</code> field.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>
-  point_estimate <span class="op">=</span> <span class="cn">NULL</span>,
-  lower_bound <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>,
-  upper_bound <span class="op">=</span> <span class="fl">10</span>,
-  ncores <span class="op">=</span> <span class="fl">1L</span>,
-  estimate <span class="op">=</span> <span class="cn">FALSE</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span></span>
+<span>  point_estimate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lower_bound <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>,</span>
+<span>  upper_bound <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  estimate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -539,22 +539,22 @@ it has already been set. Defaults to <code>FALSE</code>.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -563,7 +563,7 @@ it has already been set. Defaults to <code>FALSE</code>.</p></dd>
 <p>Change the value of the <code>parameters</code> field.</p>
 <p>Updates the range of the parameters under investigation.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span><span class="va">point_estimate</span>, <span class="va">conf_level</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span><span class="va">point_estimate</span>, <span class="va">conf_level</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -584,27 +584,27 @@ used for setting parameter bounds. It should be in (0,1).</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>point_estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
-  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,
-  conf_level <span class="op">=</span> <span class="fl">0.8</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>point_estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
+<span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
+<span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -613,7 +613,7 @@ used for setting parameter bounds. It should be in (0,1).</p></dd>
 <p>Computes a tibble storing a regular centered grid of the
 parameter space.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span><span class="va">parameters</span>, npoints <span class="op">=</span> <span class="fl">20L</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span><span class="va">parameters</span>, npoints <span class="op">=</span> <span class="fl">20L</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -633,29 +633,29 @@ each dimension. Defaults to <code>20L</code>.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
-  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,
-  conf_level <span class="op">=</span> <span class="fl">0.8</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span>
-  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,
-  npoints <span class="op">=</span> <span class="fl">2L</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
+<span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
+<span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span>
+<span>  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span>
+<span>  npoints <span class="op">=</span> <span class="fl">2L</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -665,7 +665,7 @@ each dimension. Defaults to <code>20L</code>.</p></dd>
 evaluations of the plausibility function on the regular centered grid
 of the parameter space.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span><span class="va">grid</span>, ncores <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span><span class="va">grid</span>, ncores <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -684,30 +684,30 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span>
-<span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  null_spec <span class="op">=</span> <span class="va">null_spec</span>,
-  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,
-  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,
-  <span class="va">x</span>, <span class="va">y</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span>
-  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,
-  conf_level <span class="op">=</span> <span class="fl">0.8</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span>
-  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,
-  npoints <span class="op">=</span> <span class="fl">2L</span>
-<span class="op">)</span>
-<span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
+<span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
+<span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
+<span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
+<span>  <span class="va">x</span>, <span class="va">y</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
+<span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
+<span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span>
+<span>  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span>
+<span>  npoints <span class="op">=</span> <span class="fl">2L</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -715,7 +715,7 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -733,296 +733,296 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_nperms`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_nperms`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1000</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_nperms_max`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_nperms_max`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms_max</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms_max</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_alternative`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_alternative`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "two_tail"</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="st">"right_tail"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_alternative</span><span class="op">(</span><span class="st">"right_tail"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">alternative</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "right_tail"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_aggregator`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_aggregator`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "tippett"</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="st">"fisher"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_aggregator</span><span class="op">(</span><span class="st">"fisher"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">aggregator</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fisher"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_pvalue_formula`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_pvalue_formula`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "exact"</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_pvalue_formula</span><span class="op">(</span><span class="st">"estimate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">pvalue_formula</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "estimate"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$get_value`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$get_value`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7058796</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_max_conf_level`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8235267</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_max_conf_level`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.99</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="fl">0.999</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_max_conf_level</span><span class="op">(</span><span class="fl">0.999</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">max_conf_level</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.999</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_point_estimate`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_point_estimate`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mean </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   NA </span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    mean </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.96225 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_parameter_bounds`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2.67984 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_parameter_bounds`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>point_estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span>point_estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mean (quantitative)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Range: [?, ?]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Point estimate: 2.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Point estimate: 1.64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
-<span class="r-in">  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
-<span class="r-in">  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span></span>
+<span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="va">parameters</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mean (quantitative)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Range: [1.67, 3.06]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Point estimate: 2.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Range: [1.26, 2.32]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Point estimate: 1.64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$set_grid`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$set_grid`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
-<span class="r-in">  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
-<span class="r-in">  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span></span>
+<span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span>
-<span class="r-in">  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span>
-<span class="r-in">  npoints <span class="op">=</span> <span class="fl">2L</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span></span>
+<span class="r-in"><span>  npoints <span class="op">=</span> <span class="fl">2L</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new grid size in field `$npoints`.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `PlausibilityFunction$evaluate_grid`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `PlausibilityFunction$evaluate_grid`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">PlausibilityFunction</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
-<span class="r-in">  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
-<span class="r-in">  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span></span>
+<span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span>
-<span class="r-in">  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span>
-<span class="r-in">  npoints <span class="op">=</span> <span class="fl">2L</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span></span>
+<span class="r-in"><span>  npoints <span class="op">=</span> <span class="fl">2L</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new grid size in field `$npoints`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -1037,7 +1037,7 @@ evaluations in parallel. Defaults to <code>1L</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

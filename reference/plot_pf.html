@@ -74,7 +74,7 @@ interest.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_pf</span><span class="op">(</span><span class="va">pf</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, ngrid <span class="op">=</span> <span class="fl">10</span>, ncores <span class="op">=</span> <span class="fl">1</span>, subtitle <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_pf</span><span class="op">(</span><span class="va">pf</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, ngrid <span class="op">=</span> <span class="fl">10</span>, ncores <span class="op">=</span> <span class="fl">1</span>, subtitle <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,34 +114,34 @@ parallelized computations. Defaults to <code>1L</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span>
-<span class="r-in">  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span>
-<span class="r-in">  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span>
-<span class="r-in">  <span class="va">x</span>, <span class="va">y</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">stat_t</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">stat_assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va"><a href="PlausibilityFunction.html">PlausibilityFunction</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  null_spec <span class="op">=</span> <span class="va">null_spec</span>,</span></span>
+<span class="r-in"><span>  stat_functions <span class="op">=</span> <span class="va">stat_functions</span>,</span></span>
+<span class="r-in"><span>  stat_assignments <span class="op">=</span> <span class="va">stat_assignments</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x</span>, <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The input point estimate vector is not named. The names provided via the `stat_assignments` list will be used instead.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span>
-<span class="r-in">  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span>
-<span class="r-in">  conf_level <span class="op">=</span> <span class="fl">0.8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_parameter_bounds</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  point_estimate <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">point_estimate</span>,</span></span>
+<span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new maximum confidence level in field `$max_conf_level`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Computing a confidence interval with confidence level 0.8 for parameter mean...</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span>
-<span class="r-in">  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span>
-<span class="r-in">  npoints <span class="op">=</span> <span class="fl">2L</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_grid</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  parameters <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">parameters</span>,</span></span>
+<span class="r-in"><span>  npoints <span class="op">=</span> <span class="fl">2L</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Setting new grid size in field `$npoints`.</span>
-<span class="r-in"><span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plot_pf</span><span class="op">(</span><span class="va">pf</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pf</span><span class="op">$</span><span class="fu">evaluate_grid</span><span class="op">(</span>grid <span class="op">=</span> <span class="va">pf</span><span class="op">$</span><span class="va">grid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_pf</span><span class="op">(</span><span class="va">pf</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_pf-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -157,7 +157,7 @@ parallelized computations. Defaults to <code>1L</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
