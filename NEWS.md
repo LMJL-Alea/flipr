@@ -1,4 +1,7 @@
-# flipr 0.3.1.9000
+# flipr 0.3.2
+
+- Remove `akima` from package dependencies.
+- Updated GHA workflows and `roxygen2` version.
 
 # flipr 0.3.1
 
