@@ -1,5 +1,10 @@
-## Resubmission
-This is a resubmission. In this version, I have:
+## Resubmission 2
+This is a resubmission. In this version, I have: 
+
+- Updated forgotten URLs that pointed to previous owner.
+
+## Resubmission 1
+This is a resubmission. In this version, I have: 
 
 - Updated all URLs to reflect change of ownership.
 

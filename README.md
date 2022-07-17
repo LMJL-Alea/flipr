@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Overview <a href='https://astamm.github.io/flipr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# Overview <a href='https://lmjl-alea.github.io/flipr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -14,13 +14,13 @@ coverage](https://codecov.io/gh/LMJL-Alea/flipr/branch/master/graph/badge.svg)](
 status](https://www.r-pkg.org/badges/version/flipr)](https://CRAN.R-project.org/package=flipr)
 <!-- badges: end -->
 
-The goal of the [**flipr**](https://astamm.github.io/flipr/) package is
-to provide a flexible framework for making inference via permutation.
+The goal of the [**flipr**](https://lmjl-alea.github.io/flipr/) package
+is to provide a flexible framework for making inference via permutation.
 The idea is to promote the permutation framework as an incredibly
 well-suited tool for inference on complex data. You supply your data, as
 complex as it might be, in the form of lists in which each entry stores
 one data point in a representation that suits you and
-[**flipr**](https://astamm.github.io/flipr/) takes care of the
+[**flipr**](https://lmjl-alea.github.io/flipr/) takes care of the
 permutation magic and provides you with either point estimates or
 confidence regions or
 ![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
@@ -30,16 +30,17 @@ also use the so-called *non-parametric combination* approach in this
 setting to combine several statistics to better target the alternative
 hypothesis you are testing against. Asymptotic consistency is also
 guaranteed under mild conditions on the statistic you use. The
-[**flipr**](https://astamm.github.io/flipr/) package provides a flexible
-permutation framework for making inference such as point estimation,
-confidence intervals or hypothesis testing, on any kind of data, be it
-univariate, multivariate, or more complex such as network-valued data,
-topological data, functional data or density-valued data.
+[**flipr**](https://lmjl-alea.github.io/flipr/) package provides a
+flexible permutation framework for making inference such as point
+estimation, confidence intervals or hypothesis testing, on any kind of
+data, be it univariate, multivariate, or more complex such as
+network-valued data, topological data, functional data or density-valued
+data.
 
 ## Installation
 
 You can install the latest stable version of
-[**flipr**](https://astamm.github.io/flipr/) on CRAN with:
+[**flipr**](https://lmjl-alea.github.io/flipr/) on CRAN with:
 
 ``` r
 install.packages("flipr")
@@ -61,7 +62,7 @@ library(flipr)
 
 We hereby use the very simple t-test for comparing the means of two
 univariate samples to show how easy it is to carry out a permutation
-test with [**flipr**](https://astamm.github.io/flipr/).
+test with [**flipr**](https://lmjl-alea.github.io/flipr/).
 
 ### Data generation
 
@@ -134,7 +135,7 @@ This statistic can be easily computed using
 `stats::t.test(x, y, var.equal = TRUE)$statistic`. However, we want to
 extend its evaluation to any permuted version of the data. Test
 statistic functions compatible with
-[**flipr**](https://astamm.github.io/flipr/) should have at least two
+[**flipr**](https://lmjl-alea.github.io/flipr/) should have at least two
 mandatory input arguments:
 
 -   `data` which is either a concatenated list of size
@@ -149,7 +150,7 @@ mandatory input arguments:
     in the current permuted version of the data.
 
 Some test statistics are already implemented in
-[**flipr**](https://astamm.github.io/flipr/) and ready to use.
+[**flipr**](https://lmjl-alea.github.io/flipr/) and ready to use.
 User-defined test statistics can be used as well, with the use of the
 helper function `use_stat(nsamples = 2, stat_name = )`. This function
 creates and saves an `.R` file in the `R/` folder of the current working
@@ -192,8 +193,9 @@ stat_{{{name}}} <- function(data, indices1) {
 }
 ```
 
-For instance, a [**flipr**](https://astamm.github.io/flipr/)-compatible
-version of the
+For instance, a
+[**flipr**](https://lmjl-alea.github.io/flipr/)-compatible version of
+the
 ![t](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;t "t")-statistic
 with pooled variance will look like:
 
@@ -234,10 +236,10 @@ stat_functions <- list(my_t_stat)
 ### Assign test statistics to parameters
 
 Finally we need to define a named list that tells
-[**flipr**](https://astamm.github.io/flipr/) which test statistics among
-the ones declared in the `stat_functions` list should be used for each
-parameter under investigation. This is used to determine bounds on each
-parameter for the plausibility function. This list, often termed
+[**flipr**](https://lmjl-alea.github.io/flipr/) which test statistics
+among the ones declared in the `stat_functions` list should be used for
+each parameter under investigation. This is used to determine bounds on
+each parameter for the plausibility function. This list, often termed
 `stat_assignments`, should therefore have as many elements as there are
 parameters under investigation. Each element should be named after a
 parameter under investigation and should list the indices corresponding
