@@ -76,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/astamm/flipr/" class="external-link">
+  <a href="https://github.com/LMJL-Alea/flipr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,7 +97,7 @@
       <h1 data-toc-skip>On the exactness of permutation tests</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/astamm/flipr/blob/HEAD/vignettes/exactness.Rmd" class="external-link"><code>vignettes/exactness.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/LMJL-Alea/flipr/blob/HEAD/vignettes/exactness.Rmd" class="external-link"><code>vignettes/exactness.Rmd</code></a></small>
       <div class="hidden name"><code>exactness.Rmd</code></div>
 
     </div>
@@ -216,7 +216,7 @@ p_u = \frac{b+1}{m+1},
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">makeCluster</span><span class="op">(</span><span class="fu">detectCores</span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">clusterEvalQ</span><span class="op">(</span><span class="va">cl</span>, <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://astamm.github.io/flipr/" class="external-link">flipr</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://LMJL-Alea.github.io/flipr/" class="external-link">flipr</a></span><span class="op">)</span></span>
 <span>  <span class="va">null_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">parameters</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">-</span> <span class="va">parameters</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
