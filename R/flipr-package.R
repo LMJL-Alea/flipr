@@ -10,7 +10,9 @@
 #' @name flipr
 #' @useDynLib flipr, .registration = TRUE
 #' @import ggplot2
-#' @import rlang
+#' @importFrom pbapply pblapply pbsapply
+#' @importFrom R6 R6Class
 #' @importFrom Rcpp sourceCpp
+#' @import rlang
 #' @importFrom tibble tibble
 NULL

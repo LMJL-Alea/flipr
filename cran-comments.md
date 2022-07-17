@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version, I have:
+
+- Updated all URLs to reflect change of ownership.
+
 ## Test environments
 * local macOS R installation, R 4.1.2
 * continuous integration via GH actions:

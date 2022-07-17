@@ -1,7 +1,8 @@
 # flipr 0.3.2
 
-- Remove `akima` from package dependencies.
+- Removed `akima` from package dependencies.
 - Updated GHA workflows and `roxygen2` version.
+- Updated all URLs to reflect change of ownership.
 
 # flipr 0.3.1
 

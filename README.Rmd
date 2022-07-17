@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 # Overview <a href='https://astamm.github.io/flipr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![check-standard](https://github.com/astamm/flipr/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/flipr/actions)
-[![test-coverage](https://github.com/astamm/flipr/workflows/test-coverage/badge.svg)](https://github.com/astamm/flipr/actions)
-[![Codecov test coverage](https://codecov.io/gh/astamm/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/flipr?branch=master)
-[![pkgdown](https://github.com/astamm/flipr/workflows/pkgdown/badge.svg)](https://github.com/astamm/flipr/actions)
+[![check-standard](https://github.com/LMJL-Alea/flipr/workflows/R-CMD-check/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
+[![test-coverage](https://github.com/LMJL-Alea/flipr/workflows/test-coverage/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
+[![Codecov test coverage](https://codecov.io/gh/LMJL-Alea/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/LMJL-Alea/flipr?branch=master)
+[![pkgdown](https://github.com/LMJL-Alea/flipr/workflows/pkgdown/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/flipr)](https://CRAN.R-project.org/package=flipr)
 <!-- badges: end -->
 
@@ -54,7 +54,7 @@ Or you can install the development version from [GitHub](https://github.com/) wi
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("astamm/flipr")
+remotes::install_github("LMJL-Alea/flipr")
 ```
 ## Example
 

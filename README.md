@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![check-standard](https://github.com/astamm/flipr/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/flipr/actions)
-[![test-coverage](https://github.com/astamm/flipr/workflows/test-coverage/badge.svg)](https://github.com/astamm/flipr/actions)
+[![check-standard](https://github.com/LMJL-Alea/flipr/workflows/R-CMD-check/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
+[![test-coverage](https://github.com/LMJL-Alea/flipr/workflows/test-coverage/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/astamm/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/flipr?branch=master)
-[![pkgdown](https://github.com/astamm/flipr/workflows/pkgdown/badge.svg)](https://github.com/astamm/flipr/actions)
+coverage](https://codecov.io/gh/LMJL-Alea/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/LMJL-Alea/flipr?branch=master)
+[![pkgdown](https://github.com/LMJL-Alea/flipr/workflows/pkgdown/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/flipr)](https://CRAN.R-project.org/package=flipr)
 <!-- badges: end -->
@@ -22,13 +22,14 @@ complex as it might be, in the form of lists in which each entry stores
 one data point in a representation that suits you and
 [**flipr**](https://astamm.github.io/flipr/) takes care of the
 permutation magic and provides you with either point estimates or
-confidence regions or *p*-value of hypothesis tests. Permutation tests
-are especially appealing because they are exact no matter how small or
-big your sample sizes are. You can also use the so-called
-*non-parametric combination* approach in this setting to combine several
-statistics to better target the alternative hypothesis you are testing
-against. Asymptotic consistency is also guaranteed under mild conditions
-on the statistic you use. The
+confidence regions or
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+of hypothesis tests. Permutation tests are especially appealing because
+they are exact no matter how small or big your sample sizes are. You can
+also use the so-called *non-parametric combination* approach in this
+setting to combine several statistics to better target the alternative
+hypothesis you are testing against. Asymptotic consistency is also
+guaranteed under mild conditions on the statistic you use. The
 [**flipr**](https://astamm.github.io/flipr/) package provides a flexible
 permutation framework for making inference such as point estimation,
 confidence intervals or hypothesis testing, on any kind of data, be it
@@ -49,7 +50,7 @@ Or you can install the development version from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("astamm/flipr")
+remotes::install_github("LMJL-Alea/flipr")
 ```
 
 ## Example
@@ -64,8 +65,10 @@ test with [**flipr**](https://astamm.github.io/flipr/).
 
 ### Data generation
 
-Let us first generate two samples of size 15 governed by Gaussian
-distributions with equal variance but different means:
+Let us first generate two samples of size
+![15](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;15 "15")
+governed by Gaussian distributions with equal variance but different
+means:
 
 ``` r
 set.seed(123)
@@ -76,31 +79,37 @@ y <- rnorm(n = n, mean = 1, sd = 1)
 
 Given the data we simulated, the parameter of interest here is the
 difference between the means of the distributions, say
-*δ* = *μ*<sub>*y*</sub> − *μ*<sub>*x*</sub>.
+![\delta = \mu_y - \mu_x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Cdelta%20%3D%20%5Cmu_y%20-%20%5Cmu_x "\delta = \mu_y - \mu_x").
 
-### Make the two samples exchangeable under *H*<sub>0</sub>
+### Make the two samples exchangeable under ![H_0](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;H_0 "H_0")
 
 In the context of null hypothesis testing, we consider the null
 hypothesis
-*H*<sub>0</sub> : *μ*<sub>*y*</sub> − *μ*<sub>*x*</sub> = *δ*. We can
-use a permutation scheme to approach the *p*-value if the two samples
-are *exchangeable* under *H*<sub>0</sub>. This means that we need to
-transform for example the second sample to *make* it exchangeable with
-the first sample under *H*<sub>0</sub>. In this simple example, this can
-be achieved as follows. Let
-*X*<sub>1</sub>, …, *X*<sub>*n*<sub>*x*</sub></sub> ∼ 𝒩(*μ*<sub>*x*</sub>,1)
+![H_0: \mu_y - \mu_x = \delta](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;H_0%3A%20%5Cmu_y%20-%20%5Cmu_x%20%3D%20%5Cdelta "H_0: \mu_y - \mu_x = \delta").
+We can use a permutation scheme to approach the
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+if the two samples are *exchangeable* under
+![H_0](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;H_0 "H_0").
+This means that we need to transform for example the second sample to
+*make* it exchangeable with the first sample under
+![H_0](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;H_0 "H_0").
+In this simple example, this can be achieved as follows. Let
+![X_1, \dots, X\_{n_x} \sim \mathcal{N}(\mu_x, 1)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;X_1%2C%20%5Cdots%2C%20X_%7Bn_x%7D%20%5Csim%20%5Cmathcal%7BN%7D%28%5Cmu_x%2C%201%29 "X_1, \dots, X_{n_x} \sim \mathcal{N}(\mu_x, 1)")
 and
-*Y*<sub>1</sub>, …, *Y*<sub>*n*<sub>*y*</sub></sub> ∼ 𝒩(*μ*<sub>*y*</sub>,1).
+![Y_1, \dots, Y\_{n_y} \sim \mathcal{N}(\mu_y, 1)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;Y_1%2C%20%5Cdots%2C%20Y_%7Bn_y%7D%20%5Csim%20%5Cmathcal%7BN%7D%28%5Cmu_y%2C%201%29 "Y_1, \dots, Y_{n_y} \sim \mathcal{N}(\mu_y, 1)").
 We can then transform the second sample as
-*Y*<sub>*i*</sub> ← *Y*<sub>*i*</sub> − *δ*.
+![Y_i \longleftarrow Y_i - \delta](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;Y_i%20%5Clongleftarrow%20Y_i%20-%20%5Cdelta "Y_i \longleftarrow Y_i - \delta").
 
 We can define a proper function to do this, termed the *null
 specification* function, which takes two input arguments:
 
 -   `y` which is a list storing the data points in the second sample;
 -   `parameters` which is a numeric vector of values for the parameters
-    under investigation (here only *δ* and thus `parameters` is of
-    length 1 with `parameters[1] = delta`).
+    under investigation (here only
+    ![\delta](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Cdelta "\delta")
+    and thus `parameters` is of length
+    ![1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1 "1")
+    with `parameters[1] = delta`).
 
 In our simple example, it boils down to:
 
@@ -114,9 +123,12 @@ null_spec <- function(y, parameters) {
 
 Next, we need to decide which test statistic(s) we are going to use for
 performing the test. Here, we are only interested in one parameter,
-namely the mean difference *δ*. Since the two samples share the same
-variance, we can use for example the *t*-statistic with a pooled
-estimate of the common variance.
+namely the mean difference
+![\delta](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Cdelta "\delta").
+Since the two samples share the same variance, we can use for example
+the
+![t](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;t "t")-statistic
+with a pooled estimate of the common variance.
 
 This statistic can be easily computed using
 `stats::t.test(x, y, var.equal = TRUE)$statistic`. However, we want to
@@ -126,11 +138,13 @@ statistic functions compatible with
 mandatory input arguments:
 
 -   `data` which is either a concatenated list of size
-    *n*<sub>*x*</sub> + *n*<sub>*y*</sub> regrouping the data points of
-    both samples or a distance matrix of size
-    (*n*<sub>*x*</sub>+*n*<sub>*y*</sub>) × (*n*<sub>*x*</sub>+*n*<sub>*y*</sub>)
+    ![n_x + n_y](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;n_x%20%2B%20n_y "n_x + n_y")
+    regrouping the data points of both samples or a distance matrix of
+    size
+    ![(n_x + n_y) \times (n_x + n_y)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%28n_x%20%2B%20n_y%29%20%5Ctimes%20%28n_x%20%2B%20n_y%29 "(n_x + n_y) \times (n_x + n_y)")
     stored as an object of class `dist`.
--   `indices1` which is an integer vector of size *n*<sub>*x*</sub>
+-   `indices1` which is an integer vector of size
+    ![n_x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;n_x "n_x")
     storing the indices of the data points belonging to the first sample
     in the current permuted version of the data.
 
@@ -179,7 +193,9 @@ stat_{{{name}}} <- function(data, indices1) {
 ```
 
 For instance, a [**flipr**](https://astamm.github.io/flipr/)-compatible
-version of the *t*-statistic with pooled variance will look like:
+version of the
+![t](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;t "t")-statistic
+with pooled variance will look like:
 
 ``` r
 my_t_stat <- function(data, indices1) {
@@ -204,11 +220,12 @@ my_t_stat <- function(data, indices1) {
 }
 ```
 
-Here, we are only going to use the *t*-statistic for this example, but
-we might be willing to use more than one statistic for a parameter or we
-might have several parameters under investigation, each one of them
-requiring a different test statistic. We therefore group all the test
-statistics that we need into a single list:
+Here, we are only going to use the
+![t](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;t "t")-statistic
+for this example, but we might be willing to use more than one statistic
+for a parameter or we might have several parameters under investigation,
+each one of them requiring a different test statistic. We therefore
+group all the test statistics that we need into a single list:
 
 ``` r
 stat_functions <- list(my_t_stat)
@@ -247,42 +264,58 @@ pf <- PlausibilityFunction$new(
 
 Now, assume we want to test the following hypotheses:
 
-*H*<sub>0</sub> : *δ* = 0  v.s.  *H*<sub>1</sub> : *δ* ≠ 0.
+![H_0: \delta = 0 \quad \mbox{v.s.} \quad H_1: \delta \ne 0.](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;H_0%3A%20%5Cdelta%20%3D%200%20%5Cquad%20%5Cmbox%7Bv.s.%7D%20%5Cquad%20H_1%3A%20%5Cdelta%20%5Cne%200. "H_0: \delta = 0 \quad \mbox{v.s.} \quad H_1: \delta \ne 0.")
 
 We use the `$get_value()` method for this purpose, which essentially
-evaluates the permutation *p*-value of a two-sided test by default:
+evaluates the permutation
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+of a two-sided test by default:
 
 ``` r
 pf$get_value(0)
 #> [1] 0.1078921
 ```
 
-We can compare the resulting *p*-value with the one obtained using the
-more classic parametric test:
+We can compare the resulting
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+with the one obtained using the more classic parametric test:
 
 ``` r
 t.test(x, y, var.equal = TRUE)$p.value
 #> [1] 0.1030946
 ```
 
-The permutation *p*-value does not quite match the parametric one. This
-is because of two reasons:
+The permutation
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+does not quite match the parametric one. This is because of two reasons:
 
-1.  The resolution of a permutation *p*-value is of the order of
-    1/(*B*+1), where *B* is the number of sampled permutations. By
-    default, the plausibility function is instantiated with *B* = 1000:
+1.  The resolution of a permutation
+    ![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value
+    is of the order of
+    ![1/(B+1)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1%2F%28B%2B1%29 "1/(B+1)"),
+    where
+    ![B](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;B "B")
+    is the number of sampled permutations. By default, the plausibility
+    function is instantiated with
+    ![B = 1000](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;B%20%3D%201000 "B = 1000"):
 
 ``` r
 pf$nperms
 #> [1] 1000
 ```
 
-2.  We randomly sample *B* permutations out of the
-    $\\binom{n_x+n_y}{n_x}$ possible permutations and therefore
-    introduce extra variability in the *p*-value.
+2.  We randomly sample
+    ![B](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;B "B")
+    permutations out of the
+    ![\binom{n_x+n_y}{n_x}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Cbinom%7Bn_x%2Bn_y%7D%7Bn_x%7D "\binom{n_x+n_y}{n_x}")
+    possible permutations and therefore introduce extra variability in
+    the
+    ![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value.
 
-If we were to ask for more permutations, say *B* = 1, 000, 000, we would
-be much closer to the parametric *p*-value:
+If we were to ask for more permutations, say
+![B = 1,000,000](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;B%20%3D%201%2C000%2C000 "B = 1,000,000"),
+we would be much closer to the parametric
+![p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p "p")-value:
 
 ``` r
 pf$set_nperms(1000000)
