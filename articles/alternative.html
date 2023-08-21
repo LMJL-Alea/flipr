@@ -94,7 +94,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>The alternative hypothesis in permutation testing</h1>
+      <h1 data-toc-skip>The alternative hypothesis in permutation
+testing</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/LMJL-Alea/flipr/blob/HEAD/vignettes/alternative.Rmd" class="external-link"><code>vignettes/alternative.Rmd</code></a></small>
@@ -104,43 +105,114 @@
 
     
     
-<p>In this article, we discuss a key difference between the traditional framework for null hypothesis significance testing (NHST) and the permutation framework for NHST. This critical difference lies at the root of the framework in the specification of the null and alternative hypothesis. First, we review the traditional approach to NHST. Second we explain how the use of the permutation framework requires particular care when formulating the null and alternative hypotheses. Finally, we will discuss an approach proposed by <span class="citation">Pesarin and Salmaso (2010)</span>, coined <strong>Non-Parametric Combination</strong> (NPC), which allows one to combine several test statistics into a single test.</p>
+<p>In this article, we discuss a key difference between the traditional
+framework for null hypothesis significance testing (NHST) and the
+permutation framework for NHST. This critical difference lies at the
+root of the framework in the specification of the null and alternative
+hypothesis. First, we review the traditional approach to NHST. Second we
+explain how the use of the permutation framework requires particular
+care when formulating the null and alternative hypotheses. Finally, we
+will discuss an approach proposed by <span class="citation">Pesarin and
+Salmaso (2010)</span>, coined <strong>Non-Parametric
+Combination</strong> (NPC), which allows one to combine several test
+statistics into a single test.</p>
 <div class="section level2">
 <h2 id="traditional-nhst">Traditional NHST<a class="anchor" aria-label="anchor" href="#traditional-nhst"></a>
 </h2>
-<p>The traditional approach to NHST pertains to specifying a null distribution <span class="math inline">\(H_0\)</span> that we would like to reject in favor of an alternative hypothesis <span class="math inline">\(H_a\)</span> given statistical evidence in the form of data samples. For example, if we study the effect of some drug on the amount of sugar in the blood in patients diagnosed with diabetes, we might take two samples out of two distinct populations, one to which we gave a placebo and one to which we gave the treatment. At this point, the goal is to show that the average amount of sugar in the treatment group is lower than the one in the placebo group. Hence, a suitable test for answering this question is given by the following hypotheses:</p>
+<p>The traditional approach to NHST pertains to specifying a null
+distribution <span class="math inline">\(H_0\)</span> that we would like
+to reject in favor of an alternative hypothesis <span class="math inline">\(H_a\)</span> given statistical evidence in the
+form of data samples. For example, if we study the effect of some drug
+on the amount of sugar in the blood in patients diagnosed with diabetes,
+we might take two samples out of two distinct populations, one to which
+we gave a placebo and one to which we gave the treatment. At this point,
+the goal is to show that the average amount of sugar in the treatment
+group is lower than the one in the placebo group. Hence, a suitable test
+for answering this question is given by the following hypotheses:</p>
 <p><span class="math display">\[
-H_0: \mu_\mathrm{treatment} \ge \mu_\mathrm{placebo} \quad \mbox{against} \quad H_a: \mu_\mathrm{treatment} &lt; \mu_\mathrm{placebo}
+H_0: \mu_\mathrm{treatment} \ge \mu_\mathrm{placebo} \quad
+\mbox{against} \quad H_a: \mu_\mathrm{treatment} &lt;
+\mu_\mathrm{placebo}
 \]</span></p>
-<p>As suggested by intuition, the alternative hypothesis is first determined on the basis of what we aim at proving and the null hypothesis <span class="math inline">\(H_0\)</span> is then deduced as the complementary event to <span class="math inline">\(H_a\)</span>.</p>
+<p>As suggested by intuition, the alternative hypothesis is first
+determined on the basis of what we aim at proving and the null
+hypothesis <span class="math inline">\(H_0\)</span> is then deduced as
+the complementary event to <span class="math inline">\(H_a\)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="permutation-nhst">Permutation NHST<a class="anchor" aria-label="anchor" href="#permutation-nhst"></a>
 </h2>
-<p>The permutation framework completely redefines the null and alternative hypotheses with respect to the traditional approach:</p>
+<p>The permutation framework completely redefines the null and
+alternative hypotheses with respect to the traditional approach:</p>
 <ul>
-<li>The null hypothesis is <strong>always the same</strong> for all tests performed in the permutation framework. This is by design. In effect, the idea of using the permutations to approach the null distribution relies on the assumption of data exchangeability under <span class="math inline">\(H_0\)</span>. This means that the null hypothesis always needs to be that the two samples are drawn from the same underlying distribution. Hence, if we have two independent samples <span class="math inline">\(X_1, \dots, X_{n_x} \stackrel{i.i.d.}{\sim} F_X\)</span> and <span class="math inline">\(Y_1, \dots, Y_{n_y} \stackrel{i.i.d.}{\sim} F_Y\)</span>, the null hypothesis for the two-sample problem is necessarily: <span class="math display">\[ H_0: F_X = F_Y. \]</span>
+<li>The null hypothesis is <strong>always the same</strong> for all
+tests performed in the permutation framework. This is by design. In
+effect, the idea of using the permutations to approach the null
+distribution relies on the assumption of data exchangeability under
+<span class="math inline">\(H_0\)</span>. This means that the null
+hypothesis always needs to be that the two samples are drawn from the
+same underlying distribution. Hence, if we have two independent samples
+<span class="math inline">\(X_1, \dots, X_{n_x} \stackrel{i.i.d.}{\sim}
+F_X\)</span> and <span class="math inline">\(Y_1, \dots, Y_{n_y}
+\stackrel{i.i.d.}{\sim} F_Y\)</span>, the null hypothesis for the
+two-sample problem is necessarily: <span class="math display">\[ H_0:
+F_X = F_Y. \]</span>
 </li>
-<li>The alternative hypothesis <strong>is not</strong> the complementary event to <span class="math inline">\(H_0\)</span>. In effect, that would be <span class="math inline">\(F_X \neq F_Y\)</span>. However, there could be millions of reasons for that to be true. In practice, the use of a specific test statistic targets some aspect(s) of the distributions. For instance, if one uses Hotelling’s <span class="math inline">\(T^2\)</span> statistic, focus is put on finding differences in the first-order moment of the two distributions <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span>.</li>
-<li>These two differences generate a huge change of paradigm for interpreting the results. In effect, suppose that the permutation test using Hotelling’s <span class="math inline">\(T^2\)</span> statistic reveals that there is not enough evidence to reject the null hypothesis. This does not imply, by no means, that we can assume that the two samples come from the same distribution, because, for all we know, our data could contain enough evidence to identify differences in variance or higher moments.</li>
+<li>The alternative hypothesis <strong>is not</strong> the complementary
+event to <span class="math inline">\(H_0\)</span>. In effect, that would
+be <span class="math inline">\(F_X \neq F_Y\)</span>. However, there
+could be millions of reasons for that to be true. In practice, the use
+of a specific test statistic targets some aspect(s) of the
+distributions. For instance, if one uses Hotelling’s <span class="math inline">\(T^2\)</span> statistic, focus is put on finding
+differences in the first-order moment of the two distributions <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span>.</li>
+<li>These two differences generate a huge change of paradigm for
+interpreting the results. In effect, suppose that the permutation test
+using Hotelling’s <span class="math inline">\(T^2\)</span> statistic
+reveals that there is not enough evidence to reject the null hypothesis.
+This does not imply, by no means, that we can assume that the two
+samples come from the same distribution, because, for all we know, our
+data could contain enough evidence to identify differences in variance
+or higher moments.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="non-parametric-combination">Non-Parametric Combination<a class="anchor" aria-label="anchor" href="#non-parametric-combination"></a>
 </h2>
-<p>Once you have your sample of <span class="math inline">\(m\)</span> permutations out the <span class="math inline">\(m_t\)</span> possible ones, you can in fact compute the values of as many test statistics <span class="math inline">\(T^{(1)}, \dots, T^{(L)}\)</span> as you want. At this point, you might want to use the unbiased estimator <span class="math inline">\(\widehat{p_\infty}^{(\ell)} = \frac{B^{(\ell)}}{m}\)</span> of the p-value <span class="math inline">\(p_\infty^{(\ell)} = \mathbb{P} \left( T^{(\ell)} \ge t_\mathrm{obs}^{(\ell)} \right)\)</span> for each test statistic to produce <span class="math inline">\(L\)</span> p-value estimates, each one targeting a different aspect of the distributions under investigation. Since this evidence has been summarized by p-values, they are all on the same scale even though they might look at very different features of the distributions. They can therefore be combined in various ways to provide a single test statistic value to be used in the testing procedure. There are several possible <strong>combining functions</strong> to do this fusion of p-values. The package <strong>flipr</strong> currently implements:</p>
+<p>Once you have your sample of <span class="math inline">\(m\)</span>
+permutations out the <span class="math inline">\(m_t\)</span> possible
+ones, you can in fact compute the values of as many test statistics
+<span class="math inline">\(T^{(1)}, \dots, T^{(L)}\)</span> as you
+want. At this point, you might want to use the unbiased estimator <span class="math inline">\(\widehat{p_\infty}^{(\ell)} =
+\frac{B^{(\ell)}}{m}\)</span> of the p-value <span class="math inline">\(p_\infty^{(\ell)} = \mathbb{P} \left( T^{(\ell)}
+\ge t_\mathrm{obs}^{(\ell)} \right)\)</span> for each test statistic to
+produce <span class="math inline">\(L\)</span> p-value estimates, each
+one targeting a different aspect of the distributions under
+investigation. Since this evidence has been summarized by p-values, they
+are all on the same scale even though they might look at very different
+features of the distributions. They can therefore be combined in various
+ways to provide a single test statistic value to be used in the testing
+procedure. There are several possible <strong>combining
+functions</strong> to do this fusion of p-values. The package
+<strong>flipr</strong> currently implements:</p>
 <ul>
-<li>Tippett’s combining function: <span class="math inline">\(\mathrm{Tippett}(p_1, …, p_L) = 1 - \min_{\ell \in 1, \dots, L} p_\ell\)</span>; and,</li>
-<li>Fisher’s combining function: <span class="math inline">\(\mathrm{Fisher}(p_1, …, p_L) = -2 \sum_{\ell=1}^L \log p_\ell\)</span>.</li>
+<li>Tippett’s combining function: <span class="math inline">\(\mathrm{Tippett}(p_1, …, p_L) = 1 - \min_{\ell \in
+1, \dots, L} p_\ell\)</span>; and,</li>
+<li>Fisher’s combining function: <span class="math inline">\(\mathrm{Fisher}(p_1, …, p_L) = -2 \sum_{\ell=1}^L
+\log p_\ell\)</span>.</li>
 </ul>
-<p>The choice of the combining function is made through the optional argument <code>combining_function</code> which takes a string as value. At the moment, it accepts either <code>"tippett"</code> or <code>"fisher"</code> for picking one of the two above-mentioned combining functions.</p>
+<p>The choice of the combining function is made through the optional
+argument <code>combining_function</code> which takes a string as value.
+At the moment, it accepts either <code>"tippett"</code> or
+<code>"fisher"</code> for picking one of the two above-mentioned
+combining functions.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-pesarin2010" class="csl-entry">
-Pesarin, Fortunato, and Luigi Salmaso. 2010. <span>“Permutation Tests for Complex Data,”</span> March. <a href="https://doi.org/10.1002/9780470689516" class="external-link">https://doi.org/10.1002/9780470689516</a>.
+Pesarin, Fortunato, and Luigi Salmaso. 2010. <span>“Permutation Tests
+for Complex Data,”</span> March. <a href="https://doi.org/10.1002/9780470689516" class="external-link">https://doi.org/10.1002/9780470689516</a>.
 </div>
 </div>
 </div>
@@ -163,7 +235,7 @@ Pesarin, Fortunato, and Luigi Salmaso. 2010. <span>“Permutation Tests for Comp
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

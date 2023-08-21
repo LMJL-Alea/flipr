@@ -103,6 +103,7 @@
 <a class="anchor" aria-label="anchor" href="#overview-"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>The goal of the <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for inference on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> takes care of the permutation magic and provides you with either point estimates or confidence regions or <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value of hypothesis tests. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called <em>non-parametric combination</em> approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. The <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package provides a flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -253,11 +254,15 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
 <span><span class="co">#&gt; [1] 0.1030946</span></span></code></pre></div>
 <p>The permutation <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value does not quite match the parametric one. This is because of two reasons:</p>
-<ol style="list-style-type: decimal"><li>The resolution of a permutation <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value is of the order of <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;1%2F%28B%2B1%29" title="1/(B+1)" alt="1/(B+1)">, where <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B" title="B" alt="B"> is the number of sampled permutations. By default, the plausibility function is instantiated with <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B%20%3D%201000" title="B = 1000" alt="B = 1000">:</li></ol>
+<ol style="list-style-type: decimal">
+<li>The resolution of a permutation <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value is of the order of <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;1%2F%28B%2B1%29" title="1/(B+1)" alt="1/(B+1)">, where <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B" title="B" alt="B"> is the number of sampled permutations. By default, the plausibility function is instantiated with <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B%20%3D%201000" title="B = 1000" alt="B = 1000">:</li>
+</ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span>
 <span><span class="co">#&gt; [1] 1000</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal"><li>We randomly sample <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B" title="B" alt="B"> permutations out of the <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Cbinom%7Bn_x%2Bn_y%7D%7Bn_x%7D" title="\binom{n_x+n_y}{n_x}" alt=""> possible permutations and therefore introduce extra variability in the <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value.</li></ol>
+<ol start="2" style="list-style-type: decimal">
+<li>We randomly sample <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B" title="B" alt="B"> permutations out of the <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Cbinom%7Bn_x%2Bn_y%7D%7Bn_x%7D" title="\binom{n_x+n_y}{n_x}" alt=""> possible permutations and therefore introduce extra variability in the <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value.</li>
+</ol>
 <p>If we were to ask for more permutations, say <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;B%20%3D%201%2C000%2C000" title="B = 1,000,000" alt="B = 1,000,000">, we would be much closer to the parametric <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;p" title="p" alt="p">-value:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">1000000</span><span class="op">)</span></span>
@@ -326,7 +331,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
