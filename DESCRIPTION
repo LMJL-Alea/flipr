@@ -54,12 +54,12 @@ Suggests:
     plotly,
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyr
+    tidyr, tinytest
 VignetteBuilder: knitr
-URL: https://LMJL-Alea.github.io/flipr/, https://github.com/LMJL-Alea/flipr/
+URL: https://LMJL-Alea.github.io/flipr/,
+        https://github.com/LMJL-Alea/flipr/
 BugReports: https://github.com/LMJL-Alea/flipr/issues/
 Depends: 
     R (>= 2.10)
-LinkingTo: 
-    Rcpp
+LinkingTo: Rcpp
 Config/testthat/edition: 3
