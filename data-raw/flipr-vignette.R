@@ -2,7 +2,7 @@
 
 # Setup -------------------------------------------------------------------
 
-library(tidyverse)
+library(purrr)
 library(parallel)
 library(flipr)
 

@@ -26,35 +26,35 @@ Description: A flexible permutation framework for making
     data or density-valued data.
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Imports: 
-    purrr,
-    rlang,
-    magrittr,
     cli,
-    ggplot2,
-    tibble,
-    withr,
-    viridisLite,
-    Rcpp,
-    R6,
-    pbapply,
     dials,
-    usethis,
+    ggplot2,
+    magrittr,
     optimParallel,
-    rgenoud
+    pbapply,
+    purrr,
+    R6,
+    Rcpp,
+    rgenoud,
+    rlang,
+    tibble,
+    usethis,
+    viridisLite,
+    withr
 Suggests: 
-    rmarkdown,
-    knitr,
     covr,
-    tidyverse,
-    plotly,
-    htmlwidgets,
+    dplyr,
     htmltools,
+    htmlwidgets,
+    interp,
+    knitr,
+    plotly,
+    rmarkdown,
     testthat (>= 3.0.0),
-    interp
+    tidyr
 VignetteBuilder: knitr
 URL: https://LMJL-Alea.github.io/flipr/, https://github.com/LMJL-Alea/flipr/
 BugReports: https://github.com/LMJL-Alea/flipr/issues/

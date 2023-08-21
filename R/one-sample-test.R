@@ -38,12 +38,12 @@
 #'
 #' # Sample under the null distribution
 #' x1 <- rnorm(n = n, mean = 0, sd = sigma)
-#' t1 <- one_sample_test(x1)
+#' t1 <- one_sample_test(x1, B = 100L)
 #' t1$pvalue
 #'
 #' # Sample under some alternative distribution
 #' x2 <- rnorm(n = n, mean = mu, sd = sigma)
-#' t2 <- one_sample_test(x2)
+#' t2 <- one_sample_test(x2, B = 100L)
 #' t2$pvalue
 one_sample_test <- function(x,
                             stats = list(stat_max),

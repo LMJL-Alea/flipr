@@ -6,8 +6,6 @@
 #' such as network-valued data, topological data, functional data or
 #' density-valued data.
 #'
-#' @docType package
-#' @name flipr
 #' @useDynLib flipr, .registration = TRUE
 #' @import ggplot2
 #' @importFrom pbapply pblapply pbsapply
@@ -15,4 +13,5 @@
 #' @importFrom Rcpp sourceCpp
 #' @import rlang
 #' @importFrom tibble tibble
-NULL
+#' @keywords internal
+"_PACKAGE"

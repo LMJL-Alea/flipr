@@ -2,8 +2,10 @@
 
 # Setup -------------------------------------------------------------------
 
-library(tidyverse)
-library(parallel)
+library(dplyr)
+library(purrr)
+library(tibble)
+library(tidyr)
 library(flipr)
 
 ncores <- 6

@@ -1,6 +1,6 @@
 ## code to prepare `flipr-vignette` dataset goes here
 
-library(tidyverse)
+library(purrr)
 library(parallel)
 
 # General setup
@@ -19,7 +19,7 @@ sim <- map(sample.int(.Machine$integer.max, nreps, replace = TRUE), ~ {
 # Cluster setup
 cl <- makeCluster(detectCores(logical = FALSE))
 clusterEvalQ(cl, {
-  library(tidyverse)
+  library(purrr)
   library(flipr)
   null_spec <- function(y, parameters) {
     map(y, ~ .x - parameters)

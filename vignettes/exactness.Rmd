@@ -13,8 +13,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(tidyverse)
-library(parallel)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(tidyr)
 library(flipr)
 load("../R/sysdata.rda")
 ```

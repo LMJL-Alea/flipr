@@ -3,13 +3,17 @@ new_inferred_param <- function(label,
                                point_estimate = dials::unknown(),
                                range = c(dials::unknown(), dials::unknown()),
                                inclusive = c(TRUE, TRUE),
-                               default = dials::unknown(),
                                trans = NULL,
                                values = NULL,
                                finalize = NULL) {
   res <- dials::new_quant_param(
-    type, range, inclusive, default,
-    trans, values, label, finalize
+    type = type,
+    range = range,
+    inclusive = inclusive,
+    trans = trans,
+    values = values,
+    label = label,
+    finalize = finalize
   )
   point_estimate_validate(point_estimate, range, inclusive)
   res$point_estimate <- point_estimate
