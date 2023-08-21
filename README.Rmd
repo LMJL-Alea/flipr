@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # Overview <a href='https://lmjl-alea.github.io/flipr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![check-standard](https://github.com/LMJL-Alea/flipr/workflows/R-CMD-check/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
+[![R-CMD-check](https://github.com/LMJL-Alea/flipr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LMJL-Alea/flipr/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/LMJL-Alea/flipr/workflows/test-coverage/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
 [![Codecov test coverage](https://codecov.io/gh/LMJL-Alea/flipr/branch/master/graph/badge.svg)](https://codecov.io/gh/LMJL-Alea/flipr?branch=master)
 [![pkgdown](https://github.com/LMJL-Alea/flipr/workflows/pkgdown/badge.svg)](https://github.com/LMJL-Alea/flipr/actions)
