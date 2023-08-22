@@ -1,3 +1,11 @@
+# flipr 0.3.3
+
+- Updated URLs in `DESCRIPTION` file;
+- Properly documented package overview in `flipr-package.R` file;
+- Updated GitHub Action workflows;
+- Removed suggested dependency to the entire tidyverse;
+- Updated maintainer email.
+
 # flipr 0.3.2
 
 - Removed `akima` from package dependencies.

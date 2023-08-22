@@ -1,6 +1,6 @@
 Package: flipr
 Title: Flexible Inference via Permutations in R
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: c(
     person(given = "Alessia", 
            family = "Pini", 
@@ -9,7 +9,7 @@ Authors@R: c(
     person(given = "Aymeric",
            family = "Stamm",
            role = c("aut", "cre"), 
-           email = "aymeric.stamm@math.cnrs.fr",
+           email = "aymeric.stamm@cnrs.fr",
            comment = c(ORCID = "0000-0002-8725-3654")), 
     person(given = "Simone", 
            family = "Vantini", 
