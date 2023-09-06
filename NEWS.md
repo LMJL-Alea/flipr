@@ -1,3 +1,5 @@
+# flipr (development version)
+
 # flipr 0.3.3
 
 - Updated URLs in `DESCRIPTION` file;
