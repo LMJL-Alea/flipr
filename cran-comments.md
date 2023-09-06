@@ -1,15 +1,5 @@
-## Resubmission 2
-This is a resubmission. In this version, I have: 
-
-- Updated forgotten URLs that pointed to previous owner.
-
-## Resubmission 1
-This is a resubmission. In this version, I have: 
-
-- Updated all URLs to reflect change of ownership.
-
 ## Test environments
-* local macOS R installation, R 4.1.2
+* local macOS R installation, R 4.3.1
 * continuous integration via GH actions:
   * macOS-latest (release)
   * windows-latest (release)
@@ -29,8 +19,8 @@ There were no ERRORs or WARNINGs.
 There was 1 NOTE:
 
     * checking installed package size ... NOTE
-      installed size is  8.4Mb
+      installed size is  9.9Mb
       sub-directories of 1Mb or more:
-        doc   7.6Mb
+        doc   9.1Mb
 
 The size varies according to the system on which the package is installed.
