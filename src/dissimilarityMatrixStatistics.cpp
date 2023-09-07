@@ -231,3 +231,48 @@ double stat_cq_impl(const Rcpp::NumericVector &similarityMatrix,
 
   return xxMean + yyMean - 2 * xyMean;
 }
+
+double stat_anova_f_ip_impl(const Rcpp::NumericVector &distanceMatrix,
+                            const Rcpp::IntegerVector &memberships)
+{
+  unsigned int numberOfObservations = memberships.size();
+  unsigned int numberOfGroups = 0;
+  for (unsigned int i = 0;i < numberOfObservations;++i)
+  {
+    if (memberships(i) > numberOfGroups)
+      numberOfGroups = memberships(i);
+  }
+
+  double sseValue = 0.0;
+  double ssValue = 0.0;
+  for (unsigned int i = 0;i < numberOfGroups;++i)
+  {
+    double groupSize = 0;
+    double withinSumValue = 0.0;
+    for (unsigned int j = 0;j < numberOfObservations - 1;++j)
+    {
+      if (memberships(j) == (i + 1))
+        groupSize++;
+
+      for (unsigned int k = j + 1;k < numberOfObservations;++k)
+      {
+        double distanceValue = getElement(distanceMatrix, j + 1, k + 1);
+
+        if (i == 0) // SSn
+          ssValue += distanceValue;
+
+        // SSe
+        if ((memberships(j) != (i + 1)) || (memberships(k) != (i + 1)))
+          continue;
+        withinSumValue += distanceValue;
+      }
+    }
+
+    sseValue += withinSumValue / groupSize;
+  }
+
+  ssValue /= numberOfObservations;
+  double sstValue = ssValue - sseValue;
+
+  return sstValue * (numberOfObservations - numberOfGroups) / sseValue / (numberOfGroups - 1.0);
+}

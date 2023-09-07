@@ -76,6 +76,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// stat_anova_f_ip_impl
+double stat_anova_f_ip_impl(const Rcpp::NumericVector& distanceMatrix, const Rcpp::IntegerVector& memberships);
+RcppExport SEXP _flipr_stat_anova_f_ip_impl(SEXP distanceMatrixSEXP, SEXP membershipsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type distanceMatrix(distanceMatrixSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type memberships(membershipsSEXP);
+    rcpp_result_gen = Rcpp::wrap(stat_anova_f_ip_impl(distanceMatrix, memberships));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getElement
 double getElement(const Rcpp::NumericVector& distObject, const unsigned int rowIndex, const unsigned int colIndex);
 RcppExport SEXP _flipr_getElement(SEXP distObjectSEXP, SEXP rowIndexSEXP, SEXP colIndexSEXP) {
@@ -96,6 +108,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_flipr_stat_bg_impl", (DL_FUNC) &_flipr_stat_bg_impl, 3},
     {"_flipr_stat_energy_impl", (DL_FUNC) &_flipr_stat_energy_impl, 4},
     {"_flipr_stat_cq_impl", (DL_FUNC) &_flipr_stat_cq_impl, 3},
+    {"_flipr_stat_anova_f_ip_impl", (DL_FUNC) &_flipr_stat_anova_f_ip_impl, 2},
     {"_flipr_getElement", (DL_FUNC) &_flipr_getElement, 3},
     {NULL, NULL, 0}
 };

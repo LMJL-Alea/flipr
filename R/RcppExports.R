@@ -21,6 +21,10 @@ stat_cq_impl <- function(similarityMatrix, firstGroupIndices, secondGroupIndices
     .Call(`_flipr_stat_cq_impl`, similarityMatrix, firstGroupIndices, secondGroupIndices)
 }
 
+stat_anova_f_ip_impl <- function(distanceMatrix, memberships) {
+    .Call(`_flipr_stat_anova_f_ip_impl`, distanceMatrix, memberships)
+}
+
 getElement <- function(distObject, rowIndex, colIndex) {
     .Call(`_flipr_getElement`, distObject, rowIndex, colIndex)
 }
