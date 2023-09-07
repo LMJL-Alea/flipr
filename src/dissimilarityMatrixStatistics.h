@@ -35,3 +35,9 @@ double stat_cq_impl(
     const Rcpp::IntegerVector &firstGroupIndices,
     const Rcpp::IntegerVector &secondGroupIndices
 );
+
+// [[Rcpp::export]]
+double stat_anova_f_ip_impl(
+    const Rcpp::NumericVector &distanceMatrix,
+    const Rcpp::IntegerVector &memberships
+);
