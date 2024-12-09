@@ -29,7 +29,7 @@ test_that("Regular test - Documentation example", {
   expect_gt(actual, expected)
 })
 
-test_that("Snapshot test - Two normal distributions with different means and variances", {
+test_that("Regular test - Two normal distributions with different means and variances", {
   # Arrange
   set.seed(123)
   n <- 15

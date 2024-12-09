@@ -49,7 +49,13 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
   if (is.null(pf$grid))
     abort("The plausbility function has not yet been evaluated on a grid of parameters. Consider running the `$set_grid()` method first.")
 
-  color_palette <- viridisLite::viridis(3)
+  if (requireNamespace("viridis", quietly = TRUE)) {
+    color_palette <- viridis::viridis(3)
+  } else if (requireNamespace("viridisLite", quietly = TRUE)) {
+    color_palette <- viridisLite::viridis(3)
+  } else {
+    color_palette <- gg_color_hue(3)
+  }
 
   if (pf$nparams == 1) {
     nm <- names(pf$parameters)
@@ -115,6 +121,11 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
       ) +
       theme_minimal()
   }
+}
+
+gg_color_hue <- function(n) {
+  hues <- seq(15, 375, length = n + 1)
+  grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
 format_title <- function(x) {

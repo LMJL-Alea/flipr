@@ -17,7 +17,11 @@ Authors@R: c(
            email = "simone.vantini@polimi.it"),
     person(given = "Juliette",
            family = "Chiapello",
-           role = "ctb"))
+           role = "ctb"),
+    person(given = "Manon", 
+           family = "Simonot", 
+           role = "ctb", 
+           email = "manon.simonot@univ-nantes.fr"))
 Description: A flexible permutation framework for making 
     inference such as point estimation, confidence 
     intervals or hypothesis testing, on any kind of data, 
@@ -42,7 +46,6 @@ Imports:
     rlang,
     tibble,
     usethis,
-    viridisLite,
     withr
 Suggests: 
     covr,
@@ -54,7 +57,9 @@ Suggests:
     plotly,
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyr
+    tidyr,
+    viridis,
+    viridisLite
 VignetteBuilder: knitr
 URL: https://LMJL-Alea.github.io/flipr/, https://github.com/LMJL-Alea/flipr/
 BugReports: https://github.com/LMJL-Alea/flipr/issues/
