@@ -65,12 +65,12 @@ plot_pf <- function(pf, alpha = 0.05, ngrid = 10, ncores = 1, subtitle = "") {
       labs(
         title = format_title(paste(
           pf$alternative,
-          pf$type,
+          pf$pvalue_formula,
           "p-value function"
         )),
         subtitle = format_title(paste(
           "Using",
-          pf$B,
+          pf$nperms,
           "randomly sampled permutations from seed",
           pf$seed
         )),

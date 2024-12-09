@@ -71,7 +71,7 @@ PlausibilityFunction <- R6::R6Class(
         )
         seed <- 1234
       }
-      private$seed <- seed
+      self$seed <- seed
     },
 
     #' @field nparams An integer specifying the number of parameters to be
@@ -205,8 +205,8 @@ PlausibilityFunction <- R6::R6Class(
     },
 
     #' @field pvalue_formula A string specifying which formula to use for
-    #'   computing the permutation p-value. Choices are either `probability`
-    #'   (default) or `estimator`. The former provides p-values that lead to
+    #'   computing the permutation p-value. Choices are either `exact`
+    #'   (default), `upper_bound` or `estimate`. The former provides p-values that lead to
     #'   exact hypothesis tests while the latter provides an unbiased estimate
     #'   of the traditional p-value.
     pvalue_formula = "exact",
@@ -285,7 +285,7 @@ PlausibilityFunction <- R6::R6Class(
           length(parameters),
           "."
         ))
-      withr::local_seed(private$seed)
+      withr::local_seed(self$seed)
       if (private$nsamples == 1) {
         x <- private$null_spec(private$data[[1]], parameters)
         test_result <- one_sample_test(
@@ -502,7 +502,7 @@ PlausibilityFunction <- R6::R6Class(
           stat_functions = private$stat_functions,
           stat_assignments = private$stat_assignments[param_index],
           !!!private$data,
-          seed = private$seed
+          seed = self$seed
         )
         pvf_temp$set_nperms(self$nperms)
         pvf_temp$set_alternative("two_tail")
@@ -661,7 +661,10 @@ PlausibilityFunction <- R6::R6Class(
         pbapply::pbsapply(self$get_value, cl = cl)
       if (ncores > 1L)
         parallel::stopCluster(cl)
-    }
+    },
+
+    #' @field seed A numeric value specifying the seed to be used. Defaults to `1234`.
+    seed = 1234
   ),
   private = list(
     null_spec = NULL,
@@ -686,8 +689,6 @@ PlausibilityFunction <- R6::R6Class(
     set_stat_functions = function(val) {
       private$stat_functions <- purrr::map(val, rlang::as_function)
     },
-
-    seed = 1234,
 
     alternative_choices = c("two_tail", "left_tail", "right_tail"),
     aggregator_choices = c("tippett", "fisher"),
