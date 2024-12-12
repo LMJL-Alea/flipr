@@ -6,24 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flexible Inference via Permutations in R • flipr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Flexible Inference via Permutations in R">
-<meta property="og:description" content="A flexible permutation framework for making 
-    inference such as point estimation, confidence 
-    intervals or hypothesis testing, on any kind of data, 
-    be it univariate, multivariate, or more complex such 
-    as network-valued data, topological data, functional 
-    data or density-valued data.">
+<meta property="og:description" content="A flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +20,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -60,7 +49,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -83,7 +72,7 @@
 <li>
   <a href="https://github.com/LMJL-Alea/flipr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -94,7 +83,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
@@ -104,7 +93,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of the <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for inference on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> takes care of the permutation magic and provides you with either point estimates or confidence regions or <span class="math inline"><em>p</em></span>-value of hypothesis tests. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called <em>non-parametric combination</em> approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. The <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package provides a flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.</p>
+<p>The goal of the <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package is to provide a flexible framework for making inference via permutation. The idea is to promote the permutation framework as an incredibly well-suited tool for inference on complex data. You supply your data, as complex as it might be, in the form of lists in which each entry stores one data point in a representation that suits you and <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> takes care of the permutation magic and provides you with either point estimates or confidence regions or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value of hypothesis tests. Permutation tests are especially appealing because they are exact no matter how small or big your sample sizes are. You can also use the so-called <em>non-parametric combination</em> approach in this setting to combine several statistics to better target the alternative hypothesis you are testing against. Asymptotic consistency is also guaranteed under mild conditions on the statistic you use. The <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> package provides a flexible permutation framework for making inference such as point estimation, confidence intervals or hypothesis testing, on any kind of data, be it univariate, multivariate, or more complex such as network-valued data, topological data, functional data or density-valued data.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -125,25 +114,24 @@
 <div class="section level3">
 <h3 id="data-generation">Data generation<a class="anchor" aria-label="anchor" href="#data-generation"></a>
 </h3>
-<p>Let us first generate two samples of size <span class="math inline">15</span> governed by Gaussian distributions with equal variance but different means:</p>
+<p>Let us first generate two samples of size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>15</mn><annotation encoding="application/x-tex">15</annotation></semantics></math> governed by Gaussian distributions with equal variance but different means:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">15</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p>Given the data we simulated, the parameter of interest here is the difference between the means of the distributions, say <span class="math inline"><em>δ</em> = <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub></span>.</p>
+<p>Given the data we simulated, the parameter of interest here is the difference between the means of the distributions, say <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><msub><mi>μ</mi><mi>y</mi></msub><mo>−</mo><msub><mi>μ</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">\delta = \mu_y - \mu_x</annotation></semantics></math>.</p>
 </div>
 <div class="section level3">
-<h3 id="make-the-two-samples-exchangeable-under-h_0">Make the two samples exchangeable under <span class="math inline"><em>H</em><sub>0</sub></span>
-<a class="anchor" aria-label="anchor" href="#make-the-two-samples-exchangeable-under-h_0"></a>
+<h3 id="make-the-two-samples-exchangeable-under-h_0">Make the two samples exchangeable under <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#make-the-two-samples-exchangeable-under-h_0"></a>
 </h3>
-<p>In the context of null hypothesis testing, we consider the null hypothesis <span class="math inline"><em>H</em><sub>0</sub> : <em>μ</em><sub><em>y</em></sub> − <em>μ</em><sub><em>x</em></sub> = <em>δ</em></span>. We can use a permutation scheme to approach the <span class="math inline"><em>p</em></span>-value if the two samples are <em>exchangeable</em> under <span class="math inline"><em>H</em><sub>0</sub></span>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <span class="math inline"><em>H</em><sub>0</sub></span>. In this simple example, this can be achieved as follows. Let <span class="math inline"><em>X</em><sub>1</sub>, …, <em>X</em><sub><em>n</em><sub><em>x</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>x</em></sub>,1)</span> and <span class="math inline"><em>Y</em><sub>1</sub>, …, <em>Y</em><sub><em>n</em><sub><em>y</em></sub></sub> ∼ 𝒩(<em>μ</em><sub><em>y</em></sub>,1)</span>. We can then transform the second sample as <span class="math inline"><em>Y</em><sub><em>i</em></sub> ← <em>Y</em><sub><em>i</em></sub> − <em>δ</em></span>.</p>
+<p>In the context of null hypothesis testing, we consider the null hypothesis <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><msub><mi>μ</mi><mi>y</mi></msub><mo>−</mo><msub><mi>μ</mi><mi>x</mi></msub><mo>=</mo><mi>δ</mi></mrow><annotation encoding="application/x-tex">H_0: \mu_y - \mu_x = \delta</annotation></semantics></math>. We can use a permutation scheme to approach the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value if the two samples are <em>exchangeable</em> under <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>. This means that we need to transform for example the second sample to <em>make</em> it exchangeable with the first sample under <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>. In this simple example, this can be achieved as follows. Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>X</mi><msub><mi>n</mi><mi>x</mi></msub></msub><mo>∼</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>μ</mi><mi>x</mi></msub><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X_1, \dots, X_{n_x} \sim \mathcal{N}(\mu_x, 1)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>Y</mi><msub><mi>n</mi><mi>y</mi></msub></msub><mo>∼</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>μ</mi><mi>y</mi></msub><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y_1, \dots, Y_{n_y} \sim \mathcal{N}(\mu_y, 1)</annotation></semantics></math>. We can then transform the second sample as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo>←</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><mi>δ</mi></mrow><annotation encoding="application/x-tex">Y_i \longleftarrow Y_i - \delta</annotation></semantics></math>.</p>
 <p>We can define a proper function to do this, termed the <em>null specification</em> function, which takes two input arguments:</p>
 <ul>
 <li>
 <code>y</code> which is a list storing the data points in the second sample;</li>
 <li>
-<code>parameters</code> which is a numeric vector of values for the parameters under investigation (here only <span class="math inline"><em>δ</em></span> and thus <code>parameters</code> is of length <span class="math inline">1</span> with <code>parameters[1] = delta</code>).</li>
+<code>parameters</code> which is a numeric vector of values for the parameters under investigation (here only <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math> and thus <code>parameters</code> is of length <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> with <code>parameters[1] = delta</code>).</li>
 </ul>
 <p>In our simple example, it boils down to:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -154,50 +142,50 @@
 <div class="section level3">
 <h3 id="choose-suitable-test-statistics">Choose suitable test statistics<a class="anchor" aria-label="anchor" href="#choose-suitable-test-statistics"></a>
 </h3>
-<p>Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference <span class="math inline"><em>δ</em></span>. Since the two samples share the same variance, we can use for example the <span class="math inline"><em>t</em></span>-statistic with a pooled estimate of the common variance.</p>
+<p>Next, we need to decide which test statistic(s) we are going to use for performing the test. Here, we are only interested in one parameter, namely the mean difference <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>. Since the two samples share the same variance, we can use for example the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-statistic with a pooled estimate of the common variance.</p>
 <p>This statistic can be easily computed using <code>stats::t.test(x, y, var.equal = TRUE)$statistic</code>. However, we want to extend its evaluation to any permuted version of the data. Test statistic functions compatible with <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> should have at least two mandatory input arguments:</p>
 <ul>
 <li>
-<code>data</code> which is either a concatenated list of size <span class="math inline"><em>n</em><sub><em>x</em></sub> + <em>n</em><sub><em>y</em></sub></span> regrouping the data points of both samples or a distance matrix of size <span class="math inline">(<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>) × (<em>n</em><sub><em>x</em></sub>+<em>n</em><sub><em>y</em></sub>)</span> stored as an object of class <code>dist</code>.</li>
+<code>data</code> which is either a concatenated list of size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>x</mi></msub><mo>+</mo><msub><mi>n</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">n_x + n_y</annotation></semantics></math> regrouping the data points of both samples or a distance matrix of size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mi>x</mi></msub><mo>+</mo><msub><mi>n</mi><mi>y</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>×</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mi>x</mi></msub><mo>+</mo><msub><mi>n</mi><mi>y</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(n_x + n_y) \times (n_x + n_y)</annotation></semantics></math> stored as an object of class <code>dist</code>.</li>
 <li>
-<code>indices1</code> which is an integer vector of size <span class="math inline"><em>n</em><sub><em>x</em></sub></span> storing the indices of the data points belonging to the first sample in the current permuted version of the data.</li>
+<code>indices1</code> which is an integer vector of size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>x</mi></msub><annotation encoding="application/x-tex">n_x</annotation></semantics></math> storing the indices of the data points belonging to the first sample in the current permuted version of the data.</li>
 </ul>
 <p>Some test statistics are already implemented in <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a> and ready to use. User-defined test statistics can be used as well, with the use of the helper function <code>use_stat(nsamples = 2, stat_name = )</code>. This function creates and saves an <code>.R</code> file in the <code>R/</code> folder of the current working directory and populates it with the following template:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Test Statistic for the Two-Sample Problem</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' This function computes the test statistic...</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data A list storing the concatenation of the two samples from which</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'   the user wants to make inference. Alternatively, a distance matrix stored</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'   in an object of class \code{\link[stats]{dist}} of pairwise distances</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   between data points.</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param indices1 An integer vector that contains the indices of the data</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'   points belong to the first sample in the current permuted version of the</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'   data.</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A numeric value evaluating the desired test statistic.</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#' # TO BE DONE BY THE DEVELOPER OF THE PACKAGE</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>stat_{{{name}}} <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices1) {</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"dist"</span>))</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">attr</span>(data, <span class="st">"Size"</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"list"</span>))</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(data)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"The `data` input should be of class either list or dist."</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  indices2 <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(n)[<span class="sc">-</span>indices1]</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> data[indices1]</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> data[indices2]</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here comes the code that computes the desired test</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># statistic from input samples stored in lists x and y</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>For instance, a <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a>-compatible version of the <span class="math inline"><em>t</em></span>-statistic with pooled variance will look like:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#' Test Statistic for the Two-Sample Problem</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#' This function computes the test statistic...</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#' @param data A list storing the concatenation of the two samples from which</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#'   the user wants to make inference. Alternatively, a distance matrix stored</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#'   in an object of class \code{\link[stats]{dist}} of pairwise distances</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#'   between data points.</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#' @param indices1 An integer vector that contains the indices of the data</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#'   points belong to the first sample in the current permuted version of the</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#'   data.</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#' @return A numeric value evaluating the desired test statistic.</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#' # TO BE DONE BY THE DEVELOPER OF THE PACKAGE</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>stat_{{{name}}} <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices1) {</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"dist"</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>    <span class="fu">attr</span>(data, <span class="st">"Size"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">inherits</span>(data, <span class="st">"list"</span>))</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>    <span class="fu">length</span>(data)</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"The `data` input should be of class either list or dist."</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>  indices2 <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(n)[<span class="sc">-</span>indices1]</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>  x <span class="ot">&lt;-</span> data[indices1]</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>  y <span class="ot">&lt;-</span> data[indices2]</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>  <span class="co"># Here comes the code that computes the desired test</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>  <span class="co"># statistic from input samples stored in lists x and y</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>}</span></code></pre></div>
+<p>For instance, a <a href="https://lmjl-alea.github.io/flipr/" class="external-link"><strong>flipr</strong></a>-compatible version of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-statistic with pooled variance will look like:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_t_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">indices1</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"dist"</span><span class="op">)</span><span class="op">)</span></span>
@@ -219,7 +207,7 @@
 <span>  </span>
 <span>  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Here, we are only going to use the <span class="math inline"><em>t</em></span>-statistic for this example, but we might be willing to use more than one statistic for a parameter or we might have several parameters under investigation, each one of them requiring a different test statistic. We therefore group all the test statistics that we need into a single list:</p>
+<p>Here, we are only going to use the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-statistic for this example, but we might be willing to use more than one statistic for a parameter or we might have several parameters under investigation, each one of them requiring a different test statistic. We therefore group all the test statistics that we need into a single list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stat_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">my_t_stat</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -243,26 +231,26 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! Setting the seed for sampling permutations is mandatory for obtaining a continuous p-value function. Using `seed = 1234`.</span></span></code></pre></div>
 <p>Now, assume we want to test the following hypotheses:</p>
-<p><span class="math display"><em>H</em><sub>0</sub> : <em>δ</em> = 0  v.s.  <em>H</em><sub>1</sub> : <em>δ</em> ≠ 0.</span></p>
-<p>We use the <code>$get_value()</code> method for this purpose, which essentially evaluates the permutation <span class="math inline"><em>p</em></span>-value of a two-sided test by default:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><mi>δ</mi><mo>=</mo><mn>0</mn><mspace width="1.0em"></mspace><mtext mathvariant="normal">v.s.</mtext><mspace width="1.0em"></mspace><msub><mi>H</mi><mn>1</mn></msub><mo>:</mo><mi>δ</mi><mo>≠</mo><mn>0</mn><mi>.</mi></mrow><annotation encoding="application/x-tex"> H_0: \delta = 0 \quad \mbox{v.s.} \quad H_1: \delta \ne 0. </annotation></semantics></math></p>
+<p>We use the <code>$get_value()</code> method for this purpose, which essentially evaluates the permutation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value of a two-sided test by default:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.1078921</span></span></code></pre></div>
-<p>We can compare the resulting <span class="math inline"><em>p</em></span>-value with the one obtained using the more classic parametric test:</p>
+<p>We can compare the resulting <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value with the one obtained using the more classic parametric test:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
 <span><span class="co">#&gt; [1] 0.1030946</span></span></code></pre></div>
-<p>The permutation <span class="math inline"><em>p</em></span>-value does not quite match the parametric one. This is because of two reasons:</p>
+<p>The permutation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value does not quite match the parametric one. This is because of two reasons:</p>
 <ol style="list-style-type: decimal">
-<li>The resolution of a permutation <span class="math inline"><em>p</em></span>-value is of the order of <span class="math inline">1/(<em>B</em>+1)</span>, where <span class="math inline"><em>B</em></span> is the number of sampled permutations. By default, the plausibility function is instantiated with <span class="math inline"><em>B</em> = 1000</span>:</li>
+<li>The resolution of a permutation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value is of the order of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">1/(B+1)</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the number of sampled permutations. By default, the plausibility function is instantiated with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>=</mo><mn>1000</mn></mrow><annotation encoding="application/x-tex">B = 1000</annotation></semantics></math>:</li>
 </ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pf</span><span class="op">$</span><span class="va">nperms</span></span>
 <span><span class="co">#&gt; [1] 1000</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>We randomly sample <span class="math inline"><em>B</em></span> permutations out of the <span class="math inline">$\binom{n_x+n_y}{n_x}$</span> possible permutations and therefore introduce extra variability in the <span class="math inline"><em>p</em></span>-value.</li>
+<li>We randomly sample <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> permutations out of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msub><mi>n</mi><mi>x</mi></msub><mo>+</mo><msub><mi>n</mi><mi>y</mi></msub></mrow><msub><mi>n</mi><mi>x</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\binom{n_x+n_y}{n_x}</annotation></semantics></math> possible permutations and therefore introduce extra variability in the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value.</li>
 </ol>
-<p>If we were to ask for more permutations, say <span class="math inline"><em>B</em> = 1, 000, 000</span>, we would be much closer to the parametric <span class="math inline"><em>p</em></span>-value:</p>
+<p>If we were to ask for more permutations, say <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>000</mn><mo>,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">B = 1,000,000</annotation></semantics></math>, we would be much closer to the parametric <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pf</span><span class="op">$</span><span class="fu">set_nperms</span><span class="op">(</span><span class="fl">1000000</span><span class="op">)</span></span>
 <span><span class="va">pf</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -330,16 +318,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

@@ -6,27 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>On the exactness of permutation tests • flipr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="On the exactness of permutation tests">
-<meta property="og:description" content="flipr">
-<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -55,7 +47,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -78,7 +70,7 @@
 <li>
   <a href="https://github.com/LMJL-Alea/flipr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -89,7 +81,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -97,7 +89,7 @@
       <h1 data-toc-skip>On the exactness of permutation tests</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/LMJL-Alea/flipr/blob/HEAD/vignettes/exactness.Rmd" class="external-link"><code>vignettes/exactness.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/LMJL-Alea/flipr/blob/master/vignettes/exactness.Rmd" class="external-link"><code>vignettes/exactness.Rmd</code></a></small>
       <div class="hidden name"><code>exactness.Rmd</code></div>
 
     </div>
@@ -105,61 +97,92 @@
     
     
 <p>In this article, we discuss the exactness property of permutation
-tests, which is closely related to how <span class="math inline">\(p\)</span>-values are computed from the
-permutations. This article is a summary of the paper by <span class="citation">Phipson and Smyth (2010)</span>.</p>
+tests, which is closely related to how
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-values
+are computed from the permutations. This article is a summary of the
+paper by <span class="citation">Phipson and Smyth (2010)</span>.</p>
 <div class="section level2">
 <h2 id="traditional-formulation-of-a-statistical-test">Traditional formulation of a statistical test<a class="anchor" aria-label="anchor" href="#traditional-formulation-of-a-statistical-test"></a>
 </h2>
 <p>A statistical test aims at determining whether some observed data can
 be considered to be strong evidence in favor of a so-called
-<em>alternative</em> hypothesis <span class="math inline">\(H_a\)</span>
-compared to a so-called <em>null</em> hypothesis <span class="math inline">\(H_0\)</span>. To do that, a test statistic <span class="math inline">\(T\)</span> is defined such that:</p>
+<em>alternative</em> hypothesis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>a</mi></msub><annotation encoding="application/x-tex">H_a</annotation></semantics></math>
+compared to a so-called <em>null</em> hypothesis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>.
+To do that, a test statistic
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+is defined such that:</p>
 <ul>
-<li>its observed value under <span class="math inline">\(H_0\)</span>
+<li>its observed value under
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>
 can be computed once you observed some data;</li>
-<li>large values of the statistic are evidence in favor of <span class="math inline">\(H_a\)</span>.</li>
-<li>you know (an approximation of) the distribution of <span class="math inline">\(T\)</span> under the null hypothesis, also known
-as the <strong>null distribution</strong>.</li>
+<li>large values of the statistic are evidence in favor of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>a</mi></msub><annotation encoding="application/x-tex">H_a</annotation></semantics></math>.</li>
+<li>you know (an approximation of) the distribution of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+under the null hypothesis, also known as the <strong>null
+distribution</strong>.</li>
 </ul>
 <p>Once such a test statistic is available and we observe some data, we
-can denote by <span class="math inline">\(t_\mathrm{obs}\)</span> the
-value of the test statistic computed from the observed data and define
-the so-called <strong>p-value</strong> as the null hypothesis tail
-probability: <span class="math display">\[ p_\infty = \mathbb{P}_{H_0}
-\left( T \ge t_\mathrm{obs} \right). \]</span>The p-value <span class="math inline">\(p_\infty\)</span> is by definition uniformly
-distributed on <span class="math inline">\((0,1)\)</span> under the null
-hypothesis. Hence, we can define the so-called <strong>significance
-level</strong> <span class="math inline">\(\alpha \in (0,1)\)</span> and
-decide to reject <span class="math inline">\(H_0\)</span> in favor of
-<span class="math inline">\(H_1\)</span> when <span class="math inline">\(p_\infty \le \alpha\)</span>. By doing this, the
-probability of wrongly rejecting <span class="math inline">\(H_0\)</span>, also known as the probability of
-type I errors, is simply: <span class="math display">\[ \mathbb{P}_{H_0}
-\left( p_\infty \le \alpha \right) = \alpha. \]</span>The significance
-level <span class="math inline">\(\alpha\)</span> therefore matches by
-design the probability of type I errors, which means that choosing <span class="math inline">\(\alpha\)</span> allows to control the probability
-of type I errors. We say that the test is <strong>exact</strong>.</p>
-<p>When the null distribution of <span class="math inline">\(T\)</span>
-is not known, you do not have access to <span class="math inline">\(p_\infty\)</span>. A possible solution is then to
-resort to resampling techniques to approach the null hypothesis. Once
-you get an approximate null distribution, the question is how do you
-compute a p-value that provides an exact statistical test. There are two
-approaches to this problem: the first estimates the true p-value <span class="math inline">\(p_\infty\)</span> from the approximate null
-distribution while the second proposes an alternative definition of the
-p-value that can be straightforwardly computed. Let us expand on both
-approaches.</p>
+can denote by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>
+the value of the test statistic computed from the observed data and
+define the so-called <strong>p-value</strong> as the null hypothesis
+tail probability:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>∞</mi></msub><mo>=</mo><msub><mi>ℙ</mi><msub><mi>H</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mo>≥</mo><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex"> p_\infty = \mathbb{P}_{H_0} \left( T \ge t_\mathrm{obs} \right). </annotation></semantics></math>The
+p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>
+is by definition uniformly distributed on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0,1)</annotation></semantics></math>
+under the null hypothesis. Hence, we can define the so-called
+<strong>significance level</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>∈</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\alpha \in (0,1)</annotation></semantics></math>
+and decide to reject
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>
+in favor of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>
+when
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>∞</mi></msub><mo>≤</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">p_\infty \le \alpha</annotation></semantics></math>.
+By doing this, the probability of wrongly rejecting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>,
+also known as the probability of type I errors, is simply:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ℙ</mi><msub><mi>H</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mi>∞</mi></msub><mo>≤</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>α</mi><mi>.</mi></mrow><annotation encoding="application/x-tex"> \mathbb{P}_{H_0} \left( p_\infty \le \alpha \right) = \alpha. </annotation></semantics></math>The
+significance level
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+therefore matches by design the probability of type I errors, which
+means that choosing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+allows to control the probability of type I errors. We say that the test
+is <strong>exact</strong>.</p>
+<p>When the null distribution of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+is not known, you do not have access to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>.
+A possible solution is then to resort to resampling techniques to
+approach the null hypothesis. Once you get an approximate null
+distribution, the question is how do you compute a p-value that provides
+an exact statistical test. There are two approaches to this problem: the
+first estimates the true p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>
+from the approximate null distribution while the second proposes an
+alternative definition of the p-value that can be straightforwardly
+computed. Let us expand on both approaches.</p>
 </div>
 <div class="section level2">
 <h2 id="the-two-sample-problem-in-a-permutational-framework">The two-sample problem in a permutational framework<a class="anchor" aria-label="anchor" href="#the-two-sample-problem-in-a-permutational-framework"></a>
 </h2>
-<p>We start with two samples <span class="math inline">\(X_1, \dots,
-X_{n_x} \stackrel{iid}{\sim} \mathcal{D}(\theta_x)\)</span> and <span class="math inline">\(Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim}
-\mathcal{D}(\theta_y)\)</span>. We want to know whether the two
-distributions are the same or not on the basis of the two samples we
-collected. In this parametric setting, it boils down to testing the
-following hypotheses: <span class="math display">\[ H_0: \theta_x =
-\theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. \]</span>Let
-<span class="math inline">\(T\)</span> be a statistic that depends on
-the two samples which is suited for elucidating this test, i.e.:</p>
+<p>We start with two samples
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>X</mi><msub><mi>n</mi><mi>x</mi></msub></msub><mover><mo>∼</mo><mrow><mi>i</mi><mi>i</mi><mi>d</mi></mrow></mover><mi>𝒟</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mi>x</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X_1, \dots, X_{n_x} \stackrel{iid}{\sim} \mathcal{D}(\theta_x)</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>Y</mi><msub><mi>n</mi><mi>y</mi></msub></msub><mover><mo>∼</mo><mrow><mi>i</mi><mi>i</mi><mi>d</mi></mrow></mover><mi>𝒟</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mi>y</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y_1, \dots, Y_{n_y} \stackrel{iid}{\sim} \mathcal{D}(\theta_y)</annotation></semantics></math>.
+We want to know whether the two distributions are the same or not on the
+basis of the two samples we collected. In this parametric setting, it
+boils down to testing the following hypotheses:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><msub><mi>θ</mi><mi>x</mi></msub><mo>=</mo><msub><mi>θ</mi><mi>y</mi></msub><mspace width="1.0em"></mspace><mtext mathvariant="normal">vs</mtext><mspace width="1.0em"></mspace><msub><mi>θ</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>θ</mi><mi>y</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex"> H_0: \theta_x = \theta_y \quad \mbox{vs} \quad \theta_x \neq \theta_y. </annotation></semantics></math>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+be a statistic that depends on the two samples which is suited for
+elucidating this test, i.e.:</p>
 <ul>
 <li>you can compute its observed value under the null hypothesis once
 you observed some data;</li>
@@ -167,58 +190,85 @@ you observed some data;</li>
 alternative hypothesis.</li>
 </ul>
 <p>Now, for performing the test, one should also know (an approximation
-of) the distribution of <span class="math inline">\(T\)</span> under the
-null hypothesis, also known as the <strong>null distribution</strong>,
-from which the p-value associated to this test can be computed for
-instance.</p>
+of) the distribution of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+under the null hypothesis, also known as the <strong>null
+distribution</strong>, from which the p-value associated to this test
+can be computed for instance.</p>
 <p>If one knows the exact null distribution, then there is no need to
 resort to permutations. However, if the null distribution is not known,
 permutations come in handy for approaching it.</p>
 <p>The idea is that, under the null hypothesis, the two samples come
 from the same distribution. Hence, we can pull them together as one big
-sample of size <span class="math inline">\(n = n_x + n_y\)</span>
+sample of size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><msub><mi>n</mi><mi>x</mi></msub><mo>+</mo><msub><mi>n</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">n = n_x + n_y</annotation></semantics></math>
 generated by that common distribution. At this point, we can split the
-pooled sample into two random subsets of size <span class="math inline">\(n_x\)</span> and <span class="math inline">\(n_y\)</span> respectively, and use them to compute
-a value of the statistic <span class="math inline">\(T\)</span>. If we
-repeat many times this splitting strategy, say <span class="math inline">\(m\)</span> times, we end up with <span class="math inline">\(m\)</span> values of the statistic from which we
-can compute the empirical distribution, known as the <strong>permutation
-distribution</strong>, which approaches the null distribution.</p>
+pooled sample into two random subsets of size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>x</mi></msub><annotation encoding="application/x-tex">n_x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>y</mi></msub><annotation encoding="application/x-tex">n_y</annotation></semantics></math>
+respectively, and use them to compute a value of the statistic
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>.
+If we repeat many times this splitting strategy, say
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+times, we end up with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+values of the statistic from which we can compute the empirical
+distribution, known as the <strong>permutation distribution</strong>,
+which approaches the null distribution.</p>
 </div>
 <div class="section level2">
-<h2 id="permutation-p-value-as-an-unbiased-estimator-of-p_infty">Permutation p-value as an unbiased estimator of <span class="math inline">\(p_\infty\)</span><a class="anchor" aria-label="anchor" href="#permutation-p-value-as-an-unbiased-estimator-of-p_infty"></a>
+<h2 id="permutation-p-value-as-an-unbiased-estimator-of-p_infty">Permutation p-value as an unbiased estimator of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#permutation-p-value-as-an-unbiased-estimator-of-p_infty"></a>
 </h2>
-<p>Let <span class="math inline">\(t_\mathrm{obs}\)</span> be the value
-of the statistic computed from the original two samples, <span class="math inline">\(m\)</span> be the number of permutations used to
-approach the null distribution and <span class="math inline">\(B\)</span> be a random variable that counts the
-number of test statistic values greater than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span>.</p>
-<p>By definition, the random variable <span class="math inline">\(B\)</span> follows a binomial distribution of size
-<span class="math inline">\(m\)</span> and rate of success <span class="math inline">\(p_\infty\)</span>. Hence, we can define the
-following <strong>unbiased estimator</strong> of <span class="math inline">\(p_\infty\)</span>: <span class="math display">\[
-\widehat{p_\infty} = \frac{B}{m}. \]</span></p>
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>
+be the value of the statistic computed from the original two samples,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+be the number of permutations used to approach the null distribution and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+be a random variable that counts the number of test statistic values
+greater than or equal to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>.</p>
+<p>By definition, the random variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+follows a binomial distribution of size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+and rate of success
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>.
+Hence, we can define the following <strong>unbiased estimator</strong>
+of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mi>B</mi><mi>m</mi></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex"> \widehat{p_\infty} = \frac{B}{m}. </annotation></semantics></math></p>
 <p>However, when one uses this estimator of the p-value for the purpose
 of hypothesis testing, the resulting test is not exact. Let us
 investigate why.</p>
-<p>First, remember that the true p-value <span class="math inline">\(p_\infty\)</span> is a random variable itself, in
-the sense that its value changes as soon as <span class="math inline">\(t_\mathrm{obs}\)</span> changes i.e. each time the
-whole experiment is reconducted. Hence, the probability of wrongly
-rejecting the null hypothesis using <span class="math inline">\(\widehat{p_\infty}\)</span> reads: <span class="math display">\[ \mathbb{P} \left( \widehat{p_\infty} \le \alpha
-\right) = \int_\mathbb{R} \mathbb{P} \left( \widehat{p_\infty} \le
-\alpha | p \right) f_{p_\infty}(p) dp = \int_0^1 \mathbb{P} \left(
-\widehat{p_\infty} \le \alpha | p \right) dp, \]</span>because <span class="math inline">\(p_\infty\)</span> is uniformly distributed on
-<span class="math inline">\((0,1)\)</span> under the null
-hypothesis.</p>
-<p>Next, notice that <span class="math inline">\(\widehat{p_\infty}\)</span> can only take on a
-finite set of values <span class="math inline">\(\left\{ 0, \frac{1}{m},
-\frac{2}{m}, \dots, \frac{m-1}{m}, 1 \right\}\)</span>. Hence, we have
-for any <span class="math inline">\(b \in 0, 1, \dots, m\)</span>: <span class="math display">\[ \mathbb{P} \left( \widehat{p_\infty} =
-\frac{b}{m} \right) = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} =
-\left. \frac{b}{m} \right| p \right) dp = \int_0^1 \binom{m}{b} p^b
-(1-p)^{m-b} dp = \frac{1}{m + 1}. \]</span></p>
-<p>We can therefore deduce that: <span class="math display">\[
-\mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \frac{\lfloor
-m \alpha \rfloor + 1}{m + 1} \neq \alpha. \]</span></p>
-<p>The following R code shows graphically that using <span class="math inline">\(\widehat{p_\infty}\)</span> as p-value does not
-provide an exact test:</p>
+<p>First, remember that the true p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>
+is a random variable itself, in the sense that its value changes as soon
+as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>
+changes i.e. each time the whole experiment is reconducted. Hence, the
+probability of wrongly rejecting the null hypothesis using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{p_\infty}</annotation></semantics></math>
+reads:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>≤</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mo>∫</mo><mi>ℝ</mi></msub><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>≤</mo><mi>α</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>f</mi><msub><mi>p</mi><mi>∞</mi></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>d</mi><mi>p</mi><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>≤</mo><mi>α</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>d</mi><mi>p</mi><mo>,</mo></mrow><annotation encoding="application/x-tex"> \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \int_\mathbb{R} \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) f_{p_\infty}(p) dp = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} \le \alpha | p \right) dp, </annotation></semantics></math>because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>
+is uniformly distributed on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0,1)</annotation></semantics></math>
+under the null hypothesis.</p>
+<p>Next, notice that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{p_\infty}</annotation></semantics></math>
+can only take on a finite set of values
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mn>0</mn><mo>,</mo><mfrac><mn>1</mn><mi>m</mi></mfrac><mo>,</mo><mfrac><mn>2</mn><mi>m</mi></mfrac><mo>,</mo><mi>…</mi><mo>,</mo><mfrac><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\left\{ 0, \frac{1}{m}, \frac{2}{m}, \dots, \frac{m-1}{m}, 1 \right\}</annotation></semantics></math>.
+Hence, we have for any
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∈</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">b \in 0, 1, \dots, m</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mi>b</mi><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mfrac><mi>b</mi><mi>m</mi></mfrac><mo stretchy="true" form="postfix">|</mo></mrow><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>d</mi><mi>p</mi><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mi>m</mi><mi>b</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><msup><mi>p</mi><mi>b</mi></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>m</mi><mo>−</mo><mi>b</mi></mrow></msup><mi>d</mi><mi>p</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex"> \mathbb{P} \left( \widehat{p_\infty} = \frac{b}{m} \right) = \int_0^1 \mathbb{P} \left( \widehat{p_\infty} = \left. \frac{b}{m} \right| p \right) dp = \int_0^1 \binom{m}{b} p^b (1-p)^{m-b} dp = \frac{1}{m + 1}. </annotation></semantics></math></p>
+<p>We can therefore deduce that:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><mo>≤</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">⌊</mo><mi>m</mi><mi>α</mi><mo stretchy="false" form="postfix">⌋</mo><mo>+</mo><mn>1</mn></mrow><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>≠</mo><mi>α</mi><mi>.</mi></mrow><annotation encoding="application/x-tex"> \mathbb{P} \left( \widehat{p_\infty} \le \alpha \right) = \frac{\lfloor m \alpha \rfloor + 1}{m + 1} \neq \alpha. </annotation></semantics></math></p>
+<p>The following R code shows graphically that using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{p_\infty}</annotation></semantics></math>
+as p-value does not provide an exact test:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span></span>
@@ -262,64 +312,97 @@ provide an exact test:</p>
 distribution<a class="anchor" aria-label="anchor" href="#permutation-p-value-as-the-tail-probability-of-a-resampling-distribution"></a>
 </h2>
 <p>An alternative strategy is to define the p-value by looking at the
-random variable <span class="math inline">\(B\)</span> instead of the
-test statistic <span class="math inline">\(T\)</span>. While the p-value
-is the tail probability of the null distribution, in the context of
-randomization tests, we can define it as the tail probability of the
-distribution of <span class="math inline">\(B\)</span>. Given a fixed
-number <span class="math inline">\(m\)</span> of sampled permutations,
-recall that the random variable <span class="math inline">\(B\)</span>
-counts the number of test statistic values larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span>. Hence, an alternative
-equivalent definition of the p-value is given by the so-called
-<strong>exact permutation p-value</strong>: <span class="math display">\[ p_e = \mathbb{P}_{H_0} \left( B \le b \right),
-\]</span>where <span class="math inline">\(b\)</span> is the observed
-number of test statistics larger than or equal to <span class="math inline">\(t_\mathrm{obs}\)</span> (using the observed sample
-of permutations that was drawn).</p>
-<p>Let <span class="math inline">\(B_t\)</span> be a random variable
-that counts the total number of possible distinct test statistic values
-exceeding <span class="math inline">\(t_\mathrm{obs}\)</span> and recall
-that <span class="math inline">\(m_t\)</span> is the total number of
-possible distinct permutations. We denote by <span class="math display">\[ p_t = \frac{B_t
-+ 1}{m_t + 1}, \]</span>the permutation p-value when the exhaustive list
-of all permutations is used.</p>
-<p>As we have seen before, it is straightforward to show that <span class="math inline">\(B_t\)</span> follows a discrete uniform
-distribution on the integers <span class="math inline">\(0, \dots,
-m_t\)</span> and that, conditional on <span class="math inline">\(B_t =
-b_t\)</span>, the random variable <span class="math inline">\(B\)</span>
-follows a binomial distribution of size <span class="math inline">\(m\)</span> and rate of success <span class="math inline">\(p_t\)</span>. We can thus write: <span class="math display">\[ p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left(
-B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) =
-\frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t
-+ 1} \right), \]</span> where <span class="math inline">\(F_B \left(
-\cdot; m, \frac{b_t + 1}{m_t + 1} \right)\)</span> is the cumulative
-probability function of the binomial distribution of size <span class="math inline">\(m\)</span> and probability of success <span class="math inline">\(\frac{b_t + 1}{m_t + 1}\)</span>.</p>
+random variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+instead of the test statistic
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>.
+While the p-value is the tail probability of the null distribution, in
+the context of randomization tests, we can define it as the tail
+probability of the distribution of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>.
+Given a fixed number
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+of sampled permutations, recall that the random variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+counts the number of test statistic values larger than or equal to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>.
+Hence, an alternative equivalent definition of the p-value is given by
+the so-called <strong>exact permutation p-value</strong>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>e</mi></msub><mo>=</mo><msub><mi>ℙ</mi><msub><mi>H</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo>≤</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex"> p_e = \mathbb{P}_{H_0} \left( B \le b \right), </annotation></semantics></math>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
+is the observed number of test statistics larger than or equal to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>
+(using the observed sample of permutations that was drawn).</p>
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>
+be a random variable that counts the total number of possible distinct
+test statistic values exceeding
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">t_\mathrm{obs}</annotation></semantics></math>
+and recall that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>t</mi></msub><annotation encoding="application/x-tex">m_t</annotation></semantics></math>
+is the total number of possible distinct permutations. We denote by
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>t</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>B</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex"> p_t = \frac{B_t
++ 1}{m_t + 1}, </annotation></semantics></math>the permutation p-value
+when the exhaustive list of all permutations is used.</p>
+<p>As we have seen before, it is straightforward to show that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>
+follows a discrete uniform distribution on the integers
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>m</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">0, \dots, m_t</annotation></semantics></math>
+and that, conditional on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>t</mi></msub><mo>=</mo><msub><mi>b</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">B_t = b_t</annotation></semantics></math>,
+the random variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+follows a binomial distribution of size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+and rate of success
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>t</mi></msub><annotation encoding="application/x-tex">p_t</annotation></semantics></math>.
+We can thus write:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>e</mi></msub><mo>=</mo><munderover><mo>∑</mo><mrow><msub><mi>b</mi><mi>t</mi></msub><mo>=</mo><mn>0</mn></mrow><msub><mi>B</mi><mi>t</mi></msub></munderover><msub><mi>ℙ</mi><msub><mi>H</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo>≤</mo><mi>b</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>B</mi><mi>t</mi></msub><mo>=</mo><msub><mi>b</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>ℙ</mi><msub><mi>H</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>B</mi><mi>t</mi></msub><mo>=</mo><msub><mi>b</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac><munderover><mo>∑</mo><mrow><msub><mi>b</mi><mi>t</mi></msub><mo>=</mo><mn>0</mn></mrow><msub><mi>B</mi><mi>t</mi></msub></munderover><msub><mi>F</mi><mi>B</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>;</mo><mi>m</mi><mo>,</mo><mfrac><mrow><msub><mi>b</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex"> p_e = \sum_{b_t=0}^{B_t} \mathbb{P}_{H_0} \left( B \le b | B_t = b_t \right) \mathbb{P}_{H_0} \left( B_t = b_t \right) = \frac{1}{m_t + 1} \sum_{b_t=0}^{B_t} F_B \left( b; m, \frac{b_t + 1}{m_t + 1} \right), </annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>B</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo>;</mo><mi>m</mi><mo>,</mo><mfrac><mrow><msub><mi>b</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">F_B \left( \cdot; m, \frac{b_t + 1}{m_t + 1} \right)</annotation></semantics></math>
+is the cumulative probability function of the binomial distribution of
+size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+and probability of success
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><msub><mi>b</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">\frac{b_t + 1}{m_t + 1}</annotation></semantics></math>.</p>
 <p>This can be computationally intense to compute for large values of
-<span class="math inline">\(m_t\)</span>, in which case one might use
-the following integral approximation: <span class="math display">\[ p_e
-\approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t)
-dp_t. \]</span></p>
-<p>This approximation shows that the exact p-value <span class="math inline">\(p_e\)</span> is upper bounded by <span class="math display">\[
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>t</mi></msub><annotation encoding="application/x-tex">m_t</annotation></semantics></math>,
+in which case one might use the following integral approximation:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>e</mi></msub><mo>≈</mo><mfrac><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>−</mo><msubsup><mo>∫</mo><mn>0</mn><mfrac><mn>0.5</mn><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>+</mo><mn>1</mn></mrow></mfrac></msubsup><msub><mi>F</mi><mi>B</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>;</mo><mi>m</mi><mo>,</mo><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>d</mi><msub><mi>p</mi><mi>t</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex"> p_e \approx \frac{b+1}{m+1} - \int_0^{\frac{0.5}{m_t+1}} F_B (b; m, p_t) dp_t. </annotation></semantics></math></p>
+<p>This approximation shows that the exact p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+is upper bounded by
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>u</mi></msub><mo>=</mo><mfrac><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
 p_u = \frac{b+1}{m+1},
-\]</span> which happens to be the exact p-value in the case of sampling
-permutations without replacement.</p>
+</annotation></semantics></math> which happens to be the exact p-value
+in the case of sampling permutations without replacement.</p>
 </div>
 <div class="section level2">
 <h2 id="comparison-by-empirical-evidence">Comparison by empirical evidence<a class="anchor" aria-label="anchor" href="#comparison-by-empirical-evidence"></a>
 </h2>
 <p>In <strong>flipr</strong>, you perform a permutation test using the
-estimator <span class="math inline">\(\widehat{p_\infty}\)</span> of the
-p-value <span class="math inline">\(p_\infty\)</span> by setting
-<code>type == "estimate"</code>. This provides a non-exact test but an
-unbiased estimate of <span class="math inline">\(p_\infty\)</span>. You
-perform a permutation test using the permutation p-value <span class="math inline">\(p_e\)</span> by setting
-<code>type == "exact"</code>. This provides an exact test. You also have
-the possibility of using the upper bound p-value <span class="math inline">\(p_u\)</span> using
-<code>type == "upper_bound"</code>.</p>
+estimator
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{p_\infty}</annotation></semantics></math>
+of the p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>
+by setting <code>type == "estimate"</code>. This provides a non-exact
+test but an unbiased estimate of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>∞</mi></msub><annotation encoding="application/x-tex">p_\infty</annotation></semantics></math>.
+You perform a permutation test using the permutation p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+by setting <code>type == "exact"</code>. This provides an exact test.
+You also have the possibility of using the upper bound p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>u</mi></msub><annotation encoding="application/x-tex">p_u</annotation></semantics></math>
+using <code>type == "upper_bound"</code>.</p>
 <p>The following R code runs simulations to empirically estimate the
 probability of wrongly rejecting the null hypothesis. The generative
 model for both samples is the standard normal distribution. Sample sizes
-are set to <span class="math inline">\(n_1 = n_2 = 5\)</span>. We draw
-<span class="math inline">\(20\)</span> permutations for each test. We
-used a significance level of <span class="math inline">\(5\%\)</span>.</p>
+are set to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">n_1 = n_2 = 5</annotation></semantics></math>.
+We draw
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math>
+permutations for each test. We used a significance level of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">5\%</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># General setup</span></span>
 <span><span class="va">nreps</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -381,25 +464,43 @@ used a significance level of <span class="math inline">\(5\%\)</span>.</p>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.050<span style="text-decoration: underline;">7</span>      0.050<span style="text-decoration: underline;">7</span>   0.097<span style="text-decoration: underline;">8</span></span></span></code></pre></div>
 <p>This simulation provides numerical evidence that using the
-permutation p-value <span class="math inline">\(p_e\)</span> yields an
-exact test. This is by design since <span class="math inline">\(p_e\)</span> is a genuine probability hence it is
-uniformly distributed on <span class="math inline">\((0,1)\)</span>
-under the null hypothesis. We also observe that the upper bound <span class="math inline">\(p_u\)</span> is very close to the exact p-value
-<span class="math inline">\(p_e\)</span>.</p>
+permutation p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+yields an exact test. This is by design since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+is a genuine probability hence it is uniformly distributed on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0,1)</annotation></semantics></math>
+under the null hypothesis. We also observe that the upper bound
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>u</mi></msub><annotation encoding="application/x-tex">p_u</annotation></semantics></math>
+is very close to the exact p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>.</p>
 <p>Of course, one might criticize this simulation in which the number of
-permutations <span class="math inline">\(m\)</span> has been chosen
-small on purpose to prove our point. In effect, when <span class="math inline">\(m\)</span> is larger, all formulae to compute the
-p-value yield an asymptotically exact test. Quoting <span class="citation">Phipson and Smyth (2010)</span>, <em>while this is
-true, the urgent need to avoid small <span class="math inline">\(m\)</span> disappears when the exact p-value <span class="math inline">\(p_e\)</span> is used in place of <span class="math inline">\(\widehat{p_\infty}\)</span>, because <span class="math inline">\(p_e\)</span> ensures a valid statistical test
-regardless of the sample sizes or the number of permutations. When exact
-p-values are used, the only penalty for choosing <span class="math inline">\(m\)</span> small is a loss of statistical power to
-reject the null hypothesis. This is as it should be: more permutations
-should generally provide greater power</em>.</p>
+permutations
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+has been chosen small on purpose to prove our point. In effect, when
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+is larger, all formulae to compute the p-value yield an asymptotically
+exact test. Quoting <span class="citation">Phipson and Smyth
+(2010)</span>, <em>while this is true, the urgent need to avoid small
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+disappears when the exact p-value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+is used in place of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msub><mi>p</mi><mi>∞</mi></msub><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{p_\infty}</annotation></semantics></math>,
+because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>e</mi></msub><annotation encoding="application/x-tex">p_e</annotation></semantics></math>
+ensures a valid statistical test regardless of the sample sizes or the
+number of permutations. When exact p-values are used, the only penalty
+for choosing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+small is a loss of statistical power to reject the null hypothesis. This
+is as it should be: more permutations should generally provide greater
+power</em>.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-phipson2010" class="csl-entry">
 Phipson, Belinda, and Gordon K Smyth. 2010. <span>“Permutation p-Values
 Should Never Be Zero: Calculating Exact p-Values When Permutations Are
@@ -412,9 +513,7 @@ Molecular Biology</em> 9 (1). <a href="https://doi.org/10.2202/1544-6115.1585" c
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -427,16 +526,16 @@ Molecular Biology</em> 9 (1). <a href="https://doi.org/10.2202/1544-6115.1585" c
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
