@@ -270,8 +270,8 @@ aggregate test statistic values when non-parametric combination is used
 and \verb{"fisher} for now. Defaults to \code{"tippett"}.}
 
 \item{\code{pvalue_formula}}{A string specifying which formula to use for
-computing the permutation p-value. Choices are either \code{probability}
-(default) or \code{estimator}. The former provides p-values that lead to
+computing the permutation p-value. Choices are either \code{exact}
+(default), \code{upper_bound} or \code{estimate}. The former provides p-values that lead to
 exact hypothesis tests while the latter provides an unbiased estimate
 of the traditional p-value.}
 
@@ -291,6 +291,8 @@ etc. Defaults to \code{NULL}.}
 
 \item{\code{grid}}{A tibble storing evaluations of the plausibility function on
 a regular centered grid of the parameter space. Defaults to \code{NULL}.}
+
+\item{\code{seed}}{A numeric value specifying the seed to be used. Defaults to \code{1234}.}
 }
 \if{html}{\out{</div>}}
 }

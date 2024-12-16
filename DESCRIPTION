@@ -35,10 +35,11 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     cli,
     dials,
+    furrr,
+    future,
     ggplot2,
     magrittr,
     optimParallel,
-    pbapply,
     purrr,
     R6,
     Rcpp,

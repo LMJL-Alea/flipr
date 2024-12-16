@@ -3,7 +3,6 @@
 # Setup -------------------------------------------------------------------
 
 library(purrr)
-library(parallel)
 library(flipr)
 
 n1 <- 10

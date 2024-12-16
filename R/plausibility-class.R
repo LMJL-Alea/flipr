@@ -649,18 +649,12 @@ PlausibilityFunction <- R6::R6Class(
         self$grid <- grid
       }
 
-      cl <- NULL
-      if (ncores > 1) {
-        cl <- parallel::makeCluster(ncores)
-        parallel::clusterEvalQ(cl, {
-          library(purrr)
-        })
-      }
+      # Parallelization
+      future::plan("future::multisession", workers = ncores)
+
       self$grid$pvalue <- self$grid %>%
         purrr::array_tree(margin = 1) %>%
-        pbapply::pbsapply(self$get_value, cl = cl)
-      if (ncores > 1L)
-        parallel::stopCluster(cl)
+        furrr::future_map_dbl(self$get_value)
     },
 
     #' @field seed A numeric value specifying the seed to be used. Defaults to `1234`.
