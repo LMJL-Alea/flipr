@@ -652,9 +652,18 @@ PlausibilityFunction <- R6::R6Class(
       # Parallelization
       future::plan("future::multisession", workers = ncores)
 
-      self$grid$pvalue <- self$grid %>%
-        purrr::array_tree(margin = 1) %>%
-        furrr::future_map_dbl(self$get_value)
+      progressr::with_progress({
+        transformed_grid <- self$grid %>%
+          purrr::array_tree(margin = 1)
+
+        p <- progressr::progressor(steps = length(transformed_grid))
+
+        self$grid$pvalue <- transformed_grid %>%
+          furrr::future_map_dbl({
+            p()
+            self$get_value
+          })
+      })
     },
 
     #' @field seed A numeric value specifying the seed to be used. Defaults to `1234`.

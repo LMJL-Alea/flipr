@@ -30,8 +30,14 @@ nperms <- 20
 alpha <- 0.05
 
 
-# we can add a progress bar with progressr but it slows down computation
-alpha_estimates <- furrr::future_map(sim, function(.l) {
+progressr::with_progress({
+  p <- progressr::progressor(steps = length(sim) / 10) # progress bar set up
+  ii <- 1
+
+  alpha_estimates <- furrr::future_map(sim, function(.l) {
+    if (ii %% 10 == 0) {p()} # progress bar update
+    ii <<- ii + 1
+
     pf <- PlausibilityFunction$new(
       null_spec = null_spec,
       stat_functions = stat_functions,
@@ -53,9 +59,11 @@ alpha_estimates <- furrr::future_map(sim, function(.l) {
       estimate    = pv_estimate    <= alpha
     )
   }, .options = furrr_options(seed = TRUE)) %>%
-  transpose() %>%
-  simplify_all() %>%
-  map(mean)
+    transpose() %>%
+    simplify_all() %>%
+    map(mean)
+})
+
 
 alpha_estimates
 
