@@ -649,19 +649,17 @@ PlausibilityFunction <- R6::R6Class(
         self$grid <- grid
       }
 
-      # Parallelization
-      future::plan("future::multisession", workers = ncores)
+      future::plan("future::multisession", workers = ncores) # parallelization
 
       progressr::with_progress({
         transformed_grid <- self$grid %>%
           purrr::array_tree(margin = 1)
 
-        p <- progressr::progressor(steps = length(transformed_grid))
+        p <- progressr::progressor(steps = length(transformed_grid)) #progress bar set up
 
-        self$grid$pvalue <- transformed_grid %>%
-          furrr::future_map_dbl({
-            p()
-            self$get_value
+        self$grid$pvalue <- furrr::future_map_dbl(transformed_grid, function(.l) {
+            p() #progress bar update
+            self$get_value(.l)
           })
       })
     },
